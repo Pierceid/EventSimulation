@@ -11,7 +11,7 @@ namespace EventSimulation.Randoms.Continuous {
         }
 
         public override double Next() {
-            return min + (max - min) * Generator.NextDouble();
+            return this.min + (this.max - this.min) * Generator.NextDouble();
         }
     }
 }

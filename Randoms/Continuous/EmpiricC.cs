@@ -7,14 +7,14 @@ namespace EventSimulation.Randoms.Continuous {
 
         public EmpiricC(EmpiricData<double>[] samples) {
             this.samples = new(samples.Length);
-            generators = new(samples.Length);
+            this.generators = new(samples.Length);
 
             double cumProb = 0.0;
 
             samples.ToList().ForEach(s => {
                 EmpiricData<double> data = new(s.Range.First, s.Range.Second, s.Probability + cumProb);
                 this.samples.Add(data);
-                generators.Add(new(s.Range.First, s.Range.Second));
+                this.generators.Add(new(s.Range.First, s.Range.Second));
                 cumProb += s.Probability;
             });
         }
@@ -22,9 +22,9 @@ namespace EventSimulation.Randoms.Continuous {
         public override double Next() {
             double rng = Generator.NextDouble();
 
-            for (int i = 0; i < samples.Count; i++) {
-                if (rng < samples[i].Probability) {
-                    return generators[i].Next();
+            for (int i = 0; i < this.samples.Count; i++) {
+                if (rng < this.samples[i].Probability) {
+                    return this.generators[i].Next();
                 }
             }
 

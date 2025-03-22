@@ -11,7 +11,7 @@ namespace EventSimulation.Randoms.Discrete {
         }
 
         public override int Next() {
-            return Generator.Next(min, max);
+            return Generator.Next(this.min, this.max);
         }
     }
 }
