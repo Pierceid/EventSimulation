@@ -19,13 +19,15 @@ public partial class MainWindow : Window {
     private void ButtonClick(object sender, RoutedEventArgs e) {
         if (sender is Button button) {
             if (button == btnStart) {
-                facade.StartSimulation();
+                facade?.StartSimulation();
                 btnStart.IsEnabled = false;
             } else if (button == btnStop) {
-                facade.StopSimulation();
+                facade?.StopSimulation();
                 btnStart.IsEnabled = true;
+            } else if (button == btnPause) {
+                facade?.PauseSimulation();
             } else if (button == btnAnalyze) {
-                facade.AnalyzeReplication();
+                facade?.AnalyzeReplication();
             }
         }
     }
@@ -41,11 +43,12 @@ public partial class MainWindow : Window {
     private void InitCarpentry() {
         if (!int.TryParse(txtReplications.Text, out int replications)) replications = 0;
 
-        facade.InitCarpentry(replications, sldSpeed.Value);
+        facade?.InitCarpentry(replications, sldSpeed.Value);
     }
 
     private void InitUI() {
         txtReplications.Text = "1000000";
+        sldSpeed.Value = 1.0;
 
         InitCarpentry();
     }
@@ -53,7 +56,8 @@ public partial class MainWindow : Window {
     private void SliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
         if (sender is Slider slider) {
             if (slider == sldSpeed) {
-                facade.UpdateCarpentry(sldSpeed.Value);
+                facade?.UpdateCarpentry(sldSpeed.Value);
+                lblSpeed.Content = $"Speed: {sldSpeed.Value:0}x";
             }
         }
     }

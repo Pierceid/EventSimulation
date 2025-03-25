@@ -2,14 +2,12 @@
     public abstract class SimulationCore {
         protected Thread? thread;
         protected bool isRunning;
-        protected ManualResetEventSlim? resetEvent;
         public int CurrentReplication { get; set; }
         public int ReplicationStock { get; set; }
 
         protected SimulationCore(int replicationStock) {
             this.thread = null;
             this.isRunning = false;
-            this.resetEvent = null;
             this.CurrentReplication = 0;
             this.ReplicationStock = replicationStock;
         }
@@ -35,13 +33,11 @@
                 BeforeSimulation();
                 Experiment();
                 AfterSimulation();
-                this.resetEvent?.Set();
             }
 
             AfterSimulationRun();
 
             this.isRunning = false;
-            this.resetEvent?.Set();
         }
 
         public abstract void Experiment();

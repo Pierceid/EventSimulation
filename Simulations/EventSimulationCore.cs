@@ -1,7 +1,7 @@
 ﻿using EventSimulation.Flyweight;
 using EventSimulation.Generators;
 using EventSimulation.Observer;
-using EventSimulation.Structures.Events;
+using EventSimulation.Structures;
 using EventSimulation.Structures.Objects;
 
 namespace EventSimulation.Simulations {
@@ -18,7 +18,7 @@ namespace EventSimulation.Simulations {
         public double SimulationTime { get; set; }
         public double EndOfSimulationTime { get; set; }
 
-        protected EventSimulationCore(int replicationStock) : base(replicationStock) {
+        protected EventSimulationCore(int replicationStock, double endOfSimulationTime) : base(replicationStock) {
             this.Workshop = new(this);
             this.EventCalendar = new();
             this.Generators = new();
@@ -28,11 +28,11 @@ namespace EventSimulation.Simulations {
             this.IsGeneratedSystemEvent = false;
             this.Speed = 1.0;
             this.SimulationTime = 0.0;
-            this.EndOfSimulationTime = 0.0;
+            this.EndOfSimulationTime = endOfSimulationTime;
         }
 
         public override void Experiment() {
-            while (this.EventCalendar.PriorityQueue.Count > 0 && this.isRunning) {
+            while (this.SimulationTime < this.EndOfSimulationTime && this.isRunning) {
                 var nextEvent = this.EventCalendar.GetFirstEvent();
 
                 this.SimulationTime = nextEvent.Time;
@@ -54,7 +54,6 @@ namespace EventSimulation.Simulations {
 
                 if (this.IsPaused) {
                     Tick();
-
                     Notify();
 
                     while (this.IsPaused) {
@@ -77,8 +76,6 @@ namespace EventSimulation.Simulations {
         }
 
         public void Notify() {
-            if (Workshop == null) return;
-
             foreach (var observer in observers) {
                 observer.Refresh(this);
             }

@@ -1,4 +1,6 @@
-﻿namespace EventSimulation.Structures.Events {
+﻿using EventSimulation.Structures.Events;
+
+namespace EventSimulation.Structures {
     public class EventCalendar {
         public PriorityQueue<Event, int> PriorityQueue { get; set; }
 

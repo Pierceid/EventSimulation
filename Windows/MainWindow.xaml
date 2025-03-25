@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:EventSimulation.Windows"
         xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d"
-        Title="Discrete Simulation" Height="600" Width="900" WindowStartupLocation="CenterScreen">
+        Title="Discrete Simulation" Height="680" Width="900" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -15,7 +15,6 @@
 
         <!-- Left Column: Controls -->
         <StackPanel Grid.Column="0">
-            <!-- GroupBox for Buttons and ComboBox -->
             <GroupBox Header="Simulation Controls" Margin="2" BorderBrush="DarkBlue" Foreground="DarkBlue">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -25,9 +24,8 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-
-                    <!-- Buttons and ComboBox -->
                     <Button x:Name="btnStart" Grid.Row="0" Content="Start" Height="24" Click="ButtonClick" Margin="2"/>
                     <Button x:Name="btnPause" Grid.Row="1" Content="Pause" Height="24" Click="ButtonClick" Margin="2"/>
                     <Button x:Name="btnStop" Grid.Row="2" Content="Stop" Height="24" Click="ButtonClick" Margin="2"/>
@@ -40,118 +38,30 @@
                         <Label Content="Replications:" VerticalAlignment="Center" Margin="0,0,2,0"/>
                         <TextBox x:Name="txtReplications" Grid.Column="1" Height="20" LostFocus="TextBoxLostFocus"/>
                     </Grid>
-                    <Slider x:Name="sldSpeed" Grid.Row="5" Minimum="1" Maximum="3600" Margin="2" ValueChanged="SliderValueChanged"/>
+                    <Grid Grid.Row="5" Margin="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Name="lblSpeed" Content="Speed: 1" VerticalAlignment="Center" Margin="0,0,2,0"/>
+                        <Slider x:Name="sldSpeed" Grid.Column="1" Minimum="1" Maximum="3600" Margin="2" TickFrequency="1" IsSnapToTickEnabled="True" ValueChanged="SliderValueChanged"/>
+                    </Grid>
                 </Grid>
             </GroupBox>
 
-            <!-- GroupBox for Strategy X Controls -->
-            <GroupBox x:Name="gbStrategyXControls" Header="Strategy X Controls" Margin="2" Visibility="Collapsed" BorderBrush="DarkRed" Foreground="DarkRed">
+            <GroupBox Header="Simulation Status" Margin="2" BorderBrush="DarkRed" Foreground="DarkRed">
                 <StackPanel>
-                    <!-- GroupBox for Supplies -->
-                    <GroupBox Header="Supplies" Margin="2" BorderBrush="DarkGreen" Foreground="DarkGreen">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
+                    <Label Content="Time:"/>
+                    <TextBlock x:Name="txtSimulationTime" FontWeight="Bold"/>
 
-                            <!-- Labels and TextBoxes for Mufflers, Brakes, and Lights -->
-                            <Grid Grid.Row="0" Margin="2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Label Content="Mufflers:" VerticalAlignment="Center" Margin="0,0,2,0"/>
-                                <TextBox x:Name="txtMufflers" Grid.Column="1" Height="20"/>
-                            </Grid>
+                    <Label Content="Order States:"/>
+                    <ListBox x:Name="lstOrderStates" Height="100"/>
 
-                            <Grid Grid.Row="1" Margin="2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Label Content="Brakes:" VerticalAlignment="Center" Margin="0,0,2,0"/>
-                                <TextBox x:Name="txtBrakes" Grid.Column="1" Height="20"/>
-                            </Grid>
+                    <Label Content="Worker States:"/>
+                    <ListBox x:Name="lstWorkerStates" Height="100"/>
 
-                            <Grid Grid.Row="2" Margin="2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Label Content="Lights:" VerticalAlignment="Center" Margin="0,0,2,0"/>
-                                <TextBox x:Name="txtLights" Grid.Column="1" Height="20"/>
-                            </Grid>
-                        </Grid>
-                    </GroupBox>
-
-                    <!-- GroupBox for Suppliers -->
-                    <GroupBox Header="Suppliers" Margin="2" BorderBrush="DarkGoldenrod" Foreground="DarkGoldenrod">
-                        <StackPanel>
-                            <CheckBox x:Name="chkSupplier1" Content="Supplier 1" Margin="2"/>
-                            <CheckBox x:Name="chkSupplier2" Content="Supplier 2" Margin="2"/>
-                        </StackPanel>
-                    </GroupBox>
-
-                    <!-- GroupBox for Periods -->
-                    <GroupBox Header="Periods" Margin="2" BorderBrush="DarkMagenta" Foreground="DarkMagenta">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-
-                            <!-- Slider for Period 1 -->
-                            <Grid Grid.Row="0" Margin="2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Label Content="Period 1:" VerticalAlignment="Center" Margin="0,0,2,0"/>
-                                <Slider x:Name="sldrSupplier1Period" Grid.Column="1" Minimum="1" Maximum="30" SmallChange="1" AutoToolTipPlacement="TopLeft" Margin="0,4,0,4"/>
-                            </Grid>
-
-                            <!-- Slider for Period 2 -->
-                            <Grid Grid.Row="1" Margin="2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Label Content="Period 2:" VerticalAlignment="Center" Margin="0,0,2,0"/>
-                                <Slider x:Name="sldrSupplier2Period" Grid.Column="1" Minimum="1" Maximum="30" SmallChange="1" AutoToolTipPlacement="TopLeft" Margin="0,4,0,4"/>
-                            </Grid>
-                        </Grid>
-                    </GroupBox>
-
-                    <!-- GroupBox for Offsets -->
-                    <GroupBox Header="Offsets" Margin="2" BorderBrush="OrangeRed" Foreground="OrangeRed">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-
-                            <!-- TextBoxes for Offsets -->
-                            <Grid Grid.Row="0" Margin="2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Label Content="Offset 1:" VerticalAlignment="Center" Margin="0,0,2,0"/>
-                                <TextBox x:Name="txtSupplier1Offset" Grid.Column="1" Height="20"/>
-                            </Grid>
-
-                            <Grid Grid.Row="1" Margin="2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Label Content="Offset 2:" VerticalAlignment="Center" Margin="0,0,2,0"/>
-                                <TextBox x:Name="txtSupplier2Offset" Grid.Column="1" Height="20"/>
-                            </Grid>
-                        </Grid>
-                    </GroupBox>
+                    <Label Content="Workstations Activity:"/>
+                    <ListBox x:Name="lstWorkstationActivities" Height="100"/>
                 </StackPanel>
             </GroupBox>
         </StackPanel>

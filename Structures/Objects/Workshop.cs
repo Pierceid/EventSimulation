@@ -14,12 +14,12 @@ namespace EventSimulation.Structures.Objects {
 
         public Workshop(EventSimulationCore core, int numA = 10, int numB = 10, int numC = 10) {
             simulationCore = core;
-            WorkersA = [];
-            WorkersB = [];
-            WorkersC = [];
-            QueueA = [];
-            QueueB = [];
-            QueueC = [];
+            WorkersA = new Worker[numA];
+            WorkersB = new Worker[numB];
+            WorkersC = new Worker[numC];
+            QueueA = new();
+            QueueB = new();
+            QueueC = new();
 
             for (int i = 0; i < numA; i++) WorkersA[i] = new Worker(i, WorkerGroup.A);
             for (int i = 0; i < numB; i++) WorkersB[i] = new Worker(i + numA, WorkerGroup.B);

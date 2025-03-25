@@ -1,6 +1,5 @@
 ﻿using EventSimulation.Observer;
 using EventSimulation.Simulations;
-using EventSimulation.Strategies;
 using OxyPlot.Wpf;
 using System.Windows;
 
@@ -9,6 +8,7 @@ namespace EventSimulation.Presentation {
         private Window? mainWindow;
         private Carpentry? carpentry;
         private LineGraph? graph;
+        private double replicationTime;
         private Thread? simulationThread;
         private bool isRunning;
 
@@ -16,6 +16,7 @@ namespace EventSimulation.Presentation {
             mainWindow = window;
             carpentry = null;
             graph = null;
+            replicationTime = 249 * 8 * 60 * 60;
             simulationThread = null;
             isRunning = false;
         }
@@ -28,6 +29,12 @@ namespace EventSimulation.Presentation {
 
             simulationThread = new(carpentry.RunSimulation) { IsBackground = true };
             simulationThread.Start();
+        }
+
+        public void PauseSimulation() {
+            if (carpentry == null) return;
+
+            carpentry.IsPaused = !carpentry.IsPaused;
         }
 
         public void StopSimulation() {
@@ -44,16 +51,6 @@ namespace EventSimulation.Presentation {
             if (carpentry == null) return;
 
 
-        }
-
-        public void SetStrategy(Strategy strategy) {
-            if (carpentry == null || graph == null) return;
-
-            if (isRunning) {
-                StopSimulation();
-            }
-
-            graph.RefreshGraph();
         }
 
         public void InitGraph(PlotView plotView) {
@@ -77,7 +74,7 @@ namespace EventSimulation.Presentation {
                 StopSimulation();
             }
 
-            carpentry = new Carpentry(replications) { Speed = speed };
+            carpentry = new Carpentry(replications, replicationTime) { Speed = speed };
 
             InitObservers();
         }

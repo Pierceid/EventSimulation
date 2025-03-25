@@ -1,7 +1,7 @@
 ﻿namespace EventSimulation.Simulations {
-    public class Carpentry(int replicationStock) : EventSimulationCore(replicationStock) {
+    public class Carpentry(int replicationStock, double endOfSimulationTime) : EventSimulationCore(replicationStock, endOfSimulationTime) {
         public override void AfterSimulation() {
-
+            //Notify();
         }
 
         public override void AfterSimulationRun() {
@@ -9,7 +9,7 @@
         }
 
         public override void BeforeSimulation() {
-            Notify();
+
         }
 
         public override void BeforeSimulationRun() {
