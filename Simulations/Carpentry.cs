@@ -9,10 +9,14 @@
         }
 
         public override void BeforeSimulation() {
-
+            Notify();
         }
 
         public override void BeforeSimulationRun() {
+
+        }
+
+        public override void Experiment() {
 
         }
     }

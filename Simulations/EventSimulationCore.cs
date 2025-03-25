@@ -1,12 +1,15 @@
 ﻿using EventSimulation.Flyweight;
+using EventSimulation.Generators;
 using EventSimulation.Observer;
 using EventSimulation.Structures.Events;
+using EventSimulation.Structures.Objects;
 
 namespace EventSimulation.Simulations {
     public abstract class EventSimulationCore : SimulationCore, ISubject {
-        private readonly List<IObserver> observers = [];
-        public Event? Data { get; set; }
+        private List<IObserver> observers = [];
+        public Workshop Workshop { get; set; }
         public EventCalendar EventCalendar { get; set; }
+        public RandomGenerators Generators { get; set; }
         public int UpdateInterval { get; set; }
         public bool IsPaused { get; set; }
         public bool IsSlowed { get; set; }
@@ -16,8 +19,9 @@ namespace EventSimulation.Simulations {
         public double EndOfSimulationTime { get; set; }
 
         protected EventSimulationCore(int replicationStock) : base(replicationStock) {
-            this.Data = null;
+            this.Workshop = new(this);
             this.EventCalendar = new();
+            this.Generators = new();
             this.UpdateInterval = 5;
             this.IsPaused = false;
             this.IsSlowed = false;
@@ -32,9 +36,6 @@ namespace EventSimulation.Simulations {
                 var nextEvent = this.EventCalendar.GetFirstEvent();
 
                 this.SimulationTime = nextEvent.Time;
-                this.Data = nextEvent;
-
-                UpdateData();
 
                 nextEvent.Execute();
 
@@ -54,7 +55,7 @@ namespace EventSimulation.Simulations {
                 if (this.IsPaused) {
                     Tick();
 
-                    UpdateData();
+                    Notify();
 
                     while (this.IsPaused) {
                         Thread.Sleep(200);
@@ -64,12 +65,6 @@ namespace EventSimulation.Simulations {
 
             this.IsGeneratedSystemEvent = false;
         }
-
-        public virtual void UpdateData() {
-            Notify();
-        }
-
-        public virtual void Tick() { }
 
         public void Attach(IObserver observer) {
             if (!observers.Contains(observer)) {
@@ -82,11 +77,13 @@ namespace EventSimulation.Simulations {
         }
 
         public void Notify() {
-            if (this.Data != null) {
-                foreach (var observer in observers) {
-                    observer.Update(this.Data);
-                }
+            if (Workshop == null) return;
+
+            foreach (var observer in observers) {
+                observer.Refresh(this);
             }
         }
+
+        public virtual void Tick() { }
     }
 }

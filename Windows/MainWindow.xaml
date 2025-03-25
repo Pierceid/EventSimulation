@@ -24,19 +24,14 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
                     <!-- Buttons and ComboBox -->
                     <Button x:Name="btnStart" Grid.Row="0" Content="Start" Height="24" Click="ButtonClick" Margin="2"/>
-                    <Button x:Name="btnStop" Grid.Row="1" Content="Stop" Height="24" Click="ButtonClick" Margin="2"/>
-                    <Button x:Name="btnAnalyze" Grid.Row="2" Content="Analyze" Height="24" Click="ButtonClick" Margin="2"/>
-                    <ComboBox x:Name="cbStrategies" Grid.Row="3" Height="24" SelectionChanged="ComboBoxSelectionChanged" Margin="2">
-                        <ComboBoxItem x:Name="StrategyA" Content="Strategy A"/>
-                        <ComboBoxItem x:Name="StrategyB" Content="Strategy B"/>
-                        <ComboBoxItem x:Name="StrategyC" Content="Strategy C"/>
-                        <ComboBoxItem x:Name="StrategyD" Content="Strategy D"/>
-                        <ComboBoxItem x:Name="StrategyX" Content="Strategy X"/>
-                    </ComboBox>
+                    <Button x:Name="btnPause" Grid.Row="1" Content="Pause" Height="24" Click="ButtonClick" Margin="2"/>
+                    <Button x:Name="btnStop" Grid.Row="2" Content="Stop" Height="24" Click="ButtonClick" Margin="2"/>
+                    <Button x:Name="btnAnalyze" Grid.Row="3" Content="Analyze" Height="24" Click="ButtonClick" Margin="2"/>
                     <Grid Grid.Row="4" Margin="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -45,6 +40,7 @@
                         <Label Content="Replications:" VerticalAlignment="Center" Margin="0,0,2,0"/>
                         <TextBox x:Name="txtReplications" Grid.Column="1" Height="20" LostFocus="TextBoxLostFocus"/>
                     </Grid>
+                    <Slider x:Name="sldSpeed" Grid.Row="5" Minimum="1" Maximum="3600" Margin="2" ValueChanged="SliderValueChanged"/>
                 </Grid>
             </GroupBox>
 

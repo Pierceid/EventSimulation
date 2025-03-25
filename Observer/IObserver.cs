@@ -1,7 +1,7 @@
-﻿using EventSimulation.Structures.Events;
+﻿using EventSimulation.Simulations;
 
 namespace EventSimulation.Observer {
     public interface IObserver {
-        void Update(Event eventData);
+        void Refresh(SimulationCore simulationCore);
     }
 }

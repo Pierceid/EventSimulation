@@ -14,7 +14,7 @@ namespace EventSimulation.Structures.Events {
                     SimulationCore.EventCalendar.AddEvent(systemEvent);
                 }
 
-                SimulationCore.UpdateData();
+                SimulationCore.Notify();
             }
         }
     }
