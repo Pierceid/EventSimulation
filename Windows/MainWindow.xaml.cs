@@ -47,7 +47,7 @@ public partial class MainWindow : Window {
         if (!int.TryParse(txtWorkersC.Text, out int workersC)) workersC = 0;
 
         facade?.InitCarpentry(replications, sldSpeed.Value, workersA, workersB, workersC);
-        facade?.InitObservers(txtTime, lstWorkerStates, lstOrderStates, lstWorkstationActivities);
+        facade?.InitObservers(txtTime, dgOrders, dgWorkers);
     }
 
     private void InitUI() {

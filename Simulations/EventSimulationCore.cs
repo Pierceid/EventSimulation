@@ -3,7 +3,6 @@ using EventSimulation.Generators;
 using EventSimulation.Observer;
 using EventSimulation.Structures.Events;
 using EventSimulation.Structures.Objects;
-using System.Windows;
 
 namespace EventSimulation.Simulations {
     public abstract class EventSimulationCore : SimulationCore, ISubject {
@@ -35,8 +34,6 @@ namespace EventSimulation.Simulations {
         public override void Experiment() {
             while (this.SimulationTime < this.EndOfSimulationTime && this.isRunning) {
                 var nextEvent = this.EventCalendar.Dequeue();
-
-                MessageBox.Show($"T: {nextEvent.Time} - {nextEvent.GetType().Name}");
 
                 if (nextEvent == null) continue;
 

@@ -1,5 +1,6 @@
 ﻿using EventSimulation.Observer;
 using EventSimulation.Simulations;
+using EventSimulation.Structures.Objects;
 using OxyPlot.Wpf;
 using System.Windows;
 using System.Windows.Controls;
@@ -83,15 +84,15 @@ namespace EventSimulation.Presentation {
             carpentry.Speed = speed;
         }
 
-        public void InitObservers(TextBlock timeTextBlock, ListBox workerListBox, ListBox orderListBox, ListBox workstationListBox) {
+        public void InitObservers(TextBlock timeTextBlock, DataGrid orderDataGrid, DataGrid workerDataGrid) {
             if (carpentry == null || mainWindow == null || graph == null) return;
 
             //LineGraphObserver lineGraphObserver = new(mainWindow, graph);
             TextBlockObserver textBlockObserver = new(timeTextBlock);
-            //ListBoxObserver listBoxObserver = new(workerListBox, orderListBox, workstationListBox);
+            DataGridObserver dataGridObserver = new(orderDataGrid, workerDataGrid);
             //carpentry.Attach(lineGraphObserver);
             carpentry.Attach(textBlockObserver);
-            //carpentry.Attach(listBoxObserver);
+            carpentry.Attach(dataGridObserver);
         }
     }
 }
