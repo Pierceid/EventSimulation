@@ -1,14 +1,15 @@
 ﻿using EventSimulation.Flyweight;
 using EventSimulation.Generators;
 using EventSimulation.Observer;
-using EventSimulation.Structures;
+using EventSimulation.Structures.Events;
 using EventSimulation.Structures.Objects;
+using System.Windows;
 
 namespace EventSimulation.Simulations {
     public abstract class EventSimulationCore : SimulationCore, ISubject {
         private List<IObserver> observers = [];
         public Workshop Workshop { get; set; }
-        public EventCalendar EventCalendar { get; set; }
+        public PriorityQueue<Event, double> EventCalendar { get; set; }
         public RandomGenerators Generators { get; set; }
         public int UpdateInterval { get; set; }
         public bool IsPaused { get; set; }
@@ -33,7 +34,11 @@ namespace EventSimulation.Simulations {
 
         public override void Experiment() {
             while (this.SimulationTime < this.EndOfSimulationTime && this.isRunning) {
-                var nextEvent = this.EventCalendar.GetFirstEvent();
+                var nextEvent = this.EventCalendar.Dequeue();
+
+                MessageBox.Show($"T: {nextEvent.Time} - {nextEvent.GetType().Name}");
+
+                if (nextEvent == null) continue;
 
                 this.SimulationTime = nextEvent.Time;
 
@@ -47,7 +52,7 @@ namespace EventSimulation.Simulations {
                     this.IsGeneratedSystemEvent = true;
                     var adjustedTime = this.SimulationTime + (this.Speed / this.UpdateInterval);
                     var systemEvent = SystemEventFactory.GetInstance().GetEvent(this, adjustedTime);
-                    this.EventCalendar.AddEvent(systemEvent);
+                    this.EventCalendar.Enqueue(systemEvent, adjustedTime);
                 } else if (!this.IsSlowed && this.IsGeneratedSystemEvent) {
                     this.IsGeneratedSystemEvent = false;
                 }

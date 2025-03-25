@@ -16,8 +16,8 @@ namespace EventSimulation.Structures {
             PriorityQueue.Enqueue(newEvent, (int)newEvent.Time);
         }
 
-        public void RemoveFirstEvent() {
-            PriorityQueue.Dequeue();
+        public Event? RemoveFirstEvent() {
+            return PriorityQueue.Dequeue();
         }
     }
 }

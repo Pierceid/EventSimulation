@@ -13,13 +13,13 @@ namespace EventSimulation.Structures.Events {
             double rng = SimulationCore.Generators.RNG.Next();
             ProductType type = (rng < 0.15) ? ProductType.Chair : (rng < 0.65) ? ProductType.Table : ProductType.Wardrobe;
 
-            SimulationCore.Workshop.AddOrder(new Order(type, SimulationCore.SimulationTime));
+            SimulationCore.Workshop.AddOrder(new Order(type, Time));
 
             if (SimulationCore.Workshop.QueueA.Count > 0) {
-                SimulationCore.EventCalendar.AddEvent(new CuttingStartEvent(SimulationCore, SimulationCore.SimulationTime));
+                SimulationCore.EventCalendar.Enqueue(new CuttingStartEvent(SimulationCore, Time), Time);
             }
 
-            SimulationCore.EventCalendar.AddEvent(new OrderStartEvent(SimulationCore, SimulationCore.SimulationTime + orderingTime));
+            SimulationCore.EventCalendar.Enqueue(new OrderStartEvent(SimulationCore, Time + orderingTime), Time);
         }
     }
 }

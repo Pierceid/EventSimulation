@@ -4,7 +4,7 @@ using EventSimulation.Structures.Objects;
 
 namespace EventSimulation.Structures.Events {
     public class MountingStartEvent : Event {
-        public MountingStartEvent(EventSimulationCore simulationCore, double time) : base(simulationCore, time, 3) {
+        public MountingStartEvent(EventSimulationCore simulationCore, double time) : base(simulationCore, time, 5) {
         }
 
         public override void Execute() {
@@ -32,7 +32,7 @@ namespace EventSimulation.Structures.Events {
 
             mountingTime += SimulationCore.Generators.WardrobeMountingTime.Next();
 
-            SimulationCore.EventCalendar.AddEvent(new MountingEndEvent(SimulationCore, Time + mountingTime, worker));
+            SimulationCore.EventCalendar.Enqueue(new MountingEndEvent(SimulationCore, Time + mountingTime, worker), Time + mountingTime);
         }
     }
 }

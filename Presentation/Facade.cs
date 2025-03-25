@@ -2,6 +2,7 @@
 using EventSimulation.Simulations;
 using OxyPlot.Wpf;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace EventSimulation.Presentation {
     public class Facade {
@@ -65,8 +66,6 @@ namespace EventSimulation.Presentation {
                 seriesTitle: "Costs",
                 plotView: plotView
             );
-
-            InitObservers();
         }
 
         public void InitCarpentry(int replications, double speed, int workersA, int workersB, int workersC) {
@@ -76,8 +75,6 @@ namespace EventSimulation.Presentation {
 
             carpentry = new(replications, replicationTime) { Speed = speed };
             carpentry.Workshop.InitComponents(workersA, workersB, workersC);
-
-            InitObservers();
         }
 
         public void UpdateCarpentry(double speed) {
@@ -86,12 +83,15 @@ namespace EventSimulation.Presentation {
             carpentry.Speed = speed;
         }
 
-        private void InitObservers() {
+        public void InitObservers(TextBlock timeTextBlock, ListBox workerListBox, ListBox orderListBox, ListBox workstationListBox) {
             if (carpentry == null || mainWindow == null || graph == null) return;
 
-            LineGraphObserver lineGraphObserver = new(mainWindow, graph);
-
-            carpentry.Attach(lineGraphObserver);
+            //LineGraphObserver lineGraphObserver = new(mainWindow, graph);
+            TextBlockObserver textBlockObserver = new(timeTextBlock);
+            //ListBoxObserver listBoxObserver = new(workerListBox, orderListBox, workstationListBox);
+            //carpentry.Attach(lineGraphObserver);
+            carpentry.Attach(textBlockObserver);
+            //carpentry.Attach(listBoxObserver);
         }
     }
 }

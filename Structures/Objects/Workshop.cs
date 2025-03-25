@@ -46,12 +46,12 @@ namespace EventSimulation.Structures.Objects {
         public void ProcessOrders() {
             for (int i = 0; i < WorkersA.Length; i++) {
                 if (!WorkersA[i].IsBusy && QueueA.Count > 0) {
-                    simulationCore.EventCalendar.AddEvent(new CuttingStartEvent(simulationCore, simulationCore.SimulationTime));
+                    simulationCore.EventCalendar.Enqueue(new CuttingStartEvent(simulationCore, simulationCore.SimulationTime), 3);
                 }
             }
             for (int i = 0; i < WorkersB.Length; i++) {
                 if (!WorkersB[i].IsBusy && QueueB.Count > 0) {
-                    simulationCore.EventCalendar.AddEvent(new AssemblyStartEvent(simulationCore, simulationCore.SimulationTime));
+                    simulationCore.EventCalendar.Enqueue(new AssemblyStartEvent(simulationCore, simulationCore.SimulationTime), 4);
                 }
             }
             for (int i = 0; i < WorkersC.Length; i++) {
@@ -62,7 +62,7 @@ namespace EventSimulation.Structures.Objects {
                         var order = QueueC.ElementAt(j);
 
                         if (order.Type == ProductType.Wardrobe && order.State == ProductState.Assembled) {
-                            simulationCore.EventCalendar.AddEvent(new MountingStartEvent(simulationCore, simulationCore.SimulationTime));
+                            simulationCore.EventCalendar.Enqueue(new MountingStartEvent(simulationCore, simulationCore.SimulationTime), 5);
                             mountingAssigned = true;
                             break;
                         }
@@ -73,7 +73,7 @@ namespace EventSimulation.Structures.Objects {
                             var order = QueueC.ElementAt(j);
 
                             if (order.State == ProductState.Cut) {
-                                simulationCore.EventCalendar.AddEvent(new PaintingStartEvent(simulationCore, simulationCore.SimulationTime));
+                                simulationCore.EventCalendar.Enqueue(new PaintingStartEvent(simulationCore, simulationCore.SimulationTime), 6);
                                 break;
                             }
                         }

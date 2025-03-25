@@ -11,7 +11,7 @@ namespace EventSimulation.Observer {
         public void Refresh(SimulationCore simulationCore) {
             if (simulationCore is EventSimulationCore esc) {
                 window.Dispatcher.Invoke(() => {
-                    lineGraph.UpdatePlot(esc.CurrentReplication, esc.EventCalendar.GetFirstEvent().Time);
+                    lineGraph.UpdatePlot(esc.CurrentReplication, esc.SimulationTime);
                 }, DispatcherPriority.Input);
             }
         }

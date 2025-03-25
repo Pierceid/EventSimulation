@@ -5,7 +5,7 @@ using EventSimulation.Structures.Objects;
 namespace EventSimulation.Structures.Events {
     public class CuttingStartEvent : Event {
 
-        public CuttingStartEvent(EventSimulationCore simulationCore, double time) : base(simulationCore, time, 2) {
+        public CuttingStartEvent(EventSimulationCore simulationCore, double time) : base(simulationCore, time, 3) {
         }
 
         public override void Execute() {
@@ -48,7 +48,7 @@ namespace EventSimulation.Structures.Events {
                     break;
             }
 
-            SimulationCore.EventCalendar.AddEvent(new CuttingEndEvent(SimulationCore, Time + cuttingTime, worker));
+            SimulationCore.EventCalendar.Enqueue(new CuttingEndEvent(SimulationCore, Time + cuttingTime, worker), Time + cuttingTime);
         }
     }
 }

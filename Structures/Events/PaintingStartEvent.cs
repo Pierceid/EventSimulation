@@ -4,7 +4,7 @@ using EventSimulation.Structures.Objects;
 
 namespace EventSimulation.Structures.Events {
     public class PaintingStartEvent : Event {
-        public PaintingStartEvent(EventSimulationCore simulationCore, double time) : base(simulationCore, time, 5) {
+        public PaintingStartEvent(EventSimulationCore simulationCore, double time) : base(simulationCore, time, 6) {
         }
 
         public override void Execute() {
@@ -42,7 +42,7 @@ namespace EventSimulation.Structures.Events {
                     break;
             }
 
-            SimulationCore.EventCalendar.AddEvent(new PaintingEndEvent(SimulationCore, Time + paintingTime, worker));
+            SimulationCore.EventCalendar.Enqueue(new PaintingEndEvent(SimulationCore, Time + paintingTime, worker), Time + paintingTime);
         }
     }
 }

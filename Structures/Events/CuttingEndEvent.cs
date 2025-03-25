@@ -6,13 +6,13 @@ namespace EventSimulation.Structures.Events {
     public class CuttingEndEvent : Event {
         public Worker Worker { get; set; }
 
-        public CuttingEndEvent(EventSimulationCore simulationCore, double time, Worker worker) : base(simulationCore, time, 2) {
+        public CuttingEndEvent(EventSimulationCore simulationCore, double time, Worker worker) : base(simulationCore, time, 3) {
             Worker = worker;
         }
 
         public override void Execute() {
             if (SimulationCore.Workshop.QueueA.Count > 0) {
-                SimulationCore.EventCalendar.AddEvent(new CuttingStartEvent(SimulationCore, Time));
+                SimulationCore.EventCalendar.Enqueue(new CuttingStartEvent(SimulationCore, Time), Time);
             }
 
             var movingTime = SimulationCore.Generators.WorkerMoveBetweenStationsTime.Next();
@@ -27,7 +27,7 @@ namespace EventSimulation.Structures.Events {
             Worker.FinishTask();
 
             SimulationCore.Workshop.ProcessOrders();
-            SimulationCore.EventCalendar.AddEvent(new AssemblyStartEvent(SimulationCore, Time + movingTime));
+            SimulationCore.EventCalendar.Enqueue(new PaintingStartEvent(SimulationCore, Time + movingTime), Time + movingTime);
         }
     }
 }
