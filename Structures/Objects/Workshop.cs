@@ -12,18 +12,31 @@ namespace EventSimulation.Structures.Objects {
         public Queue<Order> QueueB { get; set; }
         public Queue<Order> QueueC { get; set; }
 
-        public Workshop(EventSimulationCore core, int numA = 10, int numB = 10, int numC = 10) {
+        public Workshop(EventSimulationCore core, int workersA, int workersB, int workersC) {
             simulationCore = core;
-            WorkersA = new Worker[numA];
-            WorkersB = new Worker[numB];
-            WorkersC = new Worker[numC];
+
+            WorkersA = new Worker[workersA];
+            WorkersB = new Worker[workersB];
+            WorkersC = new Worker[workersC];
             QueueA = new();
             QueueB = new();
             QueueC = new();
 
-            for (int i = 0; i < numA; i++) WorkersA[i] = new Worker(i, WorkerGroup.A);
-            for (int i = 0; i < numB; i++) WorkersB[i] = new Worker(i + numA, WorkerGroup.B);
-            for (int i = 0; i < numC; i++) WorkersC[i] = new Worker(i + numA + numB, WorkerGroup.C);
+            InitComponents(workersA, workersB, workersC);
+        }
+
+        public void InitComponents(int workersA, int workersB, int workersC) {
+            if (QueueA.Count != 0) QueueA.Clear();
+            if (QueueB.Count != 0) QueueB.Clear();
+            if (QueueC.Count != 0) QueueC.Clear();
+
+            if (WorkersA.Length != workersA) WorkersA = new Worker[workersA];
+            if (WorkersB.Length != workersB) WorkersB = new Worker[workersB];
+            if (WorkersC.Length != workersC) WorkersC = new Worker[workersC];
+
+            for (int i = 0; i < workersA; i++) WorkersA[i] = new Worker(i, WorkerGroup.A);
+            for (int i = 0; i < workersB; i++) WorkersB[i] = new Worker(i + workersA, WorkerGroup.B);
+            for (int i = 0; i < workersC; i++) WorkersC[i] = new Worker(i + workersA + workersB, WorkerGroup.C);
         }
 
         public void AddOrder(Order order) {

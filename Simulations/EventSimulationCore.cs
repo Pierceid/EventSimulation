@@ -19,7 +19,7 @@ namespace EventSimulation.Simulations {
         public double EndOfSimulationTime { get; set; }
 
         protected EventSimulationCore(int replicationStock, double endOfSimulationTime) : base(replicationStock) {
-            this.Workshop = new(this);
+            this.Workshop = new(this, 10, 10, 10);
             this.EventCalendar = new();
             this.Generators = new();
             this.UpdateInterval = 5;

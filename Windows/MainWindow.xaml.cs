@@ -42,13 +42,20 @@ public partial class MainWindow : Window {
 
     private void InitCarpentry() {
         if (!int.TryParse(txtReplications.Text, out int replications)) replications = 0;
+        if (!int.TryParse(txtWorkersA.Text, out int workersA)) workersA = 0;
+        if (!int.TryParse(txtWorkersB.Text, out int workersB)) workersB = 0;
+        if (!int.TryParse(txtWorkersC.Text, out int workersC)) workersC = 0;
 
-        facade?.InitCarpentry(replications, sldSpeed.Value);
+        facade?.InitCarpentry(replications, sldSpeed.Value, workersA, workersB, workersC);
     }
 
     private void InitUI() {
         txtReplications.Text = "1000000";
         sldSpeed.Value = 1.0;
+        txtWorkersA.Text = "10";
+        txtWorkersB.Text = "15";
+        txtWorkersC.Text = "20";
+        txtTime.Text = "0.0";
 
         InitCarpentry();
     }

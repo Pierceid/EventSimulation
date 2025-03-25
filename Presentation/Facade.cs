@@ -69,12 +69,13 @@ namespace EventSimulation.Presentation {
             InitObservers();
         }
 
-        public void InitCarpentry(int replications, double speed) {
+        public void InitCarpentry(int replications, double speed, int workersA, int workersB, int workersC) {
             if (isRunning) {
                 StopSimulation();
             }
 
-            carpentry = new Carpentry(replications, replicationTime) { Speed = speed };
+            carpentry = new(replications, replicationTime) { Speed = speed };
+            carpentry.Workshop.InitComponents(workersA, workersB, workersC);
 
             InitObservers();
         }

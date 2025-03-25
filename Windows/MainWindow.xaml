@@ -6,11 +6,11 @@
         xmlns:local="clr-namespace:EventSimulation.Windows"
         xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d"
-        Title="Discrete Simulation" Height="680" Width="900" WindowStartupLocation="CenterScreen">
+        Title="Discrete Simulation" Height="720" Width="900" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="3.6*"/>
         </Grid.ColumnDefinitions>
 
         <!-- Left Column: Controls -->
@@ -26,10 +26,12 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
+
                     <Button x:Name="btnStart" Grid.Row="0" Content="Start" Height="24" Click="ButtonClick" Margin="2"/>
                     <Button x:Name="btnPause" Grid.Row="1" Content="Pause" Height="24" Click="ButtonClick" Margin="2"/>
                     <Button x:Name="btnStop" Grid.Row="2" Content="Stop" Height="24" Click="ButtonClick" Margin="2"/>
                     <Button x:Name="btnAnalyze" Grid.Row="3" Content="Analyze" Height="24" Click="ButtonClick" Margin="2"/>
+
                     <Grid Grid.Row="4" Margin="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -38,6 +40,7 @@
                         <Label Content="Replications:" VerticalAlignment="Center" Margin="0,0,2,0"/>
                         <TextBox x:Name="txtReplications" Grid.Column="1" Height="20" LostFocus="TextBoxLostFocus"/>
                     </Grid>
+
                     <Grid Grid.Row="5" Margin="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -51,17 +54,50 @@
 
             <GroupBox Header="Simulation Status" Margin="2" BorderBrush="DarkRed" Foreground="DarkRed">
                 <StackPanel>
-                    <Label Content="Time:"/>
-                    <TextBlock x:Name="txtSimulationTime" FontWeight="Bold"/>
+                    <Grid Margin="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Workers A:" VerticalAlignment="Center" Margin="0,0,2,0"/>
+                        <TextBox x:Name="txtWorkersA" Grid.Column="1" Height="20"/>
+                    </Grid>
 
-                    <Label Content="Order States:"/>
-                    <ListBox x:Name="lstOrderStates" Height="100"/>
+                    <Grid Margin="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Workers B:" VerticalAlignment="Center" Margin="0,0,2,0"/>
+                        <TextBox x:Name="txtWorkersB" Grid.Column="1" Height="20"/>
+                    </Grid>
 
-                    <Label Content="Worker States:"/>
-                    <ListBox x:Name="lstWorkerStates" Height="100"/>
+                    <Grid Margin="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Workers C:" VerticalAlignment="Center" Margin="0,0,2,0"/>
+                        <TextBox x:Name="txtWorkersC" Grid.Column="1" Height="20"/>
+                    </Grid>
 
-                    <Label Content="Workstations Activity:"/>
-                    <ListBox x:Name="lstWorkstationActivities" Height="100"/>
+                    <Grid Margin="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Time:" Margin="0,0,2,0"/>
+                        <TextBlock x:Name="txtTime" Grid.Column="1" FontWeight="Bold" VerticalAlignment="Center" Foreground="Black"/>
+                    </Grid>
+                    
+                    <Label Content="Order States:" Margin="0,0,2,0"/>
+                    <ListBox x:Name="lstOrderStates" Height="80" Margin="2"/>
+
+                    <Label Content="Worker States:" Margin="0,0,2,0"/>
+                    <ListBox x:Name="lstWorkerStates" Height="80" Margin="2"/>
+
+                    <Label Content="Workstations Activity:" Margin="0,0,2,0"/>
+                    <ListBox x:Name="lstWorkstationActivities" Height="80" Margin="2"/>
                 </StackPanel>
             </GroupBox>
         </StackPanel>
