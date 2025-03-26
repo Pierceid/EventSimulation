@@ -1,8 +1,9 @@
-﻿using EventSimulation.Flyweight;
-using EventSimulation.Generators;
+﻿using EventSimulation.Generators;
 using EventSimulation.Observer;
 using EventSimulation.Structures.Events;
 using EventSimulation.Structures.Objects;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace EventSimulation.Simulations {
     public abstract class EventSimulationCore : SimulationCore, ISubject {
@@ -10,10 +11,7 @@ namespace EventSimulation.Simulations {
         public Workshop Workshop { get; set; }
         public PriorityQueue<Event, double> EventCalendar { get; set; }
         public RandomGenerators Generators { get; set; }
-        public int UpdateInterval { get; set; }
         public bool IsPaused { get; set; }
-        public bool IsSlowed { get; set; }
-        public bool IsGeneratedSystemEvent { get; set; }
         public double Speed { get; set; }
         public double SimulationTime { get; set; }
         public double EndOfSimulationTime { get; set; }
@@ -22,49 +20,28 @@ namespace EventSimulation.Simulations {
             this.Workshop = new(this, 10, 10, 10);
             this.EventCalendar = new();
             this.Generators = new();
-            this.UpdateInterval = 5;
             this.IsPaused = false;
-            this.IsSlowed = false;
-            this.IsGeneratedSystemEvent = false;
             this.Speed = 1.0;
             this.SimulationTime = 0.0;
             this.EndOfSimulationTime = endOfSimulationTime;
         }
 
         public override void Experiment() {
-            while (this.SimulationTime < this.EndOfSimulationTime && this.isRunning) {
-                var nextEvent = this.EventCalendar.Dequeue();
-
-                if (nextEvent == null) continue;
-
-                this.SimulationTime = nextEvent.Time;
-
-                nextEvent.Execute();
-
-                if (this.IsSlowed) {
-                    Tick();
-                }
-
-                if (this.IsSlowed && !this.IsGeneratedSystemEvent) {
-                    this.IsGeneratedSystemEvent = true;
-                    var adjustedTime = this.SimulationTime + (this.Speed / this.UpdateInterval);
-                    var systemEvent = SystemEventFactory.GetInstance().GetEvent(this, adjustedTime);
-                    this.EventCalendar.Enqueue(systemEvent, adjustedTime);
-                } else if (!this.IsSlowed && this.IsGeneratedSystemEvent) {
-                    this.IsGeneratedSystemEvent = false;
-                }
-
-                if (this.IsPaused) {
-                    Tick();
-                    Notify();
-
+            try {
+                while (this.SimulationTime < this.EndOfSimulationTime && this.EventCalendar.Count > 0 && this.isRunning) {
                     while (this.IsPaused) {
                         Thread.Sleep(200);
                     }
-                }
-            }
 
-            this.IsGeneratedSystemEvent = false;
+                    if (this.EventCalendar.TryDequeue(out var nextEvent, out var priority)) {
+                        this.SimulationTime = priority;
+                        nextEvent.Execute();
+                    }
+                }
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+                throw;
+            }
         }
 
         public void Attach(IObserver observer) {
@@ -78,11 +55,11 @@ namespace EventSimulation.Simulations {
         }
 
         public void Notify() {
-            foreach (var observer in observers) {
-                observer.Refresh(this);
-            }
+            Application.Current.Dispatcher.Invoke(() => {
+                foreach (var observer in observers) {
+                    observer.Refresh(this);
+                }
+            }, DispatcherPriority.Background);
         }
-
-        public virtual void Tick() { }
     }
 }

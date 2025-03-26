@@ -14,12 +14,11 @@ namespace EventSimulation.Structures.Events {
             ProductType type = (rng < 0.15) ? ProductType.Chair : (rng < 0.65) ? ProductType.Table : ProductType.Wardrobe;
 
             SimulationCore.Workshop.AddOrder(new Order(type, Time));
+            SimulationCore.EventCalendar.Enqueue(new CuttingStartEvent(SimulationCore, Time), Time);
 
             if (SimulationCore.Workshop.QueueA.Count > 0) {
-                SimulationCore.EventCalendar.Enqueue(new CuttingStartEvent(SimulationCore, Time), Time);
+                SimulationCore.EventCalendar.Enqueue(new OrderStartEvent(SimulationCore, Time + orderingTime), Time);
             }
-
-            SimulationCore.EventCalendar.Enqueue(new OrderStartEvent(SimulationCore, Time + orderingTime), Time);
         }
     }
 }

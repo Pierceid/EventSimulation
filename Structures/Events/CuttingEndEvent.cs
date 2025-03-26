@@ -24,10 +24,10 @@ namespace EventSimulation.Structures.Events {
                 SimulationCore.Workshop.QueueC.Enqueue(Worker.CurrentOrder);
             }
 
+            Time += movingTime;
             Worker.FinishTask();
-
             SimulationCore.Workshop.ProcessOrders();
-            SimulationCore.EventCalendar.Enqueue(new PaintingStartEvent(SimulationCore, Time + movingTime), Time + movingTime);
+            SimulationCore.EventCalendar.Enqueue(new PaintingStartEvent(SimulationCore, Time), Time);
         }
     }
 }

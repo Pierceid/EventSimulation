@@ -1,4 +1,5 @@
 ﻿using EventSimulation.Presentation;
+using EventSimulation.Utilities;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -21,11 +22,13 @@ public partial class MainWindow : Window {
             if (button == btnStart) {
                 facade?.StartSimulation();
                 btnStart.IsEnabled = false;
+            } else if (button == btnPause) {
+                bool isPaused = facade?.PauseSimulation() ?? false;
+                btnStart.IsEnabled = !isPaused;
+                btnStop.IsEnabled = !isPaused;
             } else if (button == btnStop) {
                 facade?.StopSimulation();
                 btnStart.IsEnabled = true;
-            } else if (button == btnPause) {
-                facade?.PauseSimulation();
             } else if (button == btnAnalyze) {
                 facade?.AnalyzeReplication();
             }
@@ -52,11 +55,11 @@ public partial class MainWindow : Window {
 
     private void InitUI() {
         txtReplications.Text = "1000000";
-        sldSpeed.Value = 1.0;
+        sldSpeed.Value = 10.0;
         txtWorkersA.Text = "10";
         txtWorkersB.Text = "15";
         txtWorkersC.Text = "20";
-        txtTime.Text = "00:00:00";
+        txtTime.Text = Utility.FormatTime(0);
 
         InitCarpentry();
     }

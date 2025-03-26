@@ -22,7 +22,7 @@ namespace EventSimulation.Generators {
         public UniformC RNG = new(0, 1);
 
         // Exponential distributions
-        public Exponential OrderArrivalTime = new(1800);
+        public Exponential OrderArrivalTime = new(180);
 
         // Empirical distributions
         public EmpiricC TableCuttingTime = new(tableCuttingData);

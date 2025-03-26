@@ -15,7 +15,9 @@ namespace EventSimulation.Simulations {
         }
 
         public override void BeforeSimulationRun() {
-            this.EventCalendar.Enqueue(new OrderStartEvent(this, 0), 0);
+            SimulationTime = 0.0;
+            EventCalendar.Enqueue(new SystemEvent(this, SimulationTime), SimulationTime);
+            EventCalendar.Enqueue(new OrderStartEvent(this, SimulationTime), SimulationTime);
         }
     }
 }

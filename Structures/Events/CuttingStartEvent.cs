@@ -48,7 +48,9 @@ namespace EventSimulation.Structures.Events {
                     break;
             }
 
-            SimulationCore.EventCalendar.Enqueue(new CuttingEndEvent(SimulationCore, Time + cuttingTime, worker), Time + cuttingTime);
+            Time += cuttingTime;
+
+            SimulationCore.EventCalendar.Enqueue(new CuttingEndEvent(SimulationCore, Time, worker), Time);
         }
     }
 }

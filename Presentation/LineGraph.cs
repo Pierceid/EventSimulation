@@ -33,7 +33,7 @@ namespace EventSimulation.Presentation {
                 FontWeight = FontWeights.Bold,
                 TextHorizontalAlignment = HorizontalAlignment.Right,
                 TextVerticalAlignment = VerticalAlignment.Top,
-                TextPosition =  new DataPoint(0, 0)
+                TextPosition = new DataPoint(0, 0)
             };
             model.Annotations.Add(valueAnnotation);
 
@@ -43,14 +43,11 @@ namespace EventSimulation.Presentation {
 
         public void UpdatePlot(double xValue, double yValue) {
             series.Points.Add(new DataPoint(xValue, yValue));
-
             xAxis.Maximum = xValue;
             yAxis.Minimum = series.MinY;
             yAxis.Maximum = series.MaxY;
-
             valueAnnotation.Text = $"{yValue:F0}";
             valueAnnotation.TextPosition = new DataPoint(xAxis.Maximum * 0.99, yAxis.Maximum);
-
             model.InvalidatePlot(true);
         }
 
