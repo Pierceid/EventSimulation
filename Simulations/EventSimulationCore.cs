@@ -14,6 +14,7 @@ namespace EventSimulation.Simulations {
         public bool IsPaused { get; set; }
         public double Speed { get; set; }
         public double SimulationTime { get; set; }
+        public double UpdateTime { get; set; }
         public double EndOfSimulationTime { get; set; }
 
         protected EventSimulationCore(int replicationStock, double endOfSimulationTime) : base(replicationStock) {
@@ -23,6 +24,7 @@ namespace EventSimulation.Simulations {
             this.IsPaused = false;
             this.Speed = 1.0;
             this.SimulationTime = 0.0;
+            this.UpdateTime = 1000.0 / 39.1;
             this.EndOfSimulationTime = endOfSimulationTime;
         }
 

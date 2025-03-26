@@ -47,7 +47,7 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Label Name="lblSpeed" Content="Speed: 1" VerticalAlignment="Center" Margin="0,0,2,0"/>
-                        <Slider x:Name="sldSpeed" Grid.Column="1" Minimum="1" Maximum="1000" Margin="2" TickFrequency="1" IsSnapToTickEnabled="True" ValueChanged="SliderValueChanged"/>
+                        <Slider x:Name="sldSpeed" Grid.Column="1" Minimum="1" Maximum="36000" Margin="2" TickFrequency="1" IsSnapToTickEnabled="True" ValueChanged="SliderValueChanged"/>
                     </Grid>
 
                     <StackPanel Margin="2" Grid.Row="6">
