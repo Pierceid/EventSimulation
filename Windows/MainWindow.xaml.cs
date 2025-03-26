@@ -35,6 +35,15 @@ public partial class MainWindow : Window {
         }
     }
 
+    private void SliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
+        if (sender is Slider slider) {
+            if (slider == sldSpeed) {
+                facade?.UpdateCarpentry(sldSpeed.Value);
+                lblSpeed.Content = $"Speed: {sldSpeed.Value:0}x";
+            }
+        }
+    }
+
     private void InitCarpentry() {
         if (!int.TryParse(txtReplications.Text, out int replications)) replications = 0;
         if (!int.TryParse(txtWorkersA.Text, out int workersA)) workersA = 0;
@@ -54,14 +63,5 @@ public partial class MainWindow : Window {
         txtTime.Text = "00:00:00";
 
         InitCarpentry();
-    }
-
-    private void SliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
-        if (sender is Slider slider) {
-            if (slider == sldSpeed) {
-                facade?.UpdateCarpentry(sldSpeed.Value);
-                lblSpeed.Content = $"Speed: {sldSpeed.Value:0}x";
-            }
-        }
     }
 }
