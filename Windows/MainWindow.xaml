@@ -38,7 +38,7 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Replications:" VerticalAlignment="Center" Margin="0,0,2,0"/>
-                        <TextBox x:Name="txtReplications" Grid.Column="1" Height="20" LostFocus="TextBoxLostFocus"/>
+                        <TextBox x:Name="txtReplications" Grid.Column="1" Height="20"/>
                     </Grid>
 
                     <Grid Grid.Row="5" Margin="2">

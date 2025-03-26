@@ -19,6 +19,7 @@ public partial class MainWindow : Window {
     private void ButtonClick(object sender, RoutedEventArgs e) {
         if (sender is Button button) {
             if (button == btnStart) {
+                InitCarpentry();
                 facade?.StartSimulation();
                 btnStart.IsEnabled = false;
             } else if (button == btnPause) {
@@ -30,14 +31,6 @@ public partial class MainWindow : Window {
                 btnStart.IsEnabled = true;
             } else if (button == btnAnalyze) {
                 facade?.AnalyzeReplication();
-            }
-        }
-    }
-
-    private void TextBoxLostFocus(object sender, RoutedEventArgs e) {
-        if (sender is TextBox textBox) {
-            if (textBox == txtReplications) {
-                InitCarpentry();
             }
         }
     }
