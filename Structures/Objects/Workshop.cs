@@ -12,7 +12,7 @@ namespace EventSimulation.Structures.Objects {
         public Queue<Order> QueueB { get; set; }
         public Queue<Order> QueueC { get; set; }
 
-        public Workshop(EventSimulationCore core, int workersA, int workersB, int workersC) {
+        public Workshop(EventSimulationCore core, int workersA = 0, int workersB = 0, int workersC = 0) {
             simulationCore = core;
 
             WorkersA = new Worker[workersA];

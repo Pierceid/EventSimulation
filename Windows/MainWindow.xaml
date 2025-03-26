@@ -108,8 +108,8 @@
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="5*"/>
                     </Grid.ColumnDefinitions>
 
                     <Label Content="Order States:" Margin="0,0,2,0"/>
@@ -129,7 +129,7 @@
                             <DataGridTextColumn Header="Group" Binding="{Binding Group}" Width="*"/>
                             <DataGridCheckBoxColumn Header="Is Busy" Binding="{Binding IsBusy}" Width="*"/>
                             <DataGridTextColumn Header="Order" Binding="{Binding CurrentOrder.Id}" Width="*"/>
-                            <DataGridTextColumn Header="Place" Binding="{Binding CurrentPlace}" Width="2*"/>
+                            <DataGridTextColumn Header="Place" Binding="{Binding CurrentPlace}" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
