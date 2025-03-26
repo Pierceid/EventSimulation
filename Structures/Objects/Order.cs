@@ -3,7 +3,7 @@ using EventSimulation.Utilities;
 
 namespace EventSimulation.Structures.Objects {
     public class Order {
-        public static int Id { get; set; }
+        public static int Id { get; set; } = 0;
         public ProductType Type { get; set; }
         public double ArrivalTime { get; set; } 
         public string FormattedTime { get; set; } 

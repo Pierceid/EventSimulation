@@ -25,12 +25,14 @@ namespace EventSimulation.Structures.Events {
                 if (Worker.CurrentOrder.Type == ProductType.Wardrobe) {
                     movingTime += SimulationCore.Generators.WorkerMoveBetweenStationsTime.Next();
 
+                    Time += movingTime;
+
                     Worker.CurrentPlace = Place.PaintingAndMounting;
 
                     SimulationCore.Workshop.QueueC.Enqueue(Worker.CurrentOrder);
-                    SimulationCore.EventCalendar.Enqueue(new MountingStartEvent(SimulationCore, Time + movingTime), Time + movingTime);
+                    SimulationCore.EventCalendar.Enqueue(new MountingStartEvent(SimulationCore, Time), Time);
                 } else {
-                    SimulationCore.EventCalendar.Enqueue(new OrderEndEvent(SimulationCore, Time + movingTime), Time + movingTime);
+                    SimulationCore.EventCalendar.Enqueue(new OrderEndEvent(SimulationCore, Time), Time);
                 }
             }
 

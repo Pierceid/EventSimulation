@@ -42,6 +42,8 @@ public class AssemblyStartEvent : Event {
                 break;
         }
 
-        SimulationCore.EventCalendar.Enqueue(new AssemblyEndEvent(SimulationCore, Time + assemblyTime, order, worker), Time + assemblyTime);
+        Time += assemblyTime;
+
+        SimulationCore.EventCalendar.Enqueue(new AssemblyEndEvent(SimulationCore, Time, order, worker), Time);
     }
 }

@@ -9,16 +9,19 @@ namespace EventSimulation.Structures.Events {
         }
 
         public override void Execute() {
+            if (SimulationCore.Workshop.QueueA.Count > 0) {
+                SimulationCore.EventCalendar.Enqueue(new CuttingStartEvent(SimulationCore, Time), Time);
+            }
+
             double orderingTime = SimulationCore.Generators.OrderArrivalTime.Next();
             double rng = SimulationCore.Generators.RNG.Next();
             ProductType type = (rng < 0.15) ? ProductType.Chair : (rng < 0.65) ? ProductType.Table : ProductType.Wardrobe;
 
-            SimulationCore.Workshop.AddOrder(new Order(type, Time));
-            SimulationCore.EventCalendar.Enqueue(new CuttingStartEvent(SimulationCore, Time), Time);
+            SimulationCore.Workshop.QueueA.Enqueue(new Order(type, Time));
 
-            if (SimulationCore.Workshop.QueueA.Count > 0) {
-                SimulationCore.EventCalendar.Enqueue(new OrderStartEvent(SimulationCore, Time + orderingTime), Time);
-            }
+            Time += orderingTime;
+
+            SimulationCore.EventCalendar.Enqueue(new OrderStartEvent(SimulationCore, Time), Time);
         }
     }
 }

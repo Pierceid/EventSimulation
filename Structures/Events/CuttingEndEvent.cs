@@ -25,9 +25,13 @@ namespace EventSimulation.Structures.Events {
             }
 
             Time += movingTime;
+
             Worker.FinishTask();
             SimulationCore.Workshop.ProcessOrders();
-            SimulationCore.EventCalendar.Enqueue(new PaintingStartEvent(SimulationCore, Time), Time);
+
+            if (SimulationCore.Workshop.QueueC.Count > 0) {
+                SimulationCore.EventCalendar.Enqueue(new PaintingStartEvent(SimulationCore, Time), Time);
+            }
         }
     }
 }

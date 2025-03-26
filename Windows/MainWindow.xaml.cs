@@ -56,9 +56,9 @@ public partial class MainWindow : Window {
     private void InitUI() {
         txtReplications.Text = "1000000";
         sldSpeed.Value = 10.0;
-        txtWorkersA.Text = "10";
-        txtWorkersB.Text = "15";
-        txtWorkersC.Text = "20";
+        txtWorkersA.Text = "5";
+        txtWorkersB.Text = "5";
+        txtWorkersC.Text = "5";
         txtTime.Text = Utility.FormatTime(0);
 
         InitCarpentry();
