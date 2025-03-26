@@ -13,7 +13,7 @@ namespace EventSimulation.Structures.Events {
 
             if (worker == null) return;
 
-            Order order = SimulationCore.Workshop.QueueA.Dequeue();
+            if (!SimulationCore.Workshop.QueueA.TryDequeue(out var order)) return;
 
             worker.StartTask(order);
 
@@ -21,15 +21,15 @@ namespace EventSimulation.Structures.Events {
 
             if (worker.CurrentPlace == null) {
                 cuttingTime += SimulationCore.Generators.WorkerMoveToStorageTime.Next();
-                worker.CurrentPlace = Place.Cutting;
+                worker.CurrentPlace = Place.WorkplaceA;
             }
 
-            if (worker.CurrentPlace != Place.Cutting) {
+            if (worker.CurrentPlace != Place.WorkplaceA) {
                 cuttingTime += SimulationCore.Generators.WorkerMoveBetweenStationsTime.Next();
-                worker.CurrentPlace = Place.Cutting;
+                worker.CurrentPlace = Place.WorkplaceA;
             }
 
-            if (worker.CurrentPlace == Place.Cutting) {
+            if (worker.CurrentPlace == Place.WorkplaceA) {
                 cuttingTime += SimulationCore.Generators.WorkerMoveToStorageTime.Next();
                 cuttingTime += SimulationCore.Generators.WorkerMoveToStorageTime.Next();
             }

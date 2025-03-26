@@ -44,6 +44,14 @@ namespace EventSimulation.Simulations {
             }
         }
 
+        public void Pause() {
+            this.IsPaused = true;
+        }
+
+        public void Resume() {
+            this.IsPaused = false;
+        }
+
         public void Attach(IObserver observer) {
             if (!observers.Contains(observer)) {
                 observers.Add(observer);

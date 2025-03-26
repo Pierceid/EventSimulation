@@ -12,7 +12,7 @@ namespace EventSimulation.Structures.Events {
 
             if (worker == null) return;
 
-            Order order = SimulationCore.Workshop.QueueC.Dequeue();
+            if (!SimulationCore.Workshop.QueueC.TryDequeue(out var order)) return;
 
             if (order.Type != ProductType.Wardrobe) return;
 
@@ -22,12 +22,12 @@ namespace EventSimulation.Structures.Events {
 
             if (worker.CurrentPlace == null) {
                 mountingTime += SimulationCore.Generators.WorkerMoveToStorageTime.Next();
-                worker.CurrentPlace = Place.PaintingAndMounting;
+                worker.CurrentPlace = Place.WorkplaceC;
             }
 
-            if (worker.CurrentPlace != Place.PaintingAndMounting) {
+            if (worker.CurrentPlace != Place.WorkplaceC) {
                 mountingTime += SimulationCore.Generators.WorkerMoveBetweenStationsTime.Next();
-                worker.CurrentPlace = Place.PaintingAndMounting;
+                worker.CurrentPlace = Place.WorkplaceC;
             }
 
             mountingTime += SimulationCore.Generators.WardrobeMountingTime.Next();

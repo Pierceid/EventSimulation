@@ -1,12 +1,42 @@
 ﻿using EventSimulation.Structures.Enums;
+using System.ComponentModel;
 
 namespace EventSimulation.Structures.Objects {
-    public class Worker {
+    public class Worker : INotifyPropertyChanged {
         public int Id { get; set; }
         public WorkerGroup Group { get; set; }
-        public bool IsBusy { get; set; }
-        public Order? CurrentOrder { get; set; }
-        public Place? CurrentPlace { get; set; }
+        private bool isBusy;
+        public bool IsBusy {
+            get => isBusy;
+            set {
+                if (isBusy != value) {
+                    isBusy = value;
+                    OnPropertyChanged(nameof(IsBusy));
+                }
+            }
+        }
+
+        private Order? currentOrder;
+        public Order? CurrentOrder {
+            get => currentOrder;
+            set {
+                if (currentOrder != value) {
+                    currentOrder = value;
+                    OnPropertyChanged(nameof(CurrentOrder));
+                }
+            }
+        }
+
+        private Place? currentPlace;
+        public Place? CurrentPlace {
+            get => currentPlace;
+            set {
+                if (currentPlace != value) {
+                    currentPlace = value;
+                    OnPropertyChanged(nameof(CurrentPlace));
+                }
+            }
+        }
 
         public Worker(int id, WorkerGroup group) {
             Id = id;
@@ -24,6 +54,11 @@ namespace EventSimulation.Structures.Objects {
         public void FinishTask() {
             IsBusy = false;
             CurrentOrder = null;
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged(string propertyName) {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

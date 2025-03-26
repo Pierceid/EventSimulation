@@ -12,7 +12,7 @@ public class AssemblyStartEvent : Event {
 
         if (worker == null) return;
 
-        Order order = SimulationCore.Workshop.QueueB.Dequeue();
+        if (!SimulationCore.Workshop.QueueB.TryDequeue(out var order)) return;
 
         worker.StartTask(order);
 
@@ -20,12 +20,12 @@ public class AssemblyStartEvent : Event {
 
         if (worker.CurrentPlace == null) {
             assemblyTime += SimulationCore.Generators.WorkerMoveToStorageTime.Next();
-            worker.CurrentPlace = Place.Assembling;
+            worker.CurrentPlace = Place.WorkplaceB;
         }
 
-        if (worker.CurrentPlace != Place.Assembling) {
+        if (worker.CurrentPlace != Place.WorkplaceB) {
             assemblyTime += SimulationCore.Generators.WorkerMoveBetweenStationsTime.Next();
-            worker.CurrentPlace = Place.Assembling;
+            worker.CurrentPlace = Place.WorkplaceB;
         }
 
         switch (order.Type) {

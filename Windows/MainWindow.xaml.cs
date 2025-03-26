@@ -1,5 +1,4 @@
 ﻿using EventSimulation.Presentation;
-using EventSimulation.Utilities;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -55,11 +54,11 @@ public partial class MainWindow : Window {
 
     private void InitUI() {
         txtReplications.Text = "1000000";
-        sldSpeed.Value = 10.0;
-        txtWorkersA.Text = "5";
-        txtWorkersB.Text = "5";
-        txtWorkersC.Text = "5";
-        txtTime.Text = Utility.FormatTime(0);
+        sldSpeed.Value = 100.0;
+        txtWorkersA.Text = "3";
+        txtWorkersB.Text = "3";
+        txtWorkersC.Text = "6";
+        txtTime.Text = "00:00:00";
 
         InitCarpentry();
     }

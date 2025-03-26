@@ -12,7 +12,7 @@ namespace EventSimulation.Structures.Events {
 
             if (worker == null) return;
 
-            Order order = SimulationCore.Workshop.QueueC.Dequeue();
+            if (!SimulationCore.Workshop.QueueC.TryDequeue(out var order)) return;
 
             worker.StartTask(order);
 
@@ -20,12 +20,12 @@ namespace EventSimulation.Structures.Events {
 
             if (worker.CurrentPlace == null) {
                 paintingTime += SimulationCore.Generators.WorkerMoveToStorageTime.Next();
-                worker.CurrentPlace = Place.PaintingAndMounting;
+                worker.CurrentPlace = Place.WorkplaceC;
             }
 
-            if (worker.CurrentPlace != Place.PaintingAndMounting) {
+            if (worker.CurrentPlace != Place.WorkplaceC) {
                 paintingTime += SimulationCore.Generators.WorkerMoveBetweenStationsTime.Next();
-                worker.CurrentPlace = Place.PaintingAndMounting;
+                worker.CurrentPlace = Place.WorkplaceC;
             }
 
             switch (order.Type) {
@@ -42,7 +42,9 @@ namespace EventSimulation.Structures.Events {
                     break;
             }
 
-            SimulationCore.EventCalendar.Enqueue(new PaintingEndEvent(SimulationCore, Time + paintingTime, worker), Time + paintingTime);
+            Time += paintingTime;
+
+            SimulationCore.EventCalendar.Enqueue(new PaintingEndEvent(SimulationCore, Time, worker), Time);
         }
     }
 }

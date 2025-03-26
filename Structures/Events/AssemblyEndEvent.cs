@@ -27,7 +27,7 @@ namespace EventSimulation.Structures.Events {
 
                     Time += movingTime;
 
-                    Worker.CurrentPlace = Place.PaintingAndMounting;
+                    Worker.CurrentPlace = Place.WorkplaceC;
 
                     SimulationCore.Workshop.QueueC.Enqueue(Worker.CurrentOrder);
                     SimulationCore.EventCalendar.Enqueue(new MountingStartEvent(SimulationCore, Time), Time);

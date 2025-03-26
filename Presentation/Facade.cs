@@ -26,7 +26,8 @@ namespace EventSimulation.Presentation {
             if (carpentry == null || graph == null || isRunning) return;
 
             isRunning = true;
-            carpentry.IsPaused = false;
+            carpentry.Resume();
+            carpentry.Workshop.Clear();
             graph.RefreshGraph();
 
             simulationThread = new(carpentry.RunSimulation) { IsBackground = true };
@@ -45,7 +46,7 @@ namespace EventSimulation.Presentation {
             if (carpentry == null || graph == null || !isRunning) return;
 
             isRunning = false;
-            carpentry.IsPaused = true;
+            carpentry.Pause();
             carpentry.Stop();
 
             simulationThread?.Join();

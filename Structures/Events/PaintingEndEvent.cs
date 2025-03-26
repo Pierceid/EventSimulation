@@ -17,7 +17,7 @@ namespace EventSimulation.Structures.Events {
 
             var movingTime = SimulationCore.Generators.WorkerMoveBetweenStationsTime.Next();
 
-            Worker.CurrentPlace = Place.Assembling;
+            Worker.CurrentPlace = Place.WorkplaceB;
 
             if (Worker.CurrentOrder != null) {
                 Worker.CurrentOrder.State = ProductState.Painted;
