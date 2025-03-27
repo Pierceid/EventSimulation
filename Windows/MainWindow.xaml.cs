@@ -38,8 +38,7 @@ public partial class MainWindow : Window {
     private void SliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
         if (sender is Slider slider) {
             if (slider == sldSpeed) {
-                facade?.UpdateCarpentry(sldSpeed.Value);
-                lblSpeed.Content = $"Speed: {sldSpeed.Value:0}x";
+                UpdateCarpentry();
             }
         }
     }
@@ -52,11 +51,22 @@ public partial class MainWindow : Window {
 
         facade?.InitCarpentry(replications, sldSpeed.Value, workersA, workersB, workersC);
         facade?.InitObservers(txtTime, dgOrders, dgWorkers);
+
+        UpdateCarpentry();
+    }
+
+    private void UpdateCarpentry() {
+        double[] snapValues = [1, 60, 3600, 36000, 360000];
+        int index = (int)(sldSpeed.Value - 1);
+        double speed = snapValues[index];
+
+        facade?.UpdateCarpentry(speed);
+        lblSpeed.Content = $"Speed: {speed:0}x";
     }
 
     private void InitUI() {
         txtReplications.Text = "1000000";
-        sldSpeed.Value = 100.0;
+        sldSpeed.Value = 3;
         txtWorkersA.Text = "3";
         txtWorkersB.Text = "3";
         txtWorkersC.Text = "6";
