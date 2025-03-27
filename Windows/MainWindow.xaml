@@ -51,7 +51,7 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Label Name="lblSpeed" Content="Speed: 1" VerticalAlignment="Center" Margin="0,0,2,0"/>
+                        <Label Name="lblSpeed" Content="Speed:" VerticalAlignment="Center" Margin="0,0,2,0"/>
                         <Slider x:Name="sldSpeed" Grid.Column="1" Minimum="1" Maximum="5" IsSnapToTickEnabled="True" Margin="2" ValueChanged="SliderValueChanged"/>
                     </Grid>
 
@@ -111,7 +111,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Content="Order States:"/>
-                <DataGrid x:Name="dgOrders" Grid.Row="1" Margin="2" AutoGenerateColumns="False" HeadersVisibility="Column" IsReadOnly="True">
+                <DataGrid x:Name="dgOrders" Grid.Row="1" Margin="2" AutoGenerateColumns="False" MinColumnWidth="50" HeadersVisibility="Column" IsReadOnly="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="*"/>
                         <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="*"/>
@@ -121,7 +121,7 @@
                 </DataGrid>
 
                 <Label Content="Worker States:" Grid.Column="1"/>
-                <DataGrid x:Name="dgWorkers" Grid.Row="1" Grid.Column="1" Margin="2" AutoGenerateColumns="False" HeadersVisibility="Column" IsReadOnly="True">
+                <DataGrid x:Name="dgWorkers" Grid.Row="1" Grid.Column="1" Margin="2" AutoGenerateColumns="False" MinColumnWidth="50" HeadersVisibility="Column" IsReadOnly="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="*"/>
                         <DataGridTextColumn Header="Group" Binding="{Binding Group}" Width="*"/>
