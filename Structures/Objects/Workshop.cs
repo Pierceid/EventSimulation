@@ -54,9 +54,9 @@ namespace EventSimulation.Structures.Objects {
             if (WorkersB.Length != workersB) WorkersB = new Worker[workersB];
             if (WorkersC.Length != workersC) WorkersC = new Worker[workersC];
 
-            for (int i = 0; i < workersA; i++) WorkersA[i] = new Worker(i, WorkerGroup.A);
-            for (int i = 0; i < workersB; i++) WorkersB[i] = new Worker(i + workersA, WorkerGroup.B);
-            for (int i = 0; i < workersC; i++) WorkersC[i] = new Worker(i + workersA + workersB, WorkerGroup.C);
+            Parallel.For(0, workersA, a => WorkersA[a] = new Worker(a, WorkerGroup.A));
+            Parallel.For(0, workersB, b => WorkersB[b] = new Worker(b + workersA, WorkerGroup.B));
+            Parallel.For(0, workersC, c => WorkersC[c] = new Worker(c + workersA + workersB, WorkerGroup.C));
         }
 
         public void AddOrder(Order order) {
