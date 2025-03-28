@@ -3,17 +3,19 @@ using EventSimulation.Structures.Enums;
 using EventSimulation.Structures.Objects;
 
 namespace EventSimulation.Structures.Events {
-    public class CuttingStartEvent : Event {
+    public class CuttingStartEvent : Event<Workshop> {
 
-        public CuttingStartEvent(EventSimulationCore simulationCore, double time) : base(simulationCore, time, 3) {
+        public CuttingStartEvent(EventSimulationCore<Workshop> simulationCore, double time) : base(simulationCore, time, 3) {
         }
 
         public override void Execute() {
-            Worker? worker = SimulationCore.Workshop.GetAvailableWorker(WorkerGroup.A);
+            if (SimulationCore.Data is not Workshop workshop) return;
+
+            Worker? worker = workshop.GetAvailableWorker(WorkerGroup.A);
 
             if (worker == null) return;
 
-            if (!SimulationCore.Workshop.QueueA.TryDequeue(out var order)) return;
+            if (!workshop.QueueA.TryDequeue(out var order)) return;
 
             worker.StartTask(order);
 

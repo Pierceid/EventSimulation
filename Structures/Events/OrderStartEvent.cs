@@ -3,10 +3,10 @@ using EventSimulation.Structures.Enums;
 using EventSimulation.Structures.Objects;
 
 namespace EventSimulation.Structures.Events {
-    public class OrderStartEvent : Event {
+    public class OrderStartEvent : Event<Workshop> {
         private static int orderId = 0;
 
-        public OrderStartEvent(EventSimulationCore simulationCore, double time) : base(simulationCore, time, 2) {
+        public OrderStartEvent(EventSimulationCore<Workshop> simulationCore, double time) : base(simulationCore, time, 2) {
         }
 
         public override void Execute() {
@@ -14,7 +14,7 @@ namespace EventSimulation.Structures.Events {
             double rng = SimulationCore.Generators.RNG.Next();
             ProductType type = (rng < 0.15) ? ProductType.Chair : (rng < 0.65) ? ProductType.Table : ProductType.Wardrobe;
 
-            SimulationCore.Workshop.QueueA.Enqueue(new Order(orderId++, type, Time));
+            SimulationCore.Data.QueueA.Enqueue(new Order(orderId++, type, Time));
             SimulationCore.EventCalendar.Enqueue(new CuttingStartEvent(SimulationCore, Time), Time);
 
             Time += orderingTime;

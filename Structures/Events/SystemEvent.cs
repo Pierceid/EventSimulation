@@ -1,14 +1,16 @@
 ﻿using EventSimulation.Simulations;
 
 namespace EventSimulation.Structures.Events {
-    public class SystemEvent(EventSimulationCore simulationCore, double time) : Event(simulationCore, time, 1) {
+    public class SystemEvent<T>(EventSimulationCore<T> simulationCore, double time) : Event<T>(simulationCore, time, 1) where T : class, new() {
         public override void Execute() {
             Thread.Sleep((int)SimulationCore.UpdateTime);
 
             Time = SimulationCore.SimulationTime + (SimulationCore.Speed / SimulationCore.UpdateTime);
             SimulationCore.EventCalendar.Enqueue(this, Time);
 
-            SimulationCore.Notify();
+            if (SimulationCore.Speed != double.MaxValue) {
+                SimulationCore.Notify();
+            }
         }
     }
 }

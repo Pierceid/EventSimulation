@@ -4,7 +4,7 @@ using EventSimulation.Structures.Events;
 
 namespace EventSimulation.Structures.Objects {
     public class Workshop {
-        private EventSimulationCore simulationCore;
+        private EventSimulationCore<Workshop> simulationCore;
         public Worker[] WorkersA { get; set; }
         public Worker[] WorkersB { get; set; }
         public Worker[] WorkersC { get; set; }
@@ -12,7 +12,9 @@ namespace EventSimulation.Structures.Objects {
         public Queue<Order> QueueB { get; set; }
         public Queue<Order> QueueC { get; set; }
 
-        public Workshop(EventSimulationCore core, int workersA = 0, int workersB = 0, int workersC = 0) {
+        public Workshop() { }
+
+        public Workshop(EventSimulationCore<Workshop> core, int workersA = 0, int workersB = 0, int workersC = 0) {
             simulationCore = core;
 
             WorkersA = new Worker[workersA];
@@ -38,9 +40,9 @@ namespace EventSimulation.Structures.Objects {
             WorkersB = new Worker[lengthB];
             WorkersC = new Worker[lengthC];
 
-            for (int i = 0; i < lengthA; i++) WorkersA[i] = new Worker(i, WorkerGroup.A);
-            for (int i = 0; i < lengthB; i++) WorkersB[i] = new Worker(i + lengthA, WorkerGroup.B);
-            for (int i = 0; i < lengthC; i++) WorkersC[i] = new Worker(i + lengthA + lengthB, WorkerGroup.C);
+            Parallel.For(0, lengthA, a => WorkersA[a] = new Worker(a, WorkerGroup.A));
+            Parallel.For(0, lengthB, b => WorkersB[b] = new Worker(b + lengthA, WorkerGroup.B));
+            Parallel.For(0, lengthC, c => WorkersC[c] = new Worker(c + lengthA + lengthB, WorkerGroup.C));
         }
 
         public void InitComponents(int workersA, int workersB, int workersC) {

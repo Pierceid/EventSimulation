@@ -1,15 +1,14 @@
 ﻿using EventSimulation.Generators;
 using EventSimulation.Observer;
 using EventSimulation.Structures.Events;
-using EventSimulation.Structures.Objects;
 using System.Windows;
 using System.Windows.Threading;
 
 namespace EventSimulation.Simulations {
-    public abstract class EventSimulationCore : SimulationCore, ISubject {
+    public abstract class EventSimulationCore<T> : SimulationCore, ISubject where T : class, new() {
         private List<IObserver> observers = [];
-        public Workshop Workshop { get; set; }
-        public PriorityQueue<Event, double> EventCalendar { get; set; }
+        public PriorityQueue<Event<T>, double> EventCalendar { get; set; }
+        public T Data { get; set; }
         public RandomGenerators Generators { get; set; }
         public bool IsPaused { get; set; }
         public double Speed { get; set; }
@@ -18,14 +17,30 @@ namespace EventSimulation.Simulations {
         public double EndOfSimulationTime { get; set; }
 
         protected EventSimulationCore(int replicationStock, double endOfSimulationTime) : base(replicationStock) {
-            this.Workshop = new(this);
             this.EventCalendar = new();
+            this.Data = new T();
             this.Generators = new();
             this.IsPaused = false;
             this.Speed = 1.0;
             this.SimulationTime = 0.0;
             this.UpdateTime = 1000.0 / 39.1;
             this.EndOfSimulationTime = endOfSimulationTime;
+        }
+
+        public override void BeforeSimulation() {
+            this.SimulationTime = 0.0;
+        }
+
+        public override void AfterSimulation() {
+            this.EventCalendar.Clear();
+        }
+
+        public override void BeforeSimulationRun() {
+
+        }
+
+        public override void AfterSimulationRun() {
+
         }
 
         public override void Experiment() {

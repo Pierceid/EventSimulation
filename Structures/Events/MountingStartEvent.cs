@@ -3,16 +3,16 @@ using EventSimulation.Structures.Enums;
 using EventSimulation.Structures.Objects;
 
 namespace EventSimulation.Structures.Events {
-    public class MountingStartEvent : Event {
-        public MountingStartEvent(EventSimulationCore simulationCore, double time) : base(simulationCore, time, 5) {
+    public class MountingStartEvent : Event<Workshop> {
+        public MountingStartEvent(EventSimulationCore<Workshop> simulationCore, double time) : base(simulationCore, time, 5) {
         }
 
         public override void Execute() {
-            Worker? worker = SimulationCore.Workshop.GetAvailableWorker(WorkerGroup.C);
+            Worker? worker = SimulationCore.Data.GetAvailableWorker(WorkerGroup.C);
 
             if (worker == null) return;
 
-            if (!SimulationCore.Workshop.QueueC.TryDequeue(out var order)) return;
+            if (!SimulationCore.Data.QueueC.TryDequeue(out var order)) return;
 
             if (order.Type != ProductType.Wardrobe) return;
 

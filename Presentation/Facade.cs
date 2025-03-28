@@ -27,7 +27,7 @@ namespace EventSimulation.Presentation {
 
             isRunning = true;
             carpentry.Resume();
-            carpentry.Workshop.Clear();
+            carpentry.Data.Clear();
             graph.RefreshGraph();
 
             simulationThread = new(carpentry.RunSimulation) { IsBackground = true };
@@ -79,7 +79,7 @@ namespace EventSimulation.Presentation {
             }
 
             carpentry = new(replications, replicationTime) { Speed = speed };
-            carpentry.Workshop.InitComponents(workersA, workersB, workersC);
+            carpentry.Data.InitComponents(workersA, workersB, workersC);
         }
 
         public void UpdateCarpentry(double speed) {

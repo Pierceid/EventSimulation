@@ -20,9 +20,9 @@ namespace EventSimulation.Observer {
         }
 
         public void Refresh(SimulationCore simulationCore) {
-            if (simulationCore is EventSimulationCore esc) {
-                SyncCollection(Orders, esc.Workshop.QueueA.Concat(esc.Workshop.QueueB).Concat(esc.Workshop.QueueC));
-                SyncCollection(Workers, esc.Workshop.WorkersA.Concat(esc.Workshop.WorkersB).Concat(esc.Workshop.WorkersC));
+            if (simulationCore is EventSimulationCore<Workshop> esc) {
+                SyncCollection(Orders, esc.Data.QueueA.Concat(esc.Data.QueueB).Concat(esc.Data.QueueC));
+                SyncCollection(Workers, esc.Data.WorkersA.Concat(esc.Data.WorkersB).Concat(esc.Data.WorkersC));
             }
         }
 

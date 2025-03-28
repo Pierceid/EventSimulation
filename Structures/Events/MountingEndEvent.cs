@@ -3,15 +3,17 @@ using EventSimulation.Structures.Enums;
 using EventSimulation.Structures.Objects;
 
 namespace EventSimulation.Structures.Events {
-    public class MountingEndEvent : Event {
+    public class MountingEndEvent : Event<Workshop> {
         public Worker Worker { get; set; }
 
-        public MountingEndEvent(EventSimulationCore simulationCore, double time, Worker worker) : base(simulationCore, time, 5) {
+        public MountingEndEvent(EventSimulationCore<Workshop> simulationCore, double time, Worker worker) : base(simulationCore, time, 5) {
             Worker = worker;
         }
 
         public override void Execute() {
-            if (SimulationCore.Workshop.QueueC.Count > 0) {
+            if (SimulationCore.Data is not Workshop workshop) return;
+
+            if (workshop.QueueC.Count > 0) {
                 SimulationCore.EventCalendar.Enqueue(new MountingStartEvent(SimulationCore, Time), Time);
             }
 
@@ -21,7 +23,8 @@ namespace EventSimulation.Structures.Events {
 
             Worker.FinishTask();
 
-            SimulationCore.Workshop.ProcessOrders();
+            workshop.ProcessOrders();
+
             SimulationCore.EventCalendar.Enqueue(new OrderEndEvent(SimulationCore, Time), Time);
         }
     }

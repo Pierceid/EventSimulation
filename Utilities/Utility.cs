@@ -11,7 +11,7 @@
             int minutes = (daySeconds % 3600) / 60;
             int seconds = daySeconds % 60;
 
-            return $"{days:D2}:{hours:D2}:{minutes:D2}:{seconds:D2}";
+            return $"{days:D2}d {hours:D2}h {minutes:D2}m {seconds:D2}s";
         }
     }
 }

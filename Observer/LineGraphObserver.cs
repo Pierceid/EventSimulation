@@ -1,5 +1,6 @@
 ﻿using EventSimulation.Presentation;
 using EventSimulation.Simulations;
+using EventSimulation.Structures.Objects;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -14,9 +15,9 @@ namespace EventSimulation.Observer {
         }
 
         public void Refresh(SimulationCore simulationCore) {
-            if (simulationCore is EventSimulationCore esc) {
+            if (simulationCore is EventSimulationCore<Workshop> esc) {
                 window.Dispatcher.Invoke(() => {
-                    lineGraph.UpdatePlot(esc.SimulationTime, esc.Speed);
+                    lineGraph.UpdatePlot(esc.CurrentReplication, esc.CurrentReplication);
                 }, DispatcherPriority.Input);
             }
         }

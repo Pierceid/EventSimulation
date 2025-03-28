@@ -3,15 +3,17 @@ using EventSimulation.Structures.Enums;
 using EventSimulation.Structures.Objects;
 
 namespace EventSimulation.Structures.Events {
-    public class CuttingEndEvent : Event {
+    public class CuttingEndEvent : Event<Workshop> {
         public Worker Worker { get; set; }
 
-        public CuttingEndEvent(EventSimulationCore simulationCore, double time, Worker worker) : base(simulationCore, time, 3) {
+        public CuttingEndEvent(EventSimulationCore<Workshop> simulationCore, double time, Worker worker) : base(simulationCore, time, 3) {
             Worker = worker;
         }
 
         public override void Execute() {
-            if (SimulationCore.Workshop.QueueA.Count > 0) {
+            if (SimulationCore.Data is not Workshop workshop) return;
+
+            if (workshop.QueueA.Count > 0) {
                 SimulationCore.EventCalendar.Enqueue(new CuttingStartEvent(SimulationCore, Time), Time);
             }
 
@@ -21,15 +23,16 @@ namespace EventSimulation.Structures.Events {
 
             if (Worker.CurrentOrder != null) {
                 Worker.CurrentOrder.State = ProductState.Cut;
-                SimulationCore.Workshop.QueueC.Enqueue(Worker.CurrentOrder);
+                workshop.QueueC.Enqueue(Worker.CurrentOrder);
             }
 
             Time += movingTime;
 
             Worker.FinishTask();
-            SimulationCore.Workshop.ProcessOrders();
 
-            if (SimulationCore.Workshop.QueueC.Count > 0) {
+            workshop.ProcessOrders();
+
+            if (workshop.QueueC.Count > 0) {
                 SimulationCore.EventCalendar.Enqueue(new PaintingStartEvent(SimulationCore, Time), Time);
             }
         }

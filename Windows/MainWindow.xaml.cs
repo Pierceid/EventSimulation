@@ -56,21 +56,21 @@ public partial class MainWindow : Window {
     }
 
     private void UpdateCarpentry() {
-        double[] snapValues = [1, 60, 3600, 36000, 360000];
+        double[] snapValues = [1, 60, 3600, 36000, 360000, 3600000, double.MaxValue];
         int index = (int)(sldSpeed.Value - 1);
         double speed = snapValues[index];
 
         facade?.UpdateCarpentry(speed);
-        lblSpeed.Content = $"Speed: {speed:0}x";
+        lblSpeed.Content = $"Speed: {(index == snapValues.Length - 1 ? "VIRTUAL" : speed):0x}";
     }
 
     private void InitUI() {
         txtReplications.Text = "1000000";
-        sldSpeed.Value = 3;
-        txtWorkersA.Text = "3";
-        txtWorkersB.Text = "3";
-        txtWorkersC.Text = "6";
-        txtTime.Text = "00:00:00";
+        sldSpeed.Value = 4;
+        txtWorkersA.Text = "4";
+        txtWorkersB.Text = "4";
+        txtWorkersC.Text = "8";
+        txtTime.Text = "00d 00h 00m 00s";
 
         InitCarpentry();
     }

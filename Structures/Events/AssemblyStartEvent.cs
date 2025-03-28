@@ -3,16 +3,16 @@ using EventSimulation.Structures.Enums;
 using EventSimulation.Structures.Events;
 using EventSimulation.Structures.Objects;
 
-public class AssemblyStartEvent : Event {
-    public AssemblyStartEvent(EventSimulationCore simulationCore, double time) : base(simulationCore, time, 4) {
+public class AssemblyStartEvent : Event<Workshop> {
+    public AssemblyStartEvent(EventSimulationCore<Workshop> simulationCore, double time) : base(simulationCore, time, 4) {
     }
 
     public override void Execute() {
-        Worker? worker = SimulationCore.Workshop.GetAvailableWorker(WorkerGroup.B);
+        Worker? worker = SimulationCore.Data.GetAvailableWorker(WorkerGroup.B);
 
         if (worker == null) return;
 
-        if (!SimulationCore.Workshop.QueueB.TryDequeue(out var order)) return;
+        if (!SimulationCore.Data.QueueB.TryDequeue(out var order)) return;
 
         worker.StartTask(order);
 

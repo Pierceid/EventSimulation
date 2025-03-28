@@ -3,15 +3,15 @@ using EventSimulation.Structures.Enums;
 using EventSimulation.Structures.Objects;
 
 namespace EventSimulation.Structures.Events {
-    public class PaintingEndEvent : Event {
+    public class PaintingEndEvent : Event<Workshop> {
         public Worker Worker { get; set; }
 
-        public PaintingEndEvent(EventSimulationCore simulationCore, double time, Worker worker) : base(simulationCore, time, 6) {
+        public PaintingEndEvent(EventSimulationCore<Workshop> simulationCore, double time, Worker worker) : base(simulationCore, time, 6) {
             Worker = worker;
         }
 
         public override void Execute() {
-            if (SimulationCore.Workshop.QueueC.Count > 0) {
+            if (SimulationCore.Data.QueueC.Count > 0) {
                 SimulationCore.EventCalendar.Enqueue(new PaintingStartEvent(SimulationCore, Time), Time);
             }
 
@@ -21,14 +21,15 @@ namespace EventSimulation.Structures.Events {
 
             if (Worker.CurrentOrder != null) {
                 Worker.CurrentOrder.State = ProductState.Painted;
-                SimulationCore.Workshop.QueueB.Enqueue(Worker.CurrentOrder);
+                SimulationCore.Data.QueueB.Enqueue(Worker.CurrentOrder);
             }
 
             Time += movingTime;
-            
+
             Worker.FinishTask();
 
-            SimulationCore.Workshop.ProcessOrders();
+            SimulationCore.Data.ProcessOrders();
+
             SimulationCore.EventCalendar.Enqueue(new AssemblyStartEvent(SimulationCore, Time), Time);
         }
     }

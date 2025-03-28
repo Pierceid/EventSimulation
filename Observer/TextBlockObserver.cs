@@ -1,4 +1,5 @@
 ﻿using EventSimulation.Simulations;
+using EventSimulation.Structures.Objects;
 using EventSimulation.Utilities;
 using System.Windows.Controls;
 
@@ -11,7 +12,7 @@ namespace EventSimulation.Observer {
         }
 
         public void Refresh(SimulationCore simulationCore) {
-            if (simulationCore is EventSimulationCore esc) {
+            if (simulationCore is EventSimulationCore<Workshop> esc) {
                 this.timeTextBlock.Text = Utility.FormatTime(esc.SimulationTime);
             }
         }
