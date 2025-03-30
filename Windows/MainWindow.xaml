@@ -127,7 +127,7 @@
                         <DataGridTextColumn Header="Group" Binding="{Binding Group}" Width="2*"/>
                         <DataGridCheckBoxColumn Header="Is Busy" Binding="{Binding IsBusy}" Width="2*"/>
                         <DataGridTextColumn Header="Order" Binding="{Binding Order.Id}" Width="2*"/>
-                        <DataGridTextColumn Header="Workplace" Binding="{Binding Workplace.Id}" Width="2*"/>
+                        <DataGridTextColumn Header="Workplace" Binding="{Binding FormattedWorkplace}" Width="2*"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

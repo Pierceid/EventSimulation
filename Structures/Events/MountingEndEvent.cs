@@ -11,7 +11,7 @@ namespace EventSimulation.Structures.Events {
         }
 
         public override void Execute() {
-            if (SimulationCore.Data is not ProductionManager workshop) return;
+            if (SimulationCore.Data is not ProductionManager manager) return;
 
             if (Workplace.Worker?.Order != null) {
                 Workplace.Worker.Order.State = ProductState.Mounted;

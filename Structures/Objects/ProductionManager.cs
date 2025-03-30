@@ -1,4 +1,5 @@
 ﻿using EventSimulation.Structures.Enums;
+using System.Windows;
 
 namespace EventSimulation.Structures.Objects {
     public class ProductionManager {

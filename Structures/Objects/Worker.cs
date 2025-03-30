@@ -27,26 +27,29 @@ namespace EventSimulation.Structures.Objects {
             }
         }
 
-        private Workplace? workplace;
-        public Workplace? Workplace {
+        private int workplace;
+        public int Workplace {
             get => workplace;
             set {
-                if (workplace != null) {
+                if (workplace != value) {
                     workplace = value;
                     OnPropertyChanged(nameof(Workplace));
+                    OnPropertyChanged(nameof(FormattedWorkplace));
                 }
             }
         }
+
+        public string FormattedWorkplace => workplace == -1 ? string.Empty : workplace.ToString();
 
         public Worker(int id, WorkerGroup group) {
             Id = id;
             Group = group;
             IsBusy = false;
             Order = null;
-            Workplace = null;
+            Workplace = -1;
         }
 
-        public void StartTask(Order order, Workplace workplace) {
+        public void StartTask(Order order, int workplace) {
             IsBusy = true;
             Order = order;
             Workplace = workplace;

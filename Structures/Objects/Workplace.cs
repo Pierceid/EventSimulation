@@ -20,7 +20,7 @@
 
         public void StartWork() {
             IsOccupied = true;
-            if (Worker != null && Order != null) Worker.StartTask(Order, this);
+            if (Worker != null && Order != null) Worker.StartTask(Order, Id);
         }
 
         public void FinishWork() {

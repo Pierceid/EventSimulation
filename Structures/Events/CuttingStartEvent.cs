@@ -1,8 +1,6 @@
 ﻿using EventSimulation.Simulations;
 using EventSimulation.Structures.Enums;
 using EventSimulation.Structures.Objects;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace EventSimulation.Structures.Events {
     public class CuttingStartEvent : Event<ProductionManager> {
@@ -13,18 +11,18 @@ namespace EventSimulation.Structures.Events {
         }
 
         public override void Execute() {
-            if (SimulationCore.Data is not ProductionManager workshop) return;
+            if (SimulationCore.Data is not ProductionManager manager) return;
 
-            if (workshop.QueueA.Count == 0) return;
+            if (manager.QueueA.Count == 0) return;
 
-            Order order = workshop.QueueA.First!.Value;
-            workshop.QueueA.RemoveFirst();
+            Order order = manager.QueueA.First!.Value;
+            manager.QueueA.RemoveFirst();
 
             double cuttingTime = 0.0;
 
             if (Workplace.Worker?.Workplace == null) {
                 cuttingTime += SimulationCore.Generators.WorkerMoveToStorageTime.Next();
-            } else if (Workplace.Worker?.Workplace.Id != Workplace.Id) {
+            } else if (Workplace.Worker?.Workplace != Workplace.Id) {
                 cuttingTime += SimulationCore.Generators.WorkerMoveBetweenStationsTime.Next();
             }
 

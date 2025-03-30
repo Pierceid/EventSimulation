@@ -10,7 +10,7 @@ namespace EventSimulation.Structures.Events {
         }
 
         public override void Execute() {
-            if (SimulationCore.Data is not ProductionManager workshop) return;
+            if (SimulationCore.Data is not ProductionManager manager) return;
 
             double orderingTime = SimulationCore.Generators.OrderArrivalTime.Next();
             double rng = SimulationCore.Generators.RNG.Next();
@@ -18,12 +18,12 @@ namespace EventSimulation.Structures.Events {
 
             Order order = new(orderId++, type, Time);
 
-            workshop.QueueA.AddLast(order);
+            manager.QueueA.AddLast(order);
 
-            Worker? worker = workshop.GetAvailableWorker(ProductState.Raw);
-            Workplace workplace = workshop.GetOrCreateWorkplace();
+            Worker? worker = manager.GetAvailableWorker(ProductState.Raw);
 
             if (worker != null) {
+                Workplace workplace = manager.GetOrCreateWorkplace();
                 workplace.Assign(order, worker);
                 SimulationCore.EventCalendar.Enqueue(new CuttingStartEvent(SimulationCore, Time, workplace), Time);
             }

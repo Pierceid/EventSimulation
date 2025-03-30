@@ -11,24 +11,24 @@ namespace EventSimulation.Structures.Events {
         }
 
         public override void Execute() {
-            if (SimulationCore.Data is not ProductionManager workshop) return;
+            if (SimulationCore.Data is not ProductionManager manager) return;
 
             if (Workplace.Worker?.Order != null) {
                 Workplace.Worker.Order.State = ProductState.Painted;
 
-                workshop.QueueB.AddLast(Workplace.Worker.Order);
+                manager.QueueB.AddLast(Workplace.Worker.Order);
             }
 
             Workplace.FinishWork();
 
-            Worker? worker = workshop.GetAvailableWorker(ProductState.Painted);
+            Worker? worker = manager.GetAvailableWorker(ProductState.Painted);
 
-            if (workshop.QueueB.Count > 0 && worker != null) {
-                Workplace.Assign(workshop.QueueB.First!.Value, worker);
+            if (manager.QueueB.Count > 0 && worker != null) {
+                Workplace.Assign(manager.QueueB.First!.Value, worker);
                 SimulationCore.EventCalendar.Enqueue(new AssemblyStartEvent(SimulationCore, Time, Workplace), Time);
             }
 
-            if (workshop.QueueC.Count > 0) {
+            if (manager.QueueC.Count > 0) {
                 SimulationCore.EventCalendar.Enqueue(new PaintingStartEvent(SimulationCore, Time, Workplace), Time);
             }
         }

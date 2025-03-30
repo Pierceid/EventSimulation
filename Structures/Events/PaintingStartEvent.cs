@@ -11,12 +11,12 @@ namespace EventSimulation.Structures.Events {
         }
 
         public override void Execute() {
-            if (SimulationCore.Data is not ProductionManager workshop) return;
+            if (SimulationCore.Data is not ProductionManager manager) return;
 
-            if (workshop.QueueC.Count == 0) return;
+            if (manager.QueueC.Count == 0) return;
 
-            Order order = workshop.QueueC.First!.Value;
-            workshop.QueueC.RemoveFirst();
+            Order order = manager.QueueC.First!.Value;
+            manager.QueueC.RemoveFirst();
 
             if (order.Type == ProductType.Wardrobe && order.State == ProductState.Assembled) {
                 SimulationCore.EventCalendar.Enqueue(new MountingStartEvent(SimulationCore, Time, Workplace), Time);
@@ -27,7 +27,7 @@ namespace EventSimulation.Structures.Events {
 
             if (Workplace.Worker?.Workplace == null) {
                 paintingTime += SimulationCore.Generators.WorkerMoveToStorageTime.Next();
-            } else if (Workplace.Worker?.Workplace.Id != Workplace.Id) {
+            } else if (Workplace.Worker?.Workplace != Workplace.Id) {
                 paintingTime += SimulationCore.Generators.WorkerMoveBetweenStationsTime.Next();
             }
 

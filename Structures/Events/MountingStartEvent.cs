@@ -10,7 +10,7 @@ namespace EventSimulation.Structures.Events {
         }
 
         public override void Execute() {
-            if (Workplace == null || Workplace.Worker == null || Workplace.Worker.Order == null || Workplace.Worker.Workplace == null) return;
+            if (Workplace == null || Workplace.Worker == null || Workplace.Worker.Order == null) return;
 
             Workplace.StartWork();
 

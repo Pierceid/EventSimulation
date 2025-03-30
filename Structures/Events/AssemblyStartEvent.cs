@@ -11,18 +11,18 @@ public class AssemblyStartEvent : Event<ProductionManager> {
     }
 
     public override void Execute() {
-        if (SimulationCore.Data is not ProductionManager workshop) return;
+        if (SimulationCore.Data is not ProductionManager manager) return;
 
-        if (workshop.QueueB.Count == 0) return;
+        if (manager.QueueB.Count == 0) return;
 
-        Order order = workshop.QueueB.First!.Value;
-        workshop.QueueB.RemoveFirst();
+        Order order = manager.QueueB.First!.Value;
+        manager.QueueB.RemoveFirst();
 
         double assemblyTime = 0.0;
 
         if (Workplace.Worker?.Workplace == null) {
             assemblyTime += SimulationCore.Generators.WorkerMoveToStorageTime.Next();
-        } else if (Workplace.Worker?.Workplace.Id != Workplace.Id) {
+        } else if (Workplace.Worker?.Workplace != Workplace.Id) {
             assemblyTime += SimulationCore.Generators.WorkerMoveBetweenStationsTime.Next();
         }
 
