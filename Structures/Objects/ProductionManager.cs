@@ -1,5 +1,4 @@
 ﻿using EventSimulation.Structures.Enums;
-using System.Windows;
 
 namespace EventSimulation.Structures.Objects {
     public class ProductionManager {
@@ -79,7 +78,7 @@ namespace EventSimulation.Structures.Objects {
         }
 
         public Workplace GetOrCreateWorkplace() {
-            Workplace? workplace = Workplaces.FirstOrDefault(w => !w.IsOccupied);
+            Workplace? workplace = Workplaces.FirstOrDefault(w => !w.IsOccupied || !w.Worker!.IsBusy);
 
             if (workplace == null) {
                 workplace = new Workplace(nextWorkplaceId++);
