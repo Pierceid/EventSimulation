@@ -3,44 +3,36 @@ using EventSimulation.Structures.Enums;
 using EventSimulation.Structures.Objects;
 
 namespace EventSimulation.Structures.Events {
-    public class AssemblyEndEvent : Event<Workshop> {
-        public Order Order { get; set; }
-        public Worker Worker { get; set; }
+    public class AssemblyEndEvent : Event<ProductionManager> {
+        public Workplace Workplace { get; }
 
-        public AssemblyEndEvent(EventSimulationCore<Workshop> simulationCore, double time, Order order, Worker worker) : base(simulationCore, time, 4) {
-            Order = order;
-            Worker = worker;
+        public AssemblyEndEvent(EventSimulationCore<ProductionManager> simulationCore, double time, Workplace workplace) : base(simulationCore, time, 4) {
+            Workplace = workplace;
         }
 
         public override void Execute() {
-            if (SimulationCore.Data is not Workshop workshop) return;
+            if (SimulationCore.Data is not ProductionManager workshop) return;
 
-            if (workshop.QueueB.Count > 0) {
-                SimulationCore.EventCalendar.Enqueue(new AssemblyStartEvent(SimulationCore, Time), Time);
-            }
+            if (Workplace.Worker?.Order != null) {
+                Workplace.Worker.Order.State = ProductState.Assembled;
 
-            var movingTime = 0.0;
-
-            if (Worker.CurrentOrder != null) {
-                Worker.CurrentOrder.State = ProductState.Assembled;
-
-                if (Worker.CurrentOrder.Type == ProductType.Wardrobe) {
-                    movingTime += SimulationCore.Generators.WorkerMoveBetweenStationsTime.Next();
-
-                    Time += movingTime;
-
-                    Worker.CurrentPlace = Place.WorkplaceC;
-
-                    workshop.QueueC.Enqueue(Worker.CurrentOrder);
-                    SimulationCore.EventCalendar.Enqueue(new MountingStartEvent(SimulationCore, Time), Time);
-                } else {
-                    SimulationCore.EventCalendar.Enqueue(new OrderEndEvent(SimulationCore, Time), Time);
+                if (Workplace.Worker.Order.Type == ProductType.Wardrobe) {
+                    workshop.QueueC.AddFirst(Workplace.Worker.Order);
                 }
             }
 
-            Worker.FinishTask();
+            Workplace.FinishWork();
 
-            workshop.ProcessOrders();
+            Worker? worker = SimulationCore.Data.GetAvailableWorker(ProductState.Assembled);
+
+            if (workshop.QueueC.Count > 0 && worker != null) {
+                Workplace.Assign(workshop.QueueC.First!.Value, worker);
+                SimulationCore.EventCalendar.Enqueue(new PaintingStartEvent(SimulationCore, Time, Workplace), Time);
+            }
+
+            if (workshop.QueueB.Count > 0) {
+                SimulationCore.EventCalendar.Enqueue(new AssemblyStartEvent(SimulationCore, Time, Workplace), Time);
+            }
         }
     }
 }

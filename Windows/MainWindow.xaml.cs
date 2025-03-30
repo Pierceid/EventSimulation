@@ -65,8 +65,8 @@ public partial class MainWindow : Window {
     }
 
     private void InitUI() {
-        txtReplications.Text = "1000000";
-        sldSpeed.Value = 4;
+        txtReplications.Text = "1000";
+        sldSpeed.Value = 3;
         txtWorkersA.Text = "4";
         txtWorkersB.Text = "4";
         txtWorkersC.Text = "8";

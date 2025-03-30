@@ -3,34 +3,34 @@ using EventSimulation.Structures.Enums;
 using EventSimulation.Structures.Objects;
 
 namespace EventSimulation.Structures.Events {
-    public class PaintingEndEvent : Event<Workshop> {
-        public Worker Worker { get; set; }
+    public class PaintingEndEvent : Event<ProductionManager> {
+        public Workplace Workplace { get; }
 
-        public PaintingEndEvent(EventSimulationCore<Workshop> simulationCore, double time, Worker worker) : base(simulationCore, time, 6) {
-            Worker = worker;
+        public PaintingEndEvent(EventSimulationCore<ProductionManager> simulationCore, double time, Workplace workplace) : base(simulationCore, time, 6) {
+            Workplace = workplace;
         }
 
         public override void Execute() {
-            if (SimulationCore.Data.QueueC.Count > 0) {
-                SimulationCore.EventCalendar.Enqueue(new PaintingStartEvent(SimulationCore, Time), Time);
+            if (SimulationCore.Data is not ProductionManager workshop) return;
+
+            if (Workplace.Worker?.Order != null) {
+                Workplace.Worker.Order.State = ProductState.Painted;
+
+                workshop.QueueB.AddLast(Workplace.Worker.Order);
             }
 
-            var movingTime = SimulationCore.Generators.WorkerMoveBetweenStationsTime.Next();
+            Workplace.FinishWork();
 
-            Worker.CurrentPlace = Place.WorkplaceB;
+            Worker? worker = workshop.GetAvailableWorker(ProductState.Painted);
 
-            if (Worker.CurrentOrder != null) {
-                Worker.CurrentOrder.State = ProductState.Painted;
-                SimulationCore.Data.QueueB.Enqueue(Worker.CurrentOrder);
+            if (workshop.QueueB.Count > 0 && worker != null) {
+                Workplace.Assign(workshop.QueueB.First!.Value, worker);
+                SimulationCore.EventCalendar.Enqueue(new AssemblyStartEvent(SimulationCore, Time, Workplace), Time);
             }
 
-            Time += movingTime;
-
-            Worker.FinishTask();
-
-            SimulationCore.Data.ProcessOrders();
-
-            SimulationCore.EventCalendar.Enqueue(new AssemblyStartEvent(SimulationCore, Time), Time);
+            if (workshop.QueueC.Count > 0) {
+                SimulationCore.EventCalendar.Enqueue(new PaintingStartEvent(SimulationCore, Time, Workplace), Time);
+            }
         }
     }
 }

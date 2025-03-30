@@ -2,15 +2,15 @@
 using EventSimulation.Structures.Objects;
 
 namespace EventSimulation.Simulations {
-    public class Carpentry : EventSimulationCore<Workshop> {
+    public class Carpentry : EventSimulationCore<ProductionManager> {
         public Carpentry(int replicationStock, double endOfSimulationTime) : base(replicationStock, endOfSimulationTime) {
-            this.Data = new Workshop(this);
+            this.Data = new ProductionManager();
         }
 
         public override void BeforeSimulation() {
             base.BeforeSimulation();
 
-            EventCalendar.Enqueue(new SystemEvent<Workshop>(this, SimulationTime), SimulationTime);
+            EventCalendar.Enqueue(new SystemEvent<ProductionManager>(this, SimulationTime), SimulationTime);
             EventCalendar.Enqueue(new OrderStartEvent(this, SimulationTime), SimulationTime);
         }
 

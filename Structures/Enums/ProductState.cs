@@ -5,6 +5,6 @@
         Painted,
         Assembled,
         Mounted,
-        Stored
+        Finished
     }
 }

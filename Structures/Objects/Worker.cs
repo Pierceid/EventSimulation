@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace EventSimulation.Structures.Objects {
     public class Worker : INotifyPropertyChanged {
-        public int Id { get; set; }
+        public int Id { get; }
         public WorkerGroup Group { get; set; }
         private bool isBusy;
         public bool IsBusy {
@@ -16,24 +16,24 @@ namespace EventSimulation.Structures.Objects {
             }
         }
 
-        private Order? currentOrder;
-        public Order? CurrentOrder {
-            get => currentOrder;
+        private Order? order;
+        public Order? Order {
+            get => order;
             set {
-                if (currentOrder != value) {
-                    currentOrder = value;
-                    OnPropertyChanged(nameof(CurrentOrder));
+                if (order != value) {
+                    order = value;
+                    OnPropertyChanged(nameof(Order));
                 }
             }
         }
 
-        private Place? currentPlace;
-        public Place? CurrentPlace {
-            get => currentPlace;
+        private Workplace? workplace;
+        public Workplace? Workplace {
+            get => workplace;
             set {
-                if (currentPlace != value) {
-                    currentPlace = value;
-                    OnPropertyChanged(nameof(CurrentPlace));
+                if (workplace != null) {
+                    workplace = value;
+                    OnPropertyChanged(nameof(Workplace));
                 }
             }
         }
@@ -42,18 +42,19 @@ namespace EventSimulation.Structures.Objects {
             Id = id;
             Group = group;
             IsBusy = false;
-            CurrentOrder = null;
-            CurrentPlace = Place.Storage;
+            Order = null;
+            Workplace = null;
         }
 
-        public void StartTask(Order order) {
+        public void StartTask(Order order, Workplace workplace) {
             IsBusy = true;
-            CurrentOrder = order;
+            Order = order;
+            Workplace = workplace;
         }
 
         public void FinishTask() {
             IsBusy = false;
-            CurrentOrder = null;
+            Order = null;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

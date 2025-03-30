@@ -115,8 +115,8 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="*"/>
                         <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="2*"/>
-                        <DataGridTextColumn Header="Arrival Time" Binding="{Binding FormattedTime}" Width="2*"/>
                         <DataGridTextColumn Header="State" Binding="{Binding State}" Width="2*"/>
+                        <DataGridTextColumn Header="Arrival Time" Binding="{Binding FormattedTime}" Width="2*"/>
                     </DataGrid.Columns>
                 </DataGrid>
 
@@ -126,8 +126,8 @@
                         <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="*"/>
                         <DataGridTextColumn Header="Group" Binding="{Binding Group}" Width="2*"/>
                         <DataGridCheckBoxColumn Header="Is Busy" Binding="{Binding IsBusy}" Width="2*"/>
-                        <DataGridTextColumn Header="Order" Binding="{Binding CurrentOrder.Id}" Width="2*"/>
-                        <DataGridTextColumn Header="Place" Binding="{Binding CurrentPlace}" Width="2*"/>
+                        <DataGridTextColumn Header="Order" Binding="{Binding Order.Id}" Width="2*"/>
+                        <DataGridTextColumn Header="Workplace" Binding="{Binding Workplace.Id}" Width="2*"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

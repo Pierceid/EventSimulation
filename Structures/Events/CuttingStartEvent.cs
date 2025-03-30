@@ -1,58 +1,45 @@
 ﻿using EventSimulation.Simulations;
 using EventSimulation.Structures.Enums;
 using EventSimulation.Structures.Objects;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace EventSimulation.Structures.Events {
-    public class CuttingStartEvent : Event<Workshop> {
+    public class CuttingStartEvent : Event<ProductionManager> {
+        public Workplace Workplace { get; }
 
-        public CuttingStartEvent(EventSimulationCore<Workshop> simulationCore, double time) : base(simulationCore, time, 3) {
+        public CuttingStartEvent(EventSimulationCore<ProductionManager> simulationCore, double time, Workplace workplace) : base(simulationCore, time, 3) {
+            Workplace = workplace;
         }
 
         public override void Execute() {
-            if (SimulationCore.Data is not Workshop workshop) return;
+            if (SimulationCore.Data is not ProductionManager workshop) return;
 
-            Worker? worker = workshop.GetAvailableWorker(WorkerGroup.A);
+            if (workshop.QueueA.Count == 0) return;
 
-            if (worker == null) return;
-
-            if (!workshop.QueueA.TryDequeue(out var order)) return;
-
-            worker.StartTask(order);
+            Order order = workshop.QueueA.First!.Value;
+            workshop.QueueA.RemoveFirst();
 
             double cuttingTime = 0.0;
 
-            if (worker.CurrentPlace == null) {
+            if (Workplace.Worker?.Workplace == null) {
                 cuttingTime += SimulationCore.Generators.WorkerMoveToStorageTime.Next();
-                worker.CurrentPlace = Place.WorkplaceA;
-            }
-
-            if (worker.CurrentPlace != Place.WorkplaceA) {
+            } else if (Workplace.Worker?.Workplace.Id != Workplace.Id) {
                 cuttingTime += SimulationCore.Generators.WorkerMoveBetweenStationsTime.Next();
-                worker.CurrentPlace = Place.WorkplaceA;
             }
 
-            if (worker.CurrentPlace == Place.WorkplaceA) {
-                cuttingTime += SimulationCore.Generators.WorkerMoveToStorageTime.Next();
-                cuttingTime += SimulationCore.Generators.WorkerMoveToStorageTime.Next();
-            }
+            Workplace.StartWork();
 
-            switch (order.Type) {
-                case ProductType.Chair:
-                    cuttingTime += SimulationCore.Generators.ChairCuttingTime.Next();
-                    break;
-                case ProductType.Table:
-                    cuttingTime += SimulationCore.Generators.TableCuttingTime.Next();
-                    break;
-                case ProductType.Wardrobe:
-                    cuttingTime += SimulationCore.Generators.WardrobeCuttingTime.Next();
-                    break;
-                default:
-                    break;
-            }
+            cuttingTime += order.Type switch {
+                ProductType.Chair => SimulationCore.Generators.ChairCuttingTime.Next(),
+                ProductType.Table => SimulationCore.Generators.TableCuttingTime.Next(),
+                ProductType.Wardrobe => SimulationCore.Generators.WardrobeCuttingTime.Next(),
+                _ => 0.0
+            };
 
             Time += cuttingTime;
 
-            SimulationCore.EventCalendar.Enqueue(new CuttingEndEvent(SimulationCore, Time, worker), Time);
+            SimulationCore.EventCalendar.Enqueue(new CuttingEndEvent(SimulationCore, Time, Workplace), Time);
         }
     }
 }

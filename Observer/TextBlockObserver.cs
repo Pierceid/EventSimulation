@@ -12,7 +12,7 @@ namespace EventSimulation.Observer {
         }
 
         public void Refresh(SimulationCore simulationCore) {
-            if (simulationCore is EventSimulationCore<Workshop> esc) {
+            if (simulationCore is EventSimulationCore<ProductionManager> esc) {
                 this.timeTextBlock.Text = Utility.FormatTime(esc.SimulationTime);
             }
         }

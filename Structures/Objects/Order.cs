@@ -4,10 +4,10 @@ using System.ComponentModel;
 
 namespace EventSimulation.Structures.Objects {
     public class Order : INotifyPropertyChanged {
-        public int Id { get; set; }
+        public int Id { get; }
         public ProductType Type { get; set; }
-        public double ArrivalTime { get; set; } 
-        public string FormattedTime { get; set; } 
+        public double ArrivalTime { get; set; }
+        public string FormattedTime { get; set; }
 
         public Order(int id, ProductType type, double time) {
             Id = id;

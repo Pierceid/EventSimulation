@@ -10,13 +10,13 @@ namespace EventSimulation.Generators {
         public Triangular WorkerMoveBetweenStationsTime = new(120, 500, 150);
 
         // Continuous uniform distributions
-        public UniformC TablePaitingTime = new(12000, 36600);
+        public UniformC TablePaintingTime = new(12000, 36600);
         public UniformC TableAssemblyTime = new(1800, 3600);
         public UniformC ChairCuttingTime = new(720, 960);
-        public UniformC ChairPaitingTime = new(12600, 32400);
+        public UniformC ChairPaintingTime = new(12600, 32400);
         public UniformC ChairAssemblyTime = new(840, 1440);
         public UniformC WardrobeCuttingTime = new(900, 4800);
-        public UniformC WardrobePaitingTime = new(36000, 42000);
+        public UniformC WardrobePaintingTime = new(36000, 42000);
         public UniformC WardrobeAssemblyTime = new(2100, 4500);
         public UniformC WardrobeMountingTime = new(900, 1500);
         public UniformC RNG = new(0, 1);

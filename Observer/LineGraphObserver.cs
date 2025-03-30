@@ -15,7 +15,7 @@ namespace EventSimulation.Observer {
         }
 
         public void Refresh(SimulationCore simulationCore) {
-            if (simulationCore is EventSimulationCore<Workshop> esc) {
+            if (simulationCore is EventSimulationCore<ProductionManager> esc) {
                 window.Dispatcher.Invoke(() => {
                     lineGraph.UpdatePlot(esc.CurrentReplication, esc.CurrentReplication);
                 }, DispatcherPriority.Input);

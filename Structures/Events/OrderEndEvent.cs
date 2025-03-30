@@ -2,9 +2,11 @@
 using EventSimulation.Structures.Objects;
 
 namespace EventSimulation.Structures.Events {
-    public class OrderEndEvent : Event<Workshop> {
+    public class OrderEndEvent : Event<ProductionManager> {
+        public Workplace Workplace { get; }
 
-        public OrderEndEvent(EventSimulationCore<Workshop> simulationCore, double time) : base(simulationCore, time, 7) {
+        public OrderEndEvent(EventSimulationCore<ProductionManager> simulationCore, double time, Workplace workplace) : base(simulationCore, time, 7) {
+            Workplace = workplace;
         }
 
         public override void Execute() {
