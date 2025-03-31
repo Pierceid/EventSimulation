@@ -38,10 +38,8 @@ namespace EventSimulation.Observer {
                         this.txtQueueC.Text = $"{c.Data.QueueC.Count:F2}";
                     }
 
-                    double replication = c.CurrentReplication + 1.0;
-
-                    this.txtFinishedOrders.Text = $"{(c.AverageFinishedOrders.Count / replication):F2}";
-                    this.txtNotStartedOrders.Text = $"{(c.AveragePendingOrders.Count / replication):F2}";
+                    this.txtFinishedOrders.Text = $"{c.AverageFinishedOrders.GetAverage():F2}";
+                    this.txtNotStartedOrders.Text = $"{c.AveragePendingOrders.GetAverage():F2}";
 
                     this.txtUtilityA.Text = $"{(100 * c.AverageUtilityA.GetAverage()):F2}%";
                     this.txtUtilityB.Text = $"{(100 * c.AverageUtilityB.GetAverage()):F2}%";

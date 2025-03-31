@@ -5,8 +5,8 @@ using EventSimulation.Structures.Objects;
 namespace EventSimulation.Simulations {
     public class Carpentry : EventSimulationCore<ProductionManager> {
         public Average AverageOrderTime { get; set; }
-        public Counter AverageFinishedOrders { get; set; }
-        public Counter AveragePendingOrders { get; set; }
+        public Average AverageFinishedOrders { get; set; }
+        public Average AveragePendingOrders { get; set; }
         public Average AverageUtilityA { get; set; }
         public Average AverageUtilityB { get; set; }
         public Average AverageUtilityC { get; set; }
