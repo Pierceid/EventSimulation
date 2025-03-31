@@ -7,7 +7,7 @@ namespace EventSimulation.Observer {
     public class TextBlockObserver : IObserver {
         private TextBlock timeTextBlock;
         private TextBlock txtFinishedOrders;
-        private TextBlock txtNotStartedOrders;
+        private TextBlock txtPendingOrders;
         private TextBlock txtQueueA;
         private TextBlock txtQueueB;
         private TextBlock txtQueueC;
@@ -18,7 +18,7 @@ namespace EventSimulation.Observer {
         public TextBlockObserver(TextBlock txtTime, TextBlock txtFinishedOrders, TextBlock txtPendingOrders, TextBlock txtQueueA, TextBlock txtQueueB, TextBlock txtQueueC, TextBlock txtUtilityA, TextBlock txtUtilityB, TextBlock txtUtilityC) {
             this.timeTextBlock = txtTime;
             this.txtFinishedOrders = txtFinishedOrders;
-            this.txtNotStartedOrders = txtPendingOrders;
+            this.txtPendingOrders = txtPendingOrders;
             this.txtQueueA = txtQueueA;
             this.txtQueueB = txtQueueB;
             this.txtQueueC = txtQueueC;
@@ -33,13 +33,13 @@ namespace EventSimulation.Observer {
                     if (c.Speed != double.MaxValue) {
                         this.timeTextBlock.Text = Util.FormatTime(c.SimulationTime);
 
-                        this.txtQueueA.Text = $"{c.Data.QueueA.Count:F2}";
-                        this.txtQueueB.Text = $"{c.Data.QueueB.Count:F2}";
-                        this.txtQueueC.Text = $"{c.Data.QueueC.Count:F2}";
+                        this.txtQueueA.Text = $"{c.Data.QueueA.Count:F0}";
+                        this.txtQueueB.Text = $"{c.Data.QueueB.Count:F0}";
+                        this.txtQueueC.Text = $"{c.Data.QueueC.Count:F0}";
                     }
 
                     this.txtFinishedOrders.Text = $"{c.AverageFinishedOrders.GetAverage():F2}";
-                    this.txtNotStartedOrders.Text = $"{c.AveragePendingOrders.GetAverage():F2}";
+                    this.txtPendingOrders.Text = $"{c.AveragePendingOrders.GetAverage():F2}";
 
                     this.txtUtilityA.Text = $"{(100 * c.AverageUtilityA.GetAverage()):F2}%";
                     this.txtUtilityB.Text = $"{(100 * c.AverageUtilityB.GetAverage()):F2}%";
