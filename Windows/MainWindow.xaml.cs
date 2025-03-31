@@ -61,7 +61,7 @@ public partial class MainWindow : Window {
         if (!int.TryParse(txtWorkersC.Text, out int workersC)) workersC = 0;
 
         facade?.InitCarpentry(replications, sldSpeed.Value, workersA, workersB, workersC);
-        facade?.InitObservers(txtTime, txtFinishedOrders, txtNotStartedOrders, dgOrders, dgWorkers);
+        facade?.InitObservers(txtTime, txtFinishedOrders, txtPendingOrders, txtQueueA, txtQueueB, txtQueueC, txtUtilityA, txtUtilityB, txtUtilityC, dgOrders, dgWorkers);
 
         UpdateCarpentry();
     }

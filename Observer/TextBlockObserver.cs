@@ -8,21 +8,44 @@ namespace EventSimulation.Observer {
         private TextBlock timeTextBlock;
         private TextBlock txtFinishedOrders;
         private TextBlock txtNotStartedOrders;
+        private TextBlock txtQueueA;
+        private TextBlock txtQueueB;
+        private TextBlock txtQueueC;
+        private TextBlock txtUtilityA;
+        private TextBlock txtUtilityB;
+        private TextBlock txtUtilityC;
 
-        public TextBlockObserver(TextBlock timeTextBlock, TextBlock txtFinishedOrders, TextBlock txtNotStartedOrders) {
-            this.timeTextBlock = timeTextBlock;
+        public TextBlockObserver(TextBlock txtTime, TextBlock txtFinishedOrders, TextBlock txtPendingOrders, TextBlock txtQueueA, TextBlock txtQueueB, TextBlock txtQueueC, TextBlock txtUtilityA, TextBlock txtUtilityB, TextBlock txtUtilityC) {
+            this.timeTextBlock = txtTime;
             this.txtFinishedOrders = txtFinishedOrders;
-            this.txtNotStartedOrders = txtNotStartedOrders;
+            this.txtNotStartedOrders = txtPendingOrders;
+            this.txtQueueA = txtQueueA;
+            this.txtQueueB = txtQueueB;
+            this.txtQueueC = txtQueueC;
+            this.txtUtilityA = txtUtilityA;
+            this.txtUtilityB = txtUtilityB;
+            this.txtUtilityC = txtUtilityC;
         }
 
         public void Refresh(SimulationCore simulationCore) {
             if (simulationCore is EventSimulationCore<ProductionManager> esc) {
                 if (esc is Carpentry c) {
                     if (c.Speed != double.MaxValue) {
-                        this.timeTextBlock.Text = Utility.FormatTime(c.SimulationTime);
+                        this.timeTextBlock.Text = Util.FormatTime(c.SimulationTime);
+
+                        this.txtQueueA.Text = $"{c.Data.QueueA.Count:F2}";
+                        this.txtQueueB.Text = $"{c.Data.QueueB.Count:F2}";
+                        this.txtQueueC.Text = $"{c.Data.QueueC.Count:F2}";
                     }
-                    this.txtFinishedOrders.Text = $"{(c.AverageFinishedOrdersCount.Count / (c.CurrentReplication + 1.0)):F0}";
-                    this.txtNotStartedOrders.Text = $"{(c.AverageNotStartedOrdersCount.Count / (c.CurrentReplication + 1.0)):F2}";
+
+                    double replication = c.CurrentReplication + 1.0;
+
+                    this.txtFinishedOrders.Text = $"{(c.AverageFinishedOrders.Count / replication):F2}";
+                    this.txtNotStartedOrders.Text = $"{(c.AveragePendingOrders.Count / replication):F2}";
+
+                    this.txtUtilityA.Text = $"{(100 * c.AverageUtilityA.GetAverage()):F2}%";
+                    this.txtUtilityB.Text = $"{(100 * c.AverageUtilityB.GetAverage()):F2}%";
+                    this.txtUtilityC.Text = $"{(100 * c.AverageUtilityC.GetAverage()):F2}%";
                 }
             }
         }

@@ -19,6 +19,7 @@ namespace EventSimulation.Structures.Events {
             }
 
             Workplace.FinishWork();
+            manager.AverageUtilityA.AddSample(Time, false);
 
             if (manager.QueueC.Count > 0) {
                 SimulationCore.EventCalendar.Enqueue(new PaintingStartEvent(SimulationCore, Time, Workplace), Time);

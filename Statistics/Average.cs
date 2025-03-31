@@ -1,11 +1,16 @@
 ﻿namespace EventSimulation.Statistics {
-    public class AverageTime {
+    public class Average {
         public int Count { get; set; }
         public double Sum { get; set; }
 
-        public void AddSample(double time) {
+        public Average() {
+            Count = 0;
+            Sum = 0;
+        }
+
+        public void AddSample(double value) {
             Count++;
-            Sum += time;
+            Sum += value;
         }
 
         public double GetAverage() {
@@ -14,7 +19,7 @@
 
         public void Clear() {
             Count = 0;
-            Sum = 0.0;
+            Sum = 0;
         }
     }
 }

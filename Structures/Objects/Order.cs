@@ -15,7 +15,7 @@ namespace EventSimulation.Structures.Objects {
             Type = type;
             StartTime = time;
             EndTime = time;
-            FormattedTime = Utility.FormatTime(StartTime);
+            FormattedTime = Util.FormatTime(StartTime);
             State = ProductState.Raw;
         }
 

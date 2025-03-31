@@ -19,6 +19,7 @@ namespace EventSimulation.Structures.Events {
             }
 
             Workplace.FinishWork();
+            manager.AverageUtilityC.AddSample(Time, false);
 
             if (manager.QueueB.Count > 0) {
                 SimulationCore.EventCalendar.Enqueue(new AssemblyStartEvent(SimulationCore, Time, Workplace), Time);

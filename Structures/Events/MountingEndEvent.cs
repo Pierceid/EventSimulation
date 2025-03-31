@@ -18,6 +18,7 @@ namespace EventSimulation.Structures.Events {
             }
 
             Workplace.FinishWork();
+            manager.AverageUtilityC.AddSample(Time, false);
 
             SimulationCore.EventCalendar.Enqueue(new OrderEndEvent(SimulationCore, Time, Workplace), Time);
         }

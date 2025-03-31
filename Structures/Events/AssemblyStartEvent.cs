@@ -32,6 +32,7 @@ public class AssemblyStartEvent : Event<ProductionManager> {
         }
 
         Workplace.StartWork();
+        manager.AverageUtilityB.AddSample(Time, true);
 
         assemblyTime += order.Type switch {
             ProductType.Chair => SimulationCore.Generators.ChairAssemblyTime.Next(),

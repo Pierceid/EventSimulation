@@ -1,5 +1,5 @@
 ﻿namespace EventSimulation.Statistics {
-    public class AverageCount {
+    public class Counter {
         public int Count { get; set; }
 
         public void AddSample(int count) {

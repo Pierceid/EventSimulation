@@ -37,6 +37,7 @@ namespace EventSimulation.Structures.Events {
             }
 
             Workplace.StartWork();
+            manager.AverageUtilityC.AddSample(Time, true);
 
             paintingTime += order.Type switch {
                 ProductType.Chair => SimulationCore.Generators.ChairPaintingTime.Next(),

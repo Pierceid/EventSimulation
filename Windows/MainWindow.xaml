@@ -20,7 +20,7 @@
 
         <!-- Left Column: Controls -->
         <StackPanel>
-            <GroupBox Header="Simulation Controls" Margin="2" BorderBrush="DarkBlue" Foreground="DarkBlue">
+            <GroupBox Header="Simulation Controls" Margin="2" BorderBrush="DarkRed" Foreground="DarkRed">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -97,9 +97,14 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1">
-            <GroupBox Header="Simulation Statistics" Margin="2" BorderBrush="DarkRed" Foreground="DarkRed">
+            <GroupBox Header="Simulation Statistics" Margin="2" BorderBrush="DarkGreen" Foreground="DarkGreen">
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -110,7 +115,7 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Label Content="Finished:" Margin="0,0,2,0"/>
+                        <Label Content="Finished Orders:" Margin="0,0,2,0"/>
                         <TextBlock x:Name="txtFinishedOrders" Grid.Column="1" FontWeight="Bold" VerticalAlignment="Center" Foreground="Black"/>
                     </Grid>
 
@@ -119,8 +124,62 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Label Content="Not Started:" Margin="0,0,2,0"/>
-                        <TextBlock x:Name="txtNotStartedOrders" Grid.Column="1" FontWeight="Bold" VerticalAlignment="Center" Foreground="Black"/>
+                        <Label Content="Pending Orders:" Margin="0,0,2,0"/>
+                        <TextBlock x:Name="txtPendingOrders" Grid.Column="1" FontWeight="Bold" VerticalAlignment="Center" Foreground="Black"/>
+                    </Grid>
+
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Utility A:" Margin="0,0,2,0"/>
+                        <TextBlock x:Name="txtUtilityA" Grid.Column="1" FontWeight="Bold" VerticalAlignment="Center" Foreground="Black"/>
+                    </Grid>
+
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Utility B:" Margin="0,0,2,0"/>
+                        <TextBlock x:Name="txtUtilityB" Grid.Column="1" FontWeight="Bold" VerticalAlignment="Center" Foreground="Black"/>
+                    </Grid>
+
+                    <Grid Grid.Row="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Utility C:" Margin="0,0,2,0"/>
+                        <TextBlock x:Name="txtUtilityC" Grid.Column="1" FontWeight="Bold" VerticalAlignment="Center" Foreground="Black"/>
+                    </Grid>
+
+                    <Grid Grid.Row="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Queue A:" Margin="0,0,2,0"/>
+                        <TextBlock x:Name="txtQueueA" Grid.Column="1" FontWeight="Bold" VerticalAlignment="Center" Foreground="Black"/>
+                    </Grid>
+
+                    <Grid Grid.Row="6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Queue B:" Margin="0,0,2,0"/>
+                        <TextBlock x:Name="txtQueueB" Grid.Column="1" FontWeight="Bold" VerticalAlignment="Center" Foreground="Black"/>
+                    </Grid>
+
+                    <Grid Grid.Row="7">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Queue C:" Margin="0,0,2,0"/>
+                        <TextBlock x:Name="txtQueueC" Grid.Column="1" FontWeight="Bold" VerticalAlignment="Center" Foreground="Black"/>
                     </Grid>
                 </Grid>
             </GroupBox>
@@ -128,7 +187,7 @@
 
         <oxy:PlotView x:Name="plotView" Grid.Column="1" Margin="2"/>
 
-        <GroupBox Header="Simulation Status" Grid.Row="1" Grid.Column="1" Margin="2" BorderBrush="DarkGreen" Foreground="DarkGreen">
+        <GroupBox Header="Simulation Status" Grid.Row="1" Grid.Column="1" Margin="2" BorderBrush="DarkBlue" Foreground="DarkBlue">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="28"/>

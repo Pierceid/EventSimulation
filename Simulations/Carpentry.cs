@@ -1,19 +1,26 @@
 ﻿using EventSimulation.Statistics;
 using EventSimulation.Structures.Events;
 using EventSimulation.Structures.Objects;
-using System.Windows;
 
 namespace EventSimulation.Simulations {
     public class Carpentry : EventSimulationCore<ProductionManager> {
-        public AverageTime AverageOrderTime { get; set; }
-        public AverageCount AverageFinishedOrdersCount { get; set; }
-        public AverageCount AverageNotStartedOrdersCount { get; set; }
+        public Average AverageOrderTime { get; set; }
+        public Counter AverageFinishedOrders { get; set; }
+        public Counter AveragePendingOrders { get; set; }
+        public Average AverageUtilityA { get; set; }
+        public Average AverageUtilityB { get; set; }
+        public Average AverageUtilityC { get; set; }
 
         public Carpentry(int replicationStock, double endOfSimulationTime) : base(replicationStock, endOfSimulationTime) {
             this.Data = new ProductionManager();
+
             this.AverageOrderTime = new();
-            this.AverageFinishedOrdersCount = new();
-            this.AverageNotStartedOrdersCount = new();
+            this.AverageFinishedOrders = new();
+            this.AveragePendingOrders = new();
+
+            this.AverageUtilityA = new();
+            this.AverageUtilityB = new();
+            this.AverageUtilityC = new();
         }
 
         public override void BeforeSimulation() {
@@ -30,10 +37,13 @@ namespace EventSimulation.Simulations {
                 Notify();
             }
 
-            this.Data.AverageNotStartedOrdersCount.AddSample(this.Data.QueueA.Count);
+            this.Data.AveragePendingOrders.AddSample(this.Data.QueueA.Count);
             this.AverageOrderTime.AddSample(this.Data.AverageOrderTime.GetAverage());
-            this.AverageFinishedOrdersCount.AddSample(this.Data.AverageFinishedOrdersCount.Count);
-            this.AverageNotStartedOrdersCount.AddSample(this.Data.AverageNotStartedOrdersCount.Count);
+            this.AverageFinishedOrders.AddSample(this.Data.AverageFinishedOrders.Count);
+            this.AveragePendingOrders.AddSample(this.Data.AveragePendingOrders.Count);
+            this.AverageUtilityA.AddSample(this.Data.AverageUtilityA.GetUtility(this.SimulationTime));
+            this.AverageUtilityB.AddSample(this.Data.AverageUtilityB.GetUtility(this.SimulationTime));
+            this.AverageUtilityC.AddSample(this.Data.AverageUtilityC.GetUtility(this.SimulationTime));
 
             base.AfterSimulation();
         }
@@ -42,9 +52,14 @@ namespace EventSimulation.Simulations {
             base.BeforeSimulationRun();
 
             this.Data.Clear();
+
             this.AverageOrderTime.Clear();
-            this.AverageFinishedOrdersCount.Clear();
-            this.AverageNotStartedOrdersCount.Clear();
+            this.AverageFinishedOrders.Clear();
+            this.AveragePendingOrders.Clear();
+
+            this.AverageUtilityA.Clear();
+            this.AverageUtilityB.Clear();
+            this.AverageUtilityC.Clear();
         }
 
         public override void AfterSimulationRun() {

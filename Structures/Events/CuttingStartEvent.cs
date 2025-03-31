@@ -28,6 +28,7 @@ namespace EventSimulation.Structures.Events {
             }
 
             Workplace.StartWork();
+            manager.AverageUtilityA.AddSample(Time, true);
 
             cuttingTime += order.Type switch {
                 ProductType.Chair => SimulationCore.Generators.ChairCuttingTime.Next(),

@@ -10,7 +10,10 @@ namespace EventSimulation.Structures.Events {
         }
 
         public override void Execute() {
+            if (SimulationCore.Data is not ProductionManager manager) return;
+            
             Workplace.StartWork();
+            manager.AverageUtilityC.AddSample(Time, true);
 
             var mountingTime = SimulationCore.Generators.WardrobeMountingTime.Next();
 

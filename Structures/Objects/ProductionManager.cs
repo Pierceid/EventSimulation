@@ -10,9 +10,13 @@ namespace EventSimulation.Structures.Objects {
         public List<Worker> WorkersB { get; } = new();
         public List<Worker> WorkersC { get; } = new();
         public List<Workplace> Workplaces { get; } = new();
-        public AverageTime AverageOrderTime { get; set; } = new();
-        public AverageCount AverageFinishedOrdersCount { get; set; } = new();
-        public AverageCount AverageNotStartedOrdersCount { get; set; } = new();
+        public Average AverageOrderTime { get; set; } = new();
+        public Counter AverageFinishedOrders { get; set; } = new();
+        public Counter AveragePendingOrders { get; set; } = new();
+        public Utility AverageUtilityA { get; set; } = new();
+        public Utility AverageUtilityB { get; set; } = new();
+        public Utility AverageUtilityC { get; set; } = new();
+
         private static int nextWorkplaceId = 0;
 
         public ProductionManager() { }
@@ -40,8 +44,11 @@ namespace EventSimulation.Structures.Objects {
             InitComponents(workersA, workersB, workersC);
 
             AverageOrderTime.Clear();
-            AverageFinishedOrdersCount.Clear();
-            AverageNotStartedOrdersCount.Clear();
+            AverageFinishedOrders.Clear();
+            AveragePendingOrders.Clear();
+            AverageUtilityA.Clear();
+            AverageUtilityB.Clear();
+            AverageUtilityC.Clear();
         }
 
         public void AssignOrderToWorker(Order order) {
@@ -81,7 +88,7 @@ namespace EventSimulation.Structures.Objects {
         }
 
         public Workplace GetOrCreateWorkplace() {
-            Workplace? workplace = Workplaces.FirstOrDefault(w => !w.IsOccupied || !w.Worker!.IsBusy);
+            Workplace? workplace = Workplaces.FirstOrDefault(w => !w.IsOccupied || (w.IsOccupied && !w.Worker!.IsBusy));
 
             if (workplace == null) {
                 workplace = new Workplace(nextWorkplaceId++);

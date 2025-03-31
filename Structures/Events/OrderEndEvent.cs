@@ -15,7 +15,7 @@ namespace EventSimulation.Structures.Events {
             if (Workplace.Order != null) {
                 Workplace.Order.EndTime = Time;
                 manager.AverageOrderTime.AddSample(Workplace.Order.EndTime - Workplace.Order.StartTime);
-                manager.AverageFinishedOrdersCount.AddSample(1);
+                manager.AverageFinishedOrders.AddSample(1);
             }
         }
     }
