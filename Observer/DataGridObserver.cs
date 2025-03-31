@@ -8,10 +8,13 @@ namespace EventSimulation.Observer {
         private readonly DataGrid orderDataGrid;
         private readonly DataGrid workerDataGrid;
 
-        private ObservableCollection<Worker> Workers { get; } = new();
-        private ObservableCollection<Order> Orders { get; } = new();
+        private ObservableCollection<Worker> Workers { get; }
+        private ObservableCollection<Order> Orders { get; }
 
         public DataGridObserver(DataGrid orderDataGrid, DataGrid workerDataGrid) {
+            Workers = new();
+            Orders = new();
+            
             this.orderDataGrid = orderDataGrid;
             this.workerDataGrid = workerDataGrid;
 

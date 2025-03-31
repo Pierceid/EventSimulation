@@ -51,6 +51,8 @@ namespace EventSimulation.Simulations {
                     }
 
                     if (this.EventCalendar.TryDequeue(out var nextEvent, out var priority)) {
+                        if (this.SimulationTime > priority) throw new Exception("Simulation Time > Next Event Execution");
+
                         this.SimulationTime = priority;
                         nextEvent.Execute();
                     }

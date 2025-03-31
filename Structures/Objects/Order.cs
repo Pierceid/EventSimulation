@@ -6,14 +6,16 @@ namespace EventSimulation.Structures.Objects {
     public class Order : INotifyPropertyChanged {
         public int Id { get; }
         public ProductType Type { get; set; }
-        public double ArrivalTime { get; set; }
+        public double StartTime { get; set; }
+        public double EndTime { get; set; }
         public string FormattedTime { get; set; }
 
         public Order(int id, ProductType type, double time) {
             Id = id;
             Type = type;
-            ArrivalTime = time;
-            FormattedTime = Utility.FormatTime(time);
+            StartTime = time;
+            EndTime = time;
+            FormattedTime = Utility.FormatTime(StartTime);
             State = ProductState.Raw;
         }
 

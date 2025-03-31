@@ -1,6 +1,7 @@
 ﻿using EventSimulation.Simulations;
 using EventSimulation.Structures.Enums;
 using EventSimulation.Structures.Objects;
+using System.Windows;
 
 namespace EventSimulation.Structures.Events {
     public class OrderStartEvent : Event<ProductionManager> {
@@ -17,9 +18,7 @@ namespace EventSimulation.Structures.Events {
             ProductType type = (rng < 0.15) ? ProductType.Chair : (rng < 0.65) ? ProductType.Table : ProductType.Wardrobe;
 
             Order order = new(orderId++, type, Time);
-
             manager.QueueA.AddLast(order);
-
             Worker? worker = manager.GetAvailableWorker(ProductState.Raw);
 
             if (worker != null) {

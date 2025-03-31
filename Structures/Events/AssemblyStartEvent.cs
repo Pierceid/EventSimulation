@@ -17,10 +17,15 @@ public class AssemblyStartEvent : Event<ProductionManager> {
 
         Order order = manager.QueueB.First!.Value;
         manager.QueueB.RemoveFirst();
+        Worker? worker = manager.GetAvailableWorker(ProductState.Painted);
+
+        if (Workplace.Order == null || worker == null) return;
+
+        Workplace.Assign(Workplace.Order, worker);
 
         double assemblyTime = 0.0;
 
-        if (Workplace.Worker?.Workplace == null) {
+        if (Workplace.Worker?.Workplace == -1) {
             assemblyTime += SimulationCore.Generators.WorkerMoveToStorageTime.Next();
         } else if (Workplace.Worker?.Workplace != Workplace.Id) {
             assemblyTime += SimulationCore.Generators.WorkerMoveBetweenStationsTime.Next();

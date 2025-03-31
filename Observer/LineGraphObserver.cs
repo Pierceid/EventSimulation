@@ -16,9 +16,11 @@ namespace EventSimulation.Observer {
 
         public void Refresh(SimulationCore simulationCore) {
             if (simulationCore is EventSimulationCore<ProductionManager> esc) {
-                window.Dispatcher.Invoke(() => {
-                    lineGraph.UpdatePlot(esc.CurrentReplication, esc.CurrentReplication);
-                }, DispatcherPriority.Input);
+                if (esc is Carpentry c) {
+                    window.Dispatcher.Invoke(() => {
+                        lineGraph.UpdatePlot(c.CurrentReplication, c.AverageOrderTime.GetAverage());
+                    }, DispatcherPriority.Input);
+                }
             }
         }
     }

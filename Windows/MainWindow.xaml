@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:EventSimulation.Windows"
         xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d"
-        Title="Discrete Simulation" Height="720" Width="1040" WindowStartupLocation="CenterScreen">
+        Title="Discrete Simulation" Height="720" Width="1040" WindowStartupLocation="CenterScreen" Closing="WindowClosing">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
@@ -96,9 +96,39 @@
             </GroupBox>
         </StackPanel>
 
+        <StackPanel Grid.Row="1">
+            <GroupBox Header="Simulation Statistics" Margin="2" BorderBrush="DarkRed" Foreground="DarkRed">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Finished:" Margin="0,0,2,0"/>
+                        <TextBlock x:Name="txtFinishedOrders" Grid.Column="1" FontWeight="Bold" VerticalAlignment="Center" Foreground="Black"/>
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Not Started:" Margin="0,0,2,0"/>
+                        <TextBlock x:Name="txtNotStartedOrders" Grid.Column="1" FontWeight="Bold" VerticalAlignment="Center" Foreground="Black"/>
+                    </Grid>
+                </Grid>
+            </GroupBox>
+        </StackPanel>
+
         <oxy:PlotView x:Name="plotView" Grid.Column="1" Margin="2"/>
 
-        <GroupBox Header="Simulation Status" Grid.Row="1" Grid.Column="1" Margin="2" BorderBrush="DarkRed" Foreground="DarkRed">
+        <GroupBox Header="Simulation Status" Grid.Row="1" Grid.Column="1" Margin="2" BorderBrush="DarkGreen" Foreground="DarkGreen">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="28"/>

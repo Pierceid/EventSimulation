@@ -43,6 +43,17 @@ public partial class MainWindow : Window {
         }
     }
 
+    private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e) {
+        var result = MessageBox.Show("A simulation is running. Do you really want to exit?", "Confirm Exit", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+        
+        if (result == MessageBoxResult.No) {
+            e.Cancel = true;
+            return;
+        }
+
+        facade?.StopSimulation();
+    }
+
     private void InitCarpentry() {
         if (!int.TryParse(txtReplications.Text, out int replications)) replications = 0;
         if (!int.TryParse(txtWorkersA.Text, out int workersA)) workersA = 0;
@@ -50,7 +61,7 @@ public partial class MainWindow : Window {
         if (!int.TryParse(txtWorkersC.Text, out int workersC)) workersC = 0;
 
         facade?.InitCarpentry(replications, sldSpeed.Value, workersA, workersB, workersC);
-        facade?.InitObservers(txtTime, dgOrders, dgWorkers);
+        facade?.InitObservers(txtTime, txtFinishedOrders, txtNotStartedOrders, dgOrders, dgWorkers);
 
         UpdateCarpentry();
     }
@@ -66,10 +77,10 @@ public partial class MainWindow : Window {
 
     private void InitUI() {
         txtReplications.Text = "1000";
-        sldSpeed.Value = 3;
-        txtWorkersA.Text = "4";
-        txtWorkersB.Text = "4";
-        txtWorkersC.Text = "8";
+        sldSpeed.Value = 7;
+        txtWorkersA.Text = "2";
+        txtWorkersB.Text = "2";
+        txtWorkersC.Text = "18";
         txtTime.Text = "00d 00h 00m 00s";
 
         InitCarpentry();

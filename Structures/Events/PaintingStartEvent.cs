@@ -17,6 +17,11 @@ namespace EventSimulation.Structures.Events {
 
             Order order = manager.QueueC.First!.Value;
             manager.QueueC.RemoveFirst();
+            Worker? worker = manager.GetAvailableWorker(ProductState.Cut);
+
+            if (Workplace.Order == null || worker == null) return;
+
+            Workplace.Assign(Workplace.Order, worker);
 
             if (order.Type == ProductType.Wardrobe && order.State == ProductState.Assembled) {
                 SimulationCore.EventCalendar.Enqueue(new MountingStartEvent(SimulationCore, Time, Workplace), Time);
@@ -25,7 +30,7 @@ namespace EventSimulation.Structures.Events {
 
             double paintingTime = 0.0;
 
-            if (Workplace.Worker?.Workplace == null) {
+            if (Workplace.Worker?.Workplace == -1) {
                 paintingTime += SimulationCore.Generators.WorkerMoveToStorageTime.Next();
             } else if (Workplace.Worker?.Workplace != Workplace.Id) {
                 paintingTime += SimulationCore.Generators.WorkerMoveBetweenStationsTime.Next();

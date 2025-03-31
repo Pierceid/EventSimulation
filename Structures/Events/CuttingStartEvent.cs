@@ -1,6 +1,7 @@
 ﻿using EventSimulation.Simulations;
 using EventSimulation.Structures.Enums;
 using EventSimulation.Structures.Objects;
+using System.Windows;
 
 namespace EventSimulation.Structures.Events {
     public class CuttingStartEvent : Event<ProductionManager> {
@@ -20,7 +21,7 @@ namespace EventSimulation.Structures.Events {
 
             double cuttingTime = 0.0;
 
-            if (Workplace.Worker?.Workplace == null) {
+            if (Workplace.Worker?.Workplace == -1) {
                 cuttingTime += SimulationCore.Generators.WorkerMoveToStorageTime.Next();
             } else if (Workplace.Worker?.Workplace != Workplace.Id) {
                 cuttingTime += SimulationCore.Generators.WorkerMoveBetweenStationsTime.Next();

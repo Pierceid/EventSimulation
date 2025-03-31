@@ -13,17 +13,14 @@ namespace EventSimulation.Structures.Events {
         public override void Execute() {
             if (SimulationCore.Data is not ProductionManager manager) return;
 
-            if (Workplace.Worker?.Order != null) {
-                Workplace.Worker.Order.State = ProductState.Cut;
-                manager.QueueC.AddLast(Workplace.Worker.Order);
+            if (Workplace.Order != null) {
+                Workplace.Order.State = ProductState.Cut;
+                manager.QueueC.AddLast(Workplace.Order);
             }
 
             Workplace.FinishWork();
 
-            Worker? worker = manager.GetAvailableWorker(ProductState.Cut);
-
-            if (manager.QueueC.Count > 0 && worker != null) {
-                Workplace.Assign(manager.QueueC.First!.Value, worker);
+            if (manager.QueueC.Count > 0) {
                 SimulationCore.EventCalendar.Enqueue(new PaintingStartEvent(SimulationCore, Time, Workplace), Time);
             }
 

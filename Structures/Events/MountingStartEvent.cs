@@ -10,8 +10,6 @@ namespace EventSimulation.Structures.Events {
         }
 
         public override void Execute() {
-            if (Workplace == null || Workplace.Worker == null || Workplace.Worker.Order == null) return;
-
             Workplace.StartWork();
 
             var mountingTime = SimulationCore.Generators.WardrobeMountingTime.Next();

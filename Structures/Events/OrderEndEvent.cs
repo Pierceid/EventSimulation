@@ -10,7 +10,13 @@ namespace EventSimulation.Structures.Events {
         }
 
         public override void Execute() {
-
+            if (SimulationCore.Data is not ProductionManager manager) return;
+            
+            if (Workplace.Order != null) {
+                Workplace.Order.EndTime = Time;
+                manager.AverageOrderTime.AddSample(Workplace.Order.EndTime - Workplace.Order.StartTime);
+                manager.AverageFinishedOrdersCount.AddSample(1);
+            }
         }
     }
 }

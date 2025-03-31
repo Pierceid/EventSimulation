@@ -1,4 +1,5 @@
-﻿using EventSimulation.Structures.Enums;
+﻿using EventSimulation.Statistics;
+using EventSimulation.Structures.Enums;
 
 namespace EventSimulation.Structures.Objects {
     public class ProductionManager {
@@ -9,6 +10,9 @@ namespace EventSimulation.Structures.Objects {
         public List<Worker> WorkersB { get; } = new();
         public List<Worker> WorkersC { get; } = new();
         public List<Workplace> Workplaces { get; } = new();
+        public AverageTime AverageOrderTime { get; set; } = new();
+        public AverageCount AverageFinishedOrdersCount { get; set; } = new();
+        public AverageCount AverageNotStartedOrdersCount { get; set; } = new();
         private static int nextWorkplaceId = 0;
 
         public ProductionManager() { }
@@ -23,11 +27,6 @@ namespace EventSimulation.Structures.Objects {
             Parallel.For(0, workersC, c => WorkersC.Add(new Worker(c + workersA + workersB, WorkerGroup.C)));
         }
 
-        public void EnqueueOrder(Order order) {
-            QueueA.AddLast(order);
-            AssignOrderToWorker(order);
-        }
-
         public void Clear() {
             int workersA = WorkersA.Count;
             int workersB = WorkersB.Count;
@@ -39,6 +38,10 @@ namespace EventSimulation.Structures.Objects {
             Workplaces.Clear();
 
             InitComponents(workersA, workersB, workersC);
+
+            AverageOrderTime.Clear();
+            AverageFinishedOrdersCount.Clear();
+            AverageNotStartedOrdersCount.Clear();
         }
 
         public void AssignOrderToWorker(Order order) {

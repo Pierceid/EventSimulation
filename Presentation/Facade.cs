@@ -88,11 +88,11 @@ namespace EventSimulation.Presentation {
             carpentry.Speed = speed;
         }
 
-        public void InitObservers(TextBlock timeTextBlock, DataGrid orderDataGrid, DataGrid workerDataGrid) {
+        public void InitObservers(TextBlock timeTextBlock, TextBlock txtFinishedOrders, TextBlock txtNotStartedOrders, DataGrid orderDataGrid, DataGrid workerDataGrid) {
             if (carpentry == null || mainWindow == null || graph == null) return;
 
             LineGraphObserver lineGraphObserver = new(mainWindow, graph);
-            TextBlockObserver textBlockObserver = new(timeTextBlock);
+            TextBlockObserver textBlockObserver = new(timeTextBlock, txtFinishedOrders, txtNotStartedOrders);
             DataGridObserver dataGridObserver = new(orderDataGrid, workerDataGrid);
 
             carpentry.Attach(lineGraphObserver);
