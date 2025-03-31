@@ -82,6 +82,14 @@ public partial class MainWindow : Window {
         txtWorkersB.Text = "2";
         txtWorkersC.Text = "18";
         txtTime.Text = "00d 00h 00m 00s";
+        txtFinishedOrders.Text = "0.00";
+        txtPendingOrders.Text = "0.00";
+        txtUtilityA.Text = "0.00";
+        txtUtilityB.Text = "0.00";
+        txtUtilityC.Text = "0.00";
+        txtQueueA.Text = "0";
+        txtQueueB.Text = "0";
+        txtQueueC.Text = "0";
 
         InitCarpentry();
     }
