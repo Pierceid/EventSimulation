@@ -3,6 +3,7 @@ using EventSimulation.Structures.Enums;
 
 namespace EventSimulation.Structures.Objects {
     public class ProductionManager {
+        public List<Order> Orders { get; } = new();
         public LinkedList<Order> QueueA { get; } = new();
         public LinkedList<Order> QueueB { get; } = new();
         public LinkedList<Order> QueueC { get; } = new();
@@ -36,9 +37,12 @@ namespace EventSimulation.Structures.Objects {
             int workersB = WorkersB.Count;
             int workersC = WorkersC.Count;
 
+            Orders.Clear();
+
             WorkersA.Clear();
             WorkersB.Clear();
             WorkersC.Clear();
+
             Workplaces.Clear();
 
             InitComponents(workersA, workersB, workersC);

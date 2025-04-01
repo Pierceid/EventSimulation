@@ -12,7 +12,7 @@
             Worker = null;
         }
 
-        public void Assign(Order order, Worker worker) {
+        public void Assign(Order? order = null, Worker? worker = null) {
             IsOccupied = true;
             Order = order;
             Worker = worker;

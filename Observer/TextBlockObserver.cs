@@ -33,7 +33,7 @@ namespace EventSimulation.Observer {
 
                     (double bottom, double top) = c.ConfidenceInterval.GetConfidenceInterval();
 
-                    this.textBlocks[9].Text = $"<{top:F0},{bottom:F0}>";
+                    this.textBlocks[9].Text = $"< {top:F0} , {bottom:F0} >";
                 }
             }
         }

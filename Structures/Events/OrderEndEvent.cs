@@ -13,6 +13,7 @@ namespace EventSimulation.Structures.Events {
             if (SimulationCore.Data is not ProductionManager manager) return;
             
             if (Workplace.Order != null) {
+                Workplace.Order.State = Enums.ProductState.Finished;
                 Workplace.Order.EndTime = Time;
                 manager.AverageOrderTime.AddSample(Workplace.Order.EndTime - Workplace.Order.StartTime);
                 manager.AverageFinishedOrders.AddSample(1);

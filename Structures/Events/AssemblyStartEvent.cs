@@ -19,9 +19,7 @@ public class AssemblyStartEvent : Event<ProductionManager> {
         manager.QueueB.RemoveFirst();
         Worker? worker = manager.GetAvailableWorker(ProductState.Painted);
 
-        if (Workplace.Order == null || worker == null) return;
-
-        Workplace.Assign(Workplace.Order, worker);
+        Workplace.Assign(order, worker);
 
         double assemblyTime = 0.0;
 

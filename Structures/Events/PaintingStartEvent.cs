@@ -19,9 +19,7 @@ namespace EventSimulation.Structures.Events {
             manager.QueueC.RemoveFirst();
             Worker? worker = manager.GetAvailableWorker(ProductState.Cut);
 
-            if (Workplace.Order == null || worker == null) return;
-
-            Workplace.Assign(Workplace.Order, worker);
+            Workplace.Assign(order, worker);
 
             if (order.Type == ProductType.Wardrobe && order.State == ProductState.Assembled) {
                 SimulationCore.EventCalendar.Enqueue(new MountingStartEvent(SimulationCore, Time, Workplace), Time);

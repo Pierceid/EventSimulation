@@ -17,14 +17,21 @@ namespace EventSimulation.Structures.Events {
             ProductType type = (rng < 0.15) ? ProductType.Chair : (rng < 0.65) ? ProductType.Table : ProductType.Wardrobe;
 
             Order order = new(orderId++, type, Time);
-            manager.QueueA.AddLast(order);
-            Worker? worker = manager.GetAvailableWorker(ProductState.Raw);
 
-            if (worker != null) {
-                Workplace workplace = manager.GetOrCreateWorkplace();
-                workplace.Assign(order, worker);
-                SimulationCore.EventCalendar.Enqueue(new CuttingStartEvent(SimulationCore, Time, workplace), Time);
+            manager.Orders.Add(order);
+
+            if (manager.Orders.Count > 1000) {
+                manager.Orders.RemoveAll(o => o.State == ProductState.Finished);
             }
+
+            manager.QueueA.AddLast(order);
+
+            Worker? worker = manager.GetAvailableWorker(ProductState.Raw);
+            Workplace workplace = manager.GetOrCreateWorkplace();
+
+            workplace.Assign(order, worker);
+
+            SimulationCore.EventCalendar.Enqueue(new CuttingStartEvent(SimulationCore, Time, workplace), Time);
 
             Time += orderingTime;
 

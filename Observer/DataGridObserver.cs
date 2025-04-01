@@ -23,7 +23,7 @@ namespace EventSimulation.Observer {
         public void Refresh(SimulationCore simulationCore) {
             if (simulationCore is EventSimulationCore<ProductionManager> esc) {
                 if (esc.Speed != double.MaxValue) {
-                    SyncCollection(Orders, esc.Data.QueueA.Concat(esc.Data.QueueB).Concat(esc.Data.QueueC));
+                    SyncCollection(Orders, esc.Data.Orders);
                     SyncCollection(Workers, esc.Data.WorkersA.Concat(esc.Data.WorkersB).Concat(esc.Data.WorkersC));
                 }
             }
