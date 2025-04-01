@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="EventSimulation.Generators.RandomGenerators">
+    <Position X="7.75" Y="2.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>JAIABAAMAAGACAAAAAQAAAAAAAAAQAAgAQACAABAABA=</HashCode>
+      <FileName>Generators\RandomGenerators.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Observer.DataGridObserver" BaseTypeListCollapsed="true">
+    <Position X="13.5" Y="6" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAABAAAAAAAAAQAAAAAAAEAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Observer\DataGridObserver.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="EventSimulation.Observer.LineGraphObserver" BaseTypeListCollapsed="true">
+    <Position X="15.75" Y="6" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAABAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Observer\LineGraphObserver.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="EventSimulation.Observer.TextBlockObserver" BaseTypeListCollapsed="true">
+    <Position X="18" Y="6" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Observer\TextBlockObserver.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="EventSimulation.Presentation.Facade">
+    <Position X="16" Y="9" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAQgMAABAIAAADEAAAAQAAADAAAAAAAAACAAAAAAAg=</HashCode>
+      <FileName>Presentation\Facade.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Presentation.LineGraph">
+    <Position X="15.75" Y="3.5" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAYAAEAAAAQAAAAAAAAAAAAQAAAAAAABAAAAICAA=</HashCode>
+      <FileName>Presentation\LineGraph.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Randoms.Continuous.EmpiricC" Collapsed="true">
+    <Position X="10.5" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AgAAAACAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Randoms\Continuous\EmpiricC.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Randoms.Continuous.UniformC" Collapsed="true">
+    <Position X="10.5" Y="4" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AgAAEAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Randoms\Continuous\UniformC.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Randoms.Discrete.EmpiricD" Collapsed="true">
+    <Position X="10.5" Y="3.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AgAAAACAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Randoms\Discrete\EmpiricD.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Randoms.Discrete.UniformD" Collapsed="true">
+    <Position X="10.5" Y="4.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AgAAEAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Randoms\Discrete\UniformD.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Randoms.Other.Exponential" Collapsed="true">
+    <Position X="10.5" Y="6.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AgAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Randoms\Other\Exponential.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Randoms.Other.Triangular" Collapsed="true">
+    <Position X="10.5" Y="5.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AgAAEAAAAAAQAACAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Randoms\Other\Triangular.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Simulations.Carpentry">
+    <Position X="7.75" Y="9" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAEAIAAAAAAAAQEQAgAAAACAAAAgAAAAAA=</HashCode>
+      <FileName>Simulations\Carpentry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Simulations.EventSimulationCore&lt;T&gt;">
+    <Position X="4.5" Y="2.5" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAoAAAAAAAEgQIABAAAAAAFQIAAUBBCAAAgAAgAAAA=</HashCode>
+      <FileName>Simulations\EventSimulationCore.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EventSimulation.Simulations.SimulationCore">
+    <Position X="1.75" Y="0.5" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAACAEAAFAAAABAAAEwAAAQEACIAAAAAAAAAA=</HashCode>
+      <FileName>Simulations\SimulationCore.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Statistics.Average">
+    <Position X="4.5" Y="12" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAQAAAAAAAAAgAAAAABAAAQ=</HashCode>
+      <FileName>Statistics\Average.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Statistics.ConfidenceInterval">
+    <Position X="4.5" Y="9" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAQBAEAAAAAQAAAAAABAAAQ=</HashCode>
+      <FileName>Statistics\ConfidenceInterval.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Statistics.Counter">
+    <Position X="4.5" Y="17.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAIAQAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Statistics\Counter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Statistics.Utility">
+    <Position X="4.5" Y="14.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAACAAIAQAAAIAAAAAAAAAAABAAAQ=</HashCode>
+      <FileName>Statistics\Utility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Structures.Events.AssemblyEndEvent" Collapsed="true">
+    <Position X="0.5" Y="14.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Structures\Events\AssemblyEndEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Structures.Events.CuttingEndEvent" Collapsed="true">
+    <Position X="0.5" Y="11.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Structures\Events\CuttingEndEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Structures.Events.CuttingStartEvent" Collapsed="true">
+    <Position X="0.5" Y="11" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Structures\Events\CuttingStartEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Structures.Events.Event&lt;T&gt;">
+    <Position X="1.75" Y="6.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAQEAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Structures\Events\Event.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Structures.Events.MountingEndEvent" Collapsed="true">
+    <Position X="0.5" Y="16.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Structures\Events\MountingEndEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Structures.Events.MountingStartEvent" Collapsed="true">
+    <Position X="0.5" Y="15.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Structures\Events\MountingStartEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Structures.Events.OrderEndEvent" Collapsed="true">
+    <Position X="0.5" Y="10.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Structures\Events\OrderEndEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Structures.Events.OrderStartEvent" Collapsed="true">
+    <Position X="0.5" Y="9.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Structures\Events\OrderStartEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Structures.Events.PaintingEndEvent" Collapsed="true">
+    <Position X="0.5" Y="13.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Structures\Events\PaintingEndEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Structures.Events.PaintingStartEvent" Collapsed="true">
+    <Position X="0.5" Y="12.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Structures\Events\PaintingStartEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Structures.Events.SystemEvent&lt;T&gt;" Collapsed="true">
+    <Position X="0.5" Y="8.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Structures\Events\SystemEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AssemblyStartEvent" Collapsed="true">
+    <Position X="0.5" Y="14" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Structures\Events\AssemblyStartEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Structures.Objects.Order" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="12.5" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAIAAAAAAAoAAgAAAEAQAABABAAAA=</HashCode>
+      <FileName>Structures\Objects\Order.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="EventSimulation.Structures.Objects.ProductionManager">
+    <Position X="7.75" Y="13.25" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAEAAAABAAAAAIAQAQAAAAAAQQkAAAAAQAIggABIAAE=</HashCode>
+      <FileName>Structures\Objects\ProductionManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Structures.Objects.Worker" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="17" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAEKAEABAAAACAAAIEgAgABAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Structures\Objects\Worker.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="EventSimulation.Structures.Objects.Workplace">
+    <Position X="16" Y="15.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAECABQAAAAAAAAAAAAAAgQAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Structures\Objects\Workplace.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Structures.GeneralRandom&lt;T&gt;">
+    <Position X="11.75" Y="1" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAgAAQAAAAAEAAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Structures\GeneralRandom.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventSimulation.Windows.MainWindow" BaseTypeListCollapsed="true">
+    <Position X="19.25" Y="10" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAIAABAAACAAAAAAAAAAAAIAAAAAEAACAAAQAAAA=</HashCode>
+      <FileName>Windows\MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="EventSimulation.Observer.IObserver">
+    <Position X="1.75" Y="5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Observer\IObserver.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="EventSimulation.Observer.ISubject">
+    <Position X="4.5" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAAIAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Observer\ISubject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="EventSimulation.Structures.Enums.ProductState">
+    <Position X="13.5" Y="14.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAACBAAAACAAAAAQAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Structures\Enums\ProductState.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EventSimulation.Structures.Enums.ProductType">
+    <Position X="13.5" Y="12.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAIQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Structures\Enums\ProductType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EventSimulation.Structures.Enums.WorkerGroup">
+    <Position X="13.5" Y="18.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAEAAAA=</HashCode>
+      <FileName>Structures\Enums\WorkerGroup.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

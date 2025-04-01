@@ -65,10 +65,10 @@ namespace EventSimulation.Presentation {
             }
 
             graph = new(
-                modelTitle: "Costs Over Time",
+                modelTitle: "Average Order Time",
                 xAxisTitle: "Replications",
-                yAxisTitle: "Costs",
-                seriesTitle: "Costs",
+                yAxisTitle: "Order Time",
+                seriesTitle: "Order Time",
                 plotView: plotView
             );
         }
