@@ -1,7 +1,6 @@
 ﻿using EventSimulation.Simulations;
 using EventSimulation.Structures.Enums;
 using EventSimulation.Structures.Objects;
-using System.Windows;
 
 namespace EventSimulation.Structures.Events {
     public class CuttingStartEvent : Event<ProductionManager> {
