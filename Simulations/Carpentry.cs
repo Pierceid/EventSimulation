@@ -10,6 +10,7 @@ namespace EventSimulation.Simulations {
         public Average AverageUtilityA { get; set; }
         public Average AverageUtilityB { get; set; }
         public Average AverageUtilityC { get; set; }
+        public ConfidenceInterval ConfidenceInterval { get; set; }
 
         public Carpentry(int replicationStock, double endOfSimulationTime) : base(replicationStock, endOfSimulationTime) {
             this.Data = new ProductionManager();
@@ -21,6 +22,8 @@ namespace EventSimulation.Simulations {
             this.AverageUtilityA = new();
             this.AverageUtilityB = new();
             this.AverageUtilityC = new();
+
+            this.ConfidenceInterval = new();
         }
 
         public override void BeforeSimulation() {
@@ -38,12 +41,16 @@ namespace EventSimulation.Simulations {
             }
 
             this.Data.AveragePendingOrders.AddSample(this.Data.QueueA.Count);
+
             this.AverageOrderTime.AddSample(this.Data.AverageOrderTime.GetAverage());
-            this.AverageFinishedOrders.AddSample(this.Data.AverageFinishedOrders.Count);
-            this.AveragePendingOrders.AddSample(this.Data.AveragePendingOrders.Count);
+            this.AverageFinishedOrders.AddSample(this.Data.AverageFinishedOrders.GetCounter());
+            this.AveragePendingOrders.AddSample(this.Data.AveragePendingOrders.GetCounter());
+
             this.AverageUtilityA.AddSample(this.Data.AverageUtilityA.GetUtility(this.SimulationTime));
             this.AverageUtilityB.AddSample(this.Data.AverageUtilityB.GetUtility(this.SimulationTime));
             this.AverageUtilityC.AddSample(this.Data.AverageUtilityC.GetUtility(this.SimulationTime));
+
+            this.ConfidenceInterval.AddSample(this.AverageOrderTime.GetAverage());
 
             base.AfterSimulation();
         }
@@ -60,6 +67,8 @@ namespace EventSimulation.Simulations {
             this.AverageUtilityA.Clear();
             this.AverageUtilityB.Clear();
             this.AverageUtilityC.Clear();
+
+            this.ConfidenceInterval.Clear();
         }
 
         public override void AfterSimulationRun() {

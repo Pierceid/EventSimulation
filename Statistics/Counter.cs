@@ -6,6 +6,10 @@
             Count += count;
         }
 
+        public int GetCounter() {
+            return Count;
+        }
+
         public void Clear() {
             Count = 0;
         }

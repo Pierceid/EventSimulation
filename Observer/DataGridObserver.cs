@@ -5,21 +5,19 @@ using System.Windows.Controls;
 
 namespace EventSimulation.Observer {
     public class DataGridObserver : IObserver {
-        private readonly DataGrid orderDataGrid;
-        private readonly DataGrid workerDataGrid;
+        private DataGrid[] dataGrids;
 
         private ObservableCollection<Worker> Workers { get; }
         private ObservableCollection<Order> Orders { get; }
 
-        public DataGridObserver(DataGrid orderDataGrid, DataGrid workerDataGrid) {
+        public DataGridObserver(DataGrid[] dataGrids) {
             Workers = new();
             Orders = new();
-            
-            this.orderDataGrid = orderDataGrid;
-            this.workerDataGrid = workerDataGrid;
 
-            this.orderDataGrid.ItemsSource = Orders;
-            this.workerDataGrid.ItemsSource = Workers;
+            this.dataGrids = dataGrids;
+
+            this.dataGrids[0].ItemsSource = Orders;
+            this.dataGrids[1].ItemsSource = Workers;
         }
 
         public void Refresh(SimulationCore simulationCore) {
