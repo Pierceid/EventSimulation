@@ -3,23 +3,33 @@ using EventSimulation.Structures.Objects;
 
 namespace EventSimulation.Structures.Events {
     public class MountingStartEvent : Event<ProductionManager> {
-        public Workplace Workplace { get; }
+        public Order Order { get; }
+        public Worker Worker { get; }
 
-        public MountingStartEvent(EventSimulationCore<ProductionManager> simulationCore, double time, Workplace workplace) : base(simulationCore, time, 5) {
-            Workplace = workplace;
+        public MountingStartEvent(EventSimulationCore<ProductionManager> simulationCore, double time, Order order, Worker worker) : base(simulationCore, time, 4) {
+            Order = order;
+            Worker = worker;
         }
 
         public override void Execute() {
             if (SimulationCore.Data is not ProductionManager manager) return;
-            
-            Workplace.StartWork();
+
+            double movingTime = 0.0;
+
+            if (Worker.Workplace == null) {
+                movingTime += SimulationCore.Generators.WorkerMoveToStorageTime.Next();
+            } else if (Worker.Workplace != Order.Workplace) {
+                movingTime += SimulationCore.Generators.WorkerMoveBetweenStationsTime.Next();
+            }
+
+            Worker.Workplace = Order.Workplace;
+            Worker.SetOrder(Order);
             manager.AverageUtilityC.AddSample(Time, true);
 
-            var mountingTime = SimulationCore.Generators.WardrobeMountingTime.Next();
+            double mountingTime = SimulationCore.Generators.WardrobeMountingTime.Next();
+            double nextEventTime = Time + movingTime + mountingTime;
 
-            Time += mountingTime;
-
-            SimulationCore.EventCalendar.Enqueue(new MountingEndEvent(SimulationCore, Time, Workplace), Time);
+            SimulationCore.EventCalendar.Enqueue(new MountingEndEvent(SimulationCore, nextEventTime, Order, Worker), nextEventTime);
         }
     }
 }

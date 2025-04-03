@@ -1,10 +1,13 @@
-﻿using EventSimulation.Structures.Enums;
+﻿using EventSimulation.Statistics;
+using EventSimulation.Structures.Enums;
 using System.ComponentModel;
 
 namespace EventSimulation.Structures.Objects {
     public class Worker : INotifyPropertyChanged {
         public int Id { get; }
         public WorkerGroup Group { get; set; }
+        public Utility Utility { get; set; }
+
         private bool isBusy;
         public bool IsBusy {
             get => isBusy;
@@ -27,8 +30,8 @@ namespace EventSimulation.Structures.Objects {
             }
         }
 
-        private int workplace;
-        public int Workplace {
+        private Workplace? workplace;
+        public Workplace? Workplace {
             get => workplace;
             set {
                 if (workplace != value) {
@@ -39,25 +42,36 @@ namespace EventSimulation.Structures.Objects {
             }
         }
 
-        public string FormattedWorkplace => workplace == -1 ? string.Empty : workplace.ToString();
+        public string? FormattedWorkplace => workplace == null ? string.Empty : workplace.ToString();
 
         public Worker(int id, WorkerGroup group) {
             Id = id;
             Group = group;
             IsBusy = false;
             Order = null;
-            Workplace = -1;
+            Workplace = null;
+            Utility = new();
         }
 
-        public void StartTask(Order order, int workplace) {
-            IsBusy = true;
+        public void SetState(bool isBusy) {
+            if (!isBusy) Order = null;
+
+            IsBusy = isBusy;
+        }
+
+        public void SetOrder(Order? order) {
             Order = order;
+            IsBusy = order != null;
+        }
+
+        public void SetWorkplace(Workplace? workplace) {
             Workplace = workplace;
         }
 
-        public void FinishTask() {
-            IsBusy = false;
+        public void Clear() {
             Order = null;
+            Workplace = null;
+            IsBusy = false;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

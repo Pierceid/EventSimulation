@@ -7,6 +7,7 @@ namespace EventSimulation.Structures.Objects {
         public LinkedList<Order> QueueA { get; } = new();
         public LinkedList<Order> QueueB { get; } = new();
         public LinkedList<Order> QueueC { get; } = new();
+        public LinkedList<Order> QueueD { get; } = new();
         public List<Worker> WorkersA { get; } = new();
         public List<Worker> WorkersB { get; } = new();
         public List<Worker> WorkersC { get; } = new();
@@ -38,14 +39,14 @@ namespace EventSimulation.Structures.Objects {
             int workersC = WorkersC.Count;
 
             Orders.Clear();
-
+            QueueA.Clear();
+            QueueB.Clear();
+            QueueC.Clear();
+            QueueD.Clear();
             WorkersA.Clear();
             WorkersB.Clear();
             WorkersC.Clear();
-
             Workplaces.Clear();
-
-            InitComponents(workersA, workersB, workersC);
 
             AverageOrderTime.Clear();
             AverageFinishedOrders.Clear();
@@ -53,41 +54,17 @@ namespace EventSimulation.Structures.Objects {
             AverageUtilityA.Clear();
             AverageUtilityB.Clear();
             AverageUtilityC.Clear();
+
+            InitComponents(workersA, workersB, workersC);
         }
 
-        public void AssignOrderToWorker(Order order) {
-            LinkedList<Order>? targetQueue = order.State switch {
-                ProductState.Raw => QueueA,
-                ProductState.Painted => QueueB,
-                ProductState.Cut => QueueC,
-                ProductState.Assembled => QueueC,
-                _ => null
-            };
-
-            if (targetQueue == null || targetQueue.Count == 0) return;
-
-            while (targetQueue.Count > 0) {
-                Order currentOrder = targetQueue.First!.Value;
-                Worker? availableWorker = GetAvailableWorker(currentOrder.State);
-
-                if (availableWorker != null) {
-                    Workplace workplace = GetOrCreateWorkplace();
-                    workplace.Assign(currentOrder, availableWorker);
-                    workplace.StartWork();
-                    targetQueue.RemoveFirst();
-                } else {
-                    break;
-                }
-            }
-        }
-
-        public Worker? GetAvailableWorker(ProductState state) {
+        public List<Worker> GetAvailableWorkers(ProductState state) {
             return state switch {
-                ProductState.Raw => WorkersA.FirstOrDefault(w => !w.IsBusy),
-                ProductState.Painted => WorkersB.FirstOrDefault(w => !w.IsBusy),
-                ProductState.Cut => WorkersC.FirstOrDefault(w => !w.IsBusy),
-                ProductState.Assembled => WorkersC.FirstOrDefault(w => !w.IsBusy),
-                _ => null
+                ProductState.Raw => [.. WorkersA.FindAll(w => !w.IsBusy)],
+                ProductState.Painted => [.. WorkersB.FindAll(w => !w.IsBusy)],
+                ProductState.Cut => [.. WorkersC.FindAll(w => !w.IsBusy)],
+                ProductState.Assembled => [.. WorkersC.FindAll(w => !w.IsBusy)],
+                _ => []
             };
         }
 

@@ -1,21 +1,24 @@
 ﻿using EventSimulation.Simulations;
+using EventSimulation.Structures.Enums;
 using EventSimulation.Structures.Objects;
 
 namespace EventSimulation.Structures.Events {
     public class OrderEndEvent : Event<ProductionManager> {
-        public Workplace Workplace { get; }
+        public Order Order { get; }
+        public Worker Worker { get; }
 
-        public OrderEndEvent(EventSimulationCore<ProductionManager> simulationCore, double time, Workplace workplace) : base(simulationCore, time, 7) {
-            Workplace = workplace;
+        public OrderEndEvent(EventSimulationCore<ProductionManager> simulationCore, double time, Order order, Worker worker) : base(simulationCore, time, 7) {
+            Order = order;
+            Worker = worker;
         }
 
         public override void Execute() {
             if (SimulationCore.Data is not ProductionManager manager) return;
-            
-            if (Workplace.Order != null) {
-                Workplace.Order.State = Enums.ProductState.Finished;
-                Workplace.Order.EndTime = Time;
-                manager.AverageOrderTime.AddSample(Workplace.Order.EndTime - Workplace.Order.StartTime);
+
+            if (Order != null) {
+                Order.State = ProductState.Finished;
+                Order.EndTime = Time;
+                manager.AverageOrderTime.AddSample(Order.EndTime - Order.StartTime);
                 manager.AverageFinishedOrders.AddSample(1);
             }
         }

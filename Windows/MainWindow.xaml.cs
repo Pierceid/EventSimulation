@@ -84,9 +84,9 @@ public partial class MainWindow : Window {
     private void InitUI() {
         txtReplications.Text = "1000";
         sldSpeed.Value = 7;
-        txtWorkersA.Text = "2";
-        txtWorkersB.Text = "2";
-        txtWorkersC.Text = "18";
+        txtWorkersA.Text = "3";
+        txtWorkersB.Text = "3";
+        txtWorkersC.Text = "20";
         txtTime.Text = "00d 00h 00m 00s";
         txtFinishedOrders.Text = "0.00";
         txtPendingOrders.Text = "0.00";

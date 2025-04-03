@@ -1,46 +1,42 @@
 ﻿using EventSimulation.Simulations;
 using EventSimulation.Structures.Enums;
-using EventSimulation.Structures.Events;
 using EventSimulation.Structures.Objects;
 
-public class AssemblyStartEvent : Event<ProductionManager> {
-    public Workplace Workplace { get; }
+namespace EventSimulation.Structures.Events {
+    public class AssemblyStartEvent : Event<ProductionManager> {
+        public Order Order { get; }
+        public Worker Worker { get; }
 
-    public AssemblyStartEvent(EventSimulationCore<ProductionManager> simulationCore, double time, Workplace workplace) : base(simulationCore, time, 4) {
-        Workplace = workplace;
-    }
-
-    public override void Execute() {
-        if (SimulationCore.Data is not ProductionManager manager) return;
-
-        if (manager.QueueB.Count == 0) return;
-
-        Order order = manager.QueueB.First!.Value;
-        manager.QueueB.RemoveFirst();
-        Worker? worker = manager.GetAvailableWorker(ProductState.Painted);
-
-        Workplace.Assign(order, worker);
-
-        double assemblyTime = 0.0;
-
-        if (Workplace.Worker?.Workplace == -1) {
-            assemblyTime += SimulationCore.Generators.WorkerMoveToStorageTime.Next();
-        } else if (Workplace.Worker?.Workplace != Workplace.Id) {
-            assemblyTime += SimulationCore.Generators.WorkerMoveBetweenStationsTime.Next();
+        public AssemblyStartEvent(EventSimulationCore<ProductionManager> simulationCore, double time, Order order, Worker worker) : base(simulationCore, time, 3) {
+            Order = order;
+            Worker = worker;
         }
 
-        Workplace.StartWork();
-        manager.AverageUtilityB.AddSample(Time, true);
+        public override void Execute() {
+            if (SimulationCore.Data is not ProductionManager manager) return;
 
-        assemblyTime += order.Type switch {
-            ProductType.Chair => SimulationCore.Generators.ChairAssemblyTime.Next(),
-            ProductType.Table => SimulationCore.Generators.TableAssemblyTime.Next(),
-            ProductType.Wardrobe => SimulationCore.Generators.WardrobeAssemblyTime.Next(),
-            _ => 0.0
-        };
+            double movingTime = 0.0;
 
-        Time += assemblyTime;
+            if (Worker.Workplace == null) {
+                movingTime += SimulationCore.Generators.WorkerMoveToStorageTime.Next();
+            } else if (Worker.Workplace != Order.Workplace) {
+                movingTime += SimulationCore.Generators.WorkerMoveBetweenStationsTime.Next();
+            }
 
-        SimulationCore.EventCalendar.Enqueue(new AssemblyEndEvent(SimulationCore, Time, Workplace), Time);
+            Worker.Workplace = Order.Workplace;
+            Worker.SetOrder(Order);
+            manager.AverageUtilityB.AddSample(Time, true);
+
+            double assemblyTime = Order.Type switch {
+                ProductType.Chair => SimulationCore.Generators.ChairAssemblyTime.Next(),
+                ProductType.Table => SimulationCore.Generators.TableAssemblyTime.Next(),
+                ProductType.Wardrobe => SimulationCore.Generators.WardrobeAssemblyTime.Next(),
+                _ => 0.0
+            };
+
+            double nextEventTime = Time + movingTime + assemblyTime;
+
+            SimulationCore.EventCalendar.Enqueue(new AssemblyEndEvent(SimulationCore, nextEventTime, Order, Worker), nextEventTime);
+        }
     }
 }

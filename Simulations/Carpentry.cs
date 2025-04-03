@@ -29,6 +29,7 @@ namespace EventSimulation.Simulations {
         public override void BeforeSimulation() {
             base.BeforeSimulation();
 
+            this.EventCalendar.Clear();
             this.Data.Clear();
 
             EventCalendar.Enqueue(new SystemEvent<ProductionManager>(this, SimulationTime), SimulationTime);
@@ -58,8 +59,8 @@ namespace EventSimulation.Simulations {
         public override void BeforeSimulationRun() {
             base.BeforeSimulationRun();
 
+            this.EventCalendar.Clear();
             this.Data.Clear();
-
             this.AverageOrderTime.Clear();
             this.AverageFinishedOrders.Clear();
             this.AveragePendingOrders.Clear();

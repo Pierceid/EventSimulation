@@ -4,49 +4,44 @@ using EventSimulation.Structures.Objects;
 
 namespace EventSimulation.Structures.Events {
     public class PaintingStartEvent : Event<ProductionManager> {
-        public Workplace Workplace { get; }
+        public Order Order { get; }
+        public Worker Worker { get; }
 
-        public PaintingStartEvent(EventSimulationCore<ProductionManager> simulationCore, double time, Workplace workplace) : base(simulationCore, time, 6) {
-            Workplace = workplace;
+        public PaintingStartEvent(EventSimulationCore<ProductionManager> simulationCore, double time, Order order, Worker worker) : base(simulationCore, time, 4) {
+            Order = order;
+            Worker = worker;
         }
 
         public override void Execute() {
             if (SimulationCore.Data is not ProductionManager manager) return;
 
-            if (manager.QueueC.Count == 0) return;
-
-            Order order = manager.QueueC.First!.Value;
-            manager.QueueC.RemoveFirst();
-            Worker? worker = manager.GetAvailableWorker(ProductState.Cut);
-
-            Workplace.Assign(order, worker);
-
-            if (order.Type == ProductType.Wardrobe && order.State == ProductState.Assembled) {
-                SimulationCore.EventCalendar.Enqueue(new MountingStartEvent(SimulationCore, Time, Workplace), Time);
+            if (Order.State == ProductState.Assembled && Order.Type == ProductType.Wardrobe) {
+                SimulationCore.EventCalendar.Enqueue(new MountingStartEvent(SimulationCore, Time, Order, Worker), Time);
                 return;
             }
 
-            double paintingTime = 0.0;
+            double movingTime = 0.0;
 
-            if (Workplace.Worker?.Workplace == -1) {
-                paintingTime += SimulationCore.Generators.WorkerMoveToStorageTime.Next();
-            } else if (Workplace.Worker?.Workplace != Workplace.Id) {
-                paintingTime += SimulationCore.Generators.WorkerMoveBetweenStationsTime.Next();
+            if (Worker.Workplace == null) {
+                movingTime += SimulationCore.Generators.WorkerMoveToStorageTime.Next();
+            } else if (Worker.Workplace != Order.Workplace) {
+                movingTime += SimulationCore.Generators.WorkerMoveBetweenStationsTime.Next();
             }
 
-            Workplace.StartWork();
+            Worker.Workplace = Order.Workplace;
+            Worker.SetOrder(Order);
             manager.AverageUtilityC.AddSample(Time, true);
 
-            paintingTime += order.Type switch {
+            double paintingTime = Order.Type switch {
                 ProductType.Chair => SimulationCore.Generators.ChairPaintingTime.Next(),
                 ProductType.Table => SimulationCore.Generators.TablePaintingTime.Next(),
                 ProductType.Wardrobe => SimulationCore.Generators.WardrobePaintingTime.Next(),
                 _ => 0.0
             };
 
-            Time += paintingTime;
+            double nextEventTime = Time + movingTime + paintingTime;
 
-            SimulationCore.EventCalendar.Enqueue(new PaintingEndEvent(SimulationCore, Time, Workplace), Time);
+            SimulationCore.EventCalendar.Enqueue(new PaintingEndEvent(SimulationCore, nextEventTime, Order, Worker), nextEventTime);
         }
     }
 }

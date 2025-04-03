@@ -4,23 +4,35 @@ using EventSimulation.Structures.Objects;
 
 namespace EventSimulation.Structures.Events {
     public class MountingEndEvent : Event<ProductionManager> {
-        public Workplace Workplace { get; }
+        public Order Order { get; }
+        public Worker Worker { get; }
 
-        public MountingEndEvent(EventSimulationCore<ProductionManager> simulationCore, double time, Workplace workplace) : base(simulationCore, time, 5) {
-            Workplace = workplace;
+        public MountingEndEvent(EventSimulationCore<ProductionManager> simulationCore, double time, Order order, Worker worker) : base(simulationCore, time, 4) {
+            Order = order;
+            Worker = worker;
         }
 
         public override void Execute() {
             if (SimulationCore.Data is not ProductionManager manager) return;
 
-            if (Workplace.Order != null) {
-                Workplace.Order.State = ProductState.Mounted;
-            }
+            Order.State = ProductState.Mounted;
+            Order.Workplace = null;
 
-            Workplace.FinishWork();
+            Worker.SetOrder(null);
+            Worker.SetState(false);
             manager.AverageUtilityC.AddSample(Time, false);
 
-            SimulationCore.EventCalendar.Enqueue(new OrderEndEvent(SimulationCore, Time, Workplace), Time);
+            SimulationCore.EventCalendar.Enqueue(new OrderEndEvent(SimulationCore, Time, Order, Worker), Time);
+
+            List<Worker> availableMontageWorkers = manager.GetAvailableWorkers(ProductState.Assembled);
+
+            if (manager.QueueD.Count > 0 && availableMontageWorkers.Count > 0) {
+                Worker nextWorker = availableMontageWorkers.First();
+                Order nextOrder = manager.QueueD.First();
+                manager.QueueD.RemoveFirst();
+
+                SimulationCore.EventCalendar.Enqueue(new MountingStartEvent(SimulationCore, Time, nextOrder, nextWorker), Time);
+            }
         }
     }
 }

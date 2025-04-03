@@ -12,20 +12,19 @@
             Worker = null;
         }
 
-        public void Assign(Order? order = null, Worker? worker = null) {
-            IsOccupied = true;
+        public void AssignOrder(Order? order) {
             Order = order;
+            IsOccupied = order != null;
+        }
+
+        public void AssignWorker(Worker? worker) {
             Worker = worker;
         }
 
-        public void StartWork() {
-            IsOccupied = true;
-            if (Worker != null && Order != null) Worker.StartTask(Order, Id);
-        }
+        public void SetState(bool isOccupied) {
+            if (!isOccupied) Order = null;
 
-        public void FinishWork() {
-            IsOccupied = false;
-            if (Worker != null && Order != null) Worker.FinishTask();
+            IsOccupied = isOccupied;
         }
     }
 }

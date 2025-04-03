@@ -9,6 +9,7 @@ namespace EventSimulation.Structures.Objects {
         public double StartTime { get; set; }
         public double EndTime { get; set; }
         public string FormattedTime { get; set; }
+        public Workplace? Workplace { get; set; }
 
         public Order(int id, ProductType type, double time) {
             Id = id;
@@ -17,6 +18,7 @@ namespace EventSimulation.Structures.Objects {
             EndTime = time;
             FormattedTime = Util.FormatTime(StartTime);
             State = ProductState.Raw;
+            Workplace = null;
         }
 
         private ProductState state;

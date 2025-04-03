@@ -4,29 +4,40 @@ using EventSimulation.Structures.Objects;
 
 namespace EventSimulation.Structures.Events {
     public class CuttingEndEvent : Event<ProductionManager> {
-        public Workplace Workplace { get; }
+        public Order Order { get; }
+        public Worker Worker { get; }
 
-        public CuttingEndEvent(EventSimulationCore<ProductionManager> simulationCore, double time, Workplace workplace) : base(simulationCore, time, 3) {
-            Workplace = workplace;
+        public CuttingEndEvent(EventSimulationCore<ProductionManager> simulationCore, double time, Order order, Worker worker) : base(simulationCore, time, 3) {
+            Order = order;
+            Worker = worker;
         }
 
         public override void Execute() {
             if (SimulationCore.Data is not ProductionManager manager) return;
 
-            if (Workplace.Order != null) {
-                Workplace.Order.State = ProductState.Cut;
-                manager.QueueC.AddLast(Workplace.Order);
-            }
+            Order.State = ProductState.Cut;
+            manager.QueueC.AddLast(Order);
 
-            Workplace.FinishWork();
+            Worker.SetOrder(null);
             manager.AverageUtilityA.AddSample(Time, false);
 
-            if (manager.QueueC.Count > 0) {
-                SimulationCore.EventCalendar.Enqueue(new PaintingStartEvent(SimulationCore, Time, Workplace), Time);
+            List<Worker> availableWorkersC = manager.GetAvailableWorkers(ProductState.Cut);
+            List<Worker> availableWorkersA = manager.GetAvailableWorkers(ProductState.Raw);
+
+            if (availableWorkersC.Count > 0 && manager.QueueC.Count > 0) {
+                Worker nextWorker = availableWorkersC.First();
+                Order nextOrder = manager.QueueC.First();
+                manager.QueueC.RemoveFirst();
+
+                SimulationCore.EventCalendar.Enqueue(new PaintingStartEvent(SimulationCore, Time, nextOrder, nextWorker), Time);
             }
 
-            if (manager.QueueA.Count > 0) {
-                SimulationCore.EventCalendar.Enqueue(new CuttingStartEvent(SimulationCore, Time, Workplace), Time);
+            if (availableWorkersA.Count > 0 && manager.QueueA.Count > 0) {
+                Worker nextWorker = availableWorkersA.First();
+                Order nextOrder = manager.QueueA.First();
+                manager.QueueA.RemoveFirst();
+
+                SimulationCore.EventCalendar.Enqueue(new CuttingStartEvent(SimulationCore, Time, nextOrder, nextWorker), Time);
             }
         }
     }
