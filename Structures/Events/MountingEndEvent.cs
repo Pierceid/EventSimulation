@@ -23,16 +23,6 @@ namespace EventSimulation.Structures.Events {
             manager.AverageUtilityC.AddSample(Time, false);
 
             SimulationCore.EventCalendar.Enqueue(new OrderEndEvent(SimulationCore, Time, Order, Worker), Time);
-
-            List<Worker> availableMontageWorkers = manager.GetAvailableWorkers(ProductState.Assembled);
-
-            if (manager.QueueD.Count > 0 && availableMontageWorkers.Count > 0) {
-                Worker nextWorker = availableMontageWorkers.First();
-                Order nextOrder = manager.QueueD.First();
-                manager.QueueD.RemoveFirst();
-
-                SimulationCore.EventCalendar.Enqueue(new MountingStartEvent(SimulationCore, Time, nextOrder, nextWorker), Time);
-            }
         }
     }
 }

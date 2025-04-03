@@ -4,7 +4,7 @@ using EventSimulation.Structures.Objects;
 
 namespace EventSimulation.Simulations {
     public class Carpentry : EventSimulationCore<ProductionManager> {
-        public Average AverageOrderTime { get; set; }
+        public ConfidenceInterval AverageOrderTime { get; set; }
         public Average AverageFinishedOrders { get; set; }
         public Average AveragePendingOrders { get; set; }
         public Average AverageUtilityA { get; set; }
@@ -43,7 +43,7 @@ namespace EventSimulation.Simulations {
 
             this.Data.AveragePendingOrders.AddSample(this.Data.QueueA.Count);
 
-            this.AverageOrderTime.AddSample(this.Data.AverageOrderTime.GetAverage());
+            this.AverageOrderTime.AddSample(this.Data.AverageOrderTime.GetMean());
             this.AverageFinishedOrders.AddSample(this.Data.AverageFinishedOrders.GetCounter());
             this.AveragePendingOrders.AddSample(this.Data.AveragePendingOrders.GetCounter());
 
@@ -51,7 +51,7 @@ namespace EventSimulation.Simulations {
             this.AverageUtilityB.AddSample(this.Data.AverageUtilityB.GetUtility(this.SimulationTime));
             this.AverageUtilityC.AddSample(this.Data.AverageUtilityC.GetUtility(this.SimulationTime));
 
-            this.ConfidenceInterval.AddSample(this.AverageOrderTime.GetAverage());
+            this.ConfidenceInterval.AddSample(this.AverageOrderTime.GetMean());
 
             base.AfterSimulation();
         }

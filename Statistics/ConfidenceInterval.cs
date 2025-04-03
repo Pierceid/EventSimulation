@@ -19,8 +19,9 @@
         public (double bottom, double top) GetConfidenceInterval() {
             if (Count < 30) return (double.NaN, double.NaN);
 
-            var mean = Sum / Count;
-            var variation = 1.96 * GetSigma() / Math.Sqrt(Count);
+            var mean = GetMean();
+            var sigma = GetSigma();
+            var variation = 1.96 * sigma / Math.Sqrt(Count);
 
             return (mean - variation, mean + variation);
         }
@@ -31,13 +32,16 @@
             SumOfSquares = 0;
         }
 
+        public double GetMean() {
+            if (Count == 0) return 0;
+
+            return Sum / Count;
+        }
+
         private double GetSigma() {
             if (Count < 2) return 0;
 
-            var top = SumOfSquares - ((Sum * Sum) / Count);
-            var bottom = Count - 1;
-
-            return Math.Sqrt(top / bottom);
+            return Math.Sqrt((SumOfSquares - (Sum * Sum) / Count) / (Count - 1));
         }
     }
 }

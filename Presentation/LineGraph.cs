@@ -1,4 +1,5 @@
-﻿using OxyPlot;
+﻿using EventSimulation.Simulations;
+using OxyPlot;
 using OxyPlot.Annotations;
 using OxyPlot.Axes;
 using OxyPlot.Series;
@@ -9,8 +10,10 @@ namespace EventSimulation.Presentation {
         private PlotModel model;
         private LinearAxis xAxis;
         private LinearAxis yAxis;
-        private LineSeries series;
+        private LineSeries mainSeries;
         private LineSeries upperSeries;
+        private LineSeries lowerSeries;
+        private TextAnnotation valueAnnotation;
         private PlotView plotView;
 
         public LineGraph(string modelTitle, string xAxisTitle, string yAxisTitle, string seriesTitle, PlotView plotView) {
@@ -22,8 +25,14 @@ namespace EventSimulation.Presentation {
             yAxis = new LinearAxis { Position = AxisPosition.Left, Title = yAxisTitle, Minimum = 0, Maximum = 1000 };
             model.Axes.Add(yAxis);
 
-            series = new LineSeries { Title = seriesTitle, Color = OxyColors.Green };
-            model.Series.Add(series);
+            mainSeries = new LineSeries { Title = seriesTitle, Color = OxyColors.Green };
+            model.Series.Add(mainSeries);
+
+            upperSeries = new LineSeries { Title = "Upper Bound (95%)", Color = OxyColors.Blue, LineStyle = LineStyle.Dash };
+            model.Series.Add(upperSeries);
+
+            lowerSeries = new LineSeries { Title = "Lower Bound (95%)", Color = OxyColors.Red, LineStyle = LineStyle.Dash };
+            model.Series.Add(lowerSeries);
 
             valueAnnotation = new TextAnnotation {
                 Text = "0",
@@ -41,18 +50,34 @@ namespace EventSimulation.Presentation {
             this.plotView.Model = model;
         }
 
-        public void UpdatePlot(double xValue, double yValue) {
-            series.Points.Add(new DataPoint(xValue, yValue));
-            xAxis.Maximum = xValue;
-            yAxis.Minimum = series.MinY;
-            yAxis.Maximum = series.MaxY;
-            valueAnnotation.Text = $"{yValue:F0}";
-            valueAnnotation.TextPosition = new DataPoint(xAxis.Maximum * 0.99, yAxis.Maximum);
-            model.InvalidatePlot(true);
+        public void UpdatePlot(SimulationCore simulationCore) {
+            if (simulationCore is Carpentry c) {
+                double rep = c.CurrentReplication;
+                double mean = c.AverageOrderTime.GetMean();
+                (double bottom, double top) = c.AverageOrderTime.GetConfidenceInterval();
+
+                mainSeries.Points.Add(new DataPoint(rep, mean));
+
+                if (c.CurrentReplication % 2 == 0) {
+                    upperSeries.Points.Add(new DataPoint(rep, top));
+                    lowerSeries.Points.Add(new DataPoint(rep, bottom));
+                }
+
+                xAxis.Maximum = rep;
+                yAxis.Minimum = Math.Min(mainSeries.MinY, Math.Min(lowerSeries.MinY, upperSeries.MinY));
+                yAxis.Maximum = Math.Max(mainSeries.MaxY, Math.Max(lowerSeries.MaxY, upperSeries.MaxY));
+
+                valueAnnotation.Text = $"{mean:F0}";
+                valueAnnotation.TextPosition = new DataPoint(xAxis.Maximum * 0.99, yAxis.Maximum);
+                model.InvalidatePlot(true);
+            }
         }
 
         public void RefreshGraph() {
-            series.Points.Clear();
+            mainSeries.Points.Clear();
+            upperSeries.Points.Clear();
+            lowerSeries.Points.Clear();
+
             xAxis.Minimum = 0;
             xAxis.Maximum = 1000;
             yAxis.Minimum = 0;

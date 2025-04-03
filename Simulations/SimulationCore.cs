@@ -18,6 +18,7 @@
 
         public void Stop() {
             this.isRunning = false;
+            this.thread = null;
         }
 
         public void RunSimulation() {

@@ -37,17 +37,16 @@ namespace EventSimulation.Structures.Events {
                 Order.Workplace = null;
 
                 SimulationCore.EventCalendar.Enqueue(new OrderEndEvent(SimulationCore, Time, Order, Worker), Time);
-                //manager.AverageProductionTime.AddSample(Order.TimeOfWork);
             }
 
             List<Worker> availableAssemblyWorkers = manager.GetAvailableWorkers(ProductState.Painted);
 
             if (availableAssemblyWorkers.Count > 0 && manager.QueueB.Count > 0) {
-                Worker nextAssemblyWorker = availableAssemblyWorkers.First();
-                Order nextAssemblyOrder = manager.QueueB.First();
+                Worker nextWorker = availableAssemblyWorkers.First();
+                Order nextOrder = manager.QueueB.First();
                 manager.QueueB.RemoveFirst();
 
-                SimulationCore.EventCalendar.Enqueue(new AssemblyStartEvent(SimulationCore, Time, nextAssemblyOrder, nextAssemblyWorker), Time);
+                SimulationCore.EventCalendar.Enqueue(new AssemblyStartEvent(SimulationCore, Time, nextOrder, nextWorker), Time);
             }
         }
     }

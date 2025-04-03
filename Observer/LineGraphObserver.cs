@@ -1,6 +1,5 @@
 ﻿using EventSimulation.Presentation;
 using EventSimulation.Simulations;
-using EventSimulation.Structures.Objects;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -15,13 +14,9 @@ namespace EventSimulation.Observer {
         }
 
         public void Refresh(SimulationCore simulationCore) {
-            if (simulationCore is EventSimulationCore<ProductionManager> esc) {
-                if (esc is Carpentry c) {
-                    window.Dispatcher.Invoke(() => {
-                        lineGraph.UpdatePlot(c.CurrentReplication, c.AverageOrderTime.GetAverage());
-                    }, DispatcherPriority.Input);
-                }
-            }
+            window.Dispatcher.Invoke(() => {
+                lineGraph.UpdatePlot(simulationCore);
+            }, DispatcherPriority.Input);
         }
     }
 }
