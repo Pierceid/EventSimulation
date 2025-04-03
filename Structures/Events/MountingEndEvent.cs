@@ -16,10 +16,10 @@ namespace EventSimulation.Structures.Events {
             if (SimulationCore.Data is not ProductionManager manager) return;
 
             Order.State = ProductState.Mounted;
-            Order.Workplace = null;
+
+            manager.Workplaces.FirstOrDefault(wp => wp.Order == Order)?.SetState(false);
 
             Worker.SetOrder(null);
-            Worker.SetState(false);
             manager.AverageUtilityC.AddSample(Time, false);
 
             SimulationCore.EventCalendar.Enqueue(new OrderEndEvent(SimulationCore, Time, Order, Worker), Time);

@@ -18,7 +18,6 @@ namespace EventSimulation.Structures.Events {
             Order.State = ProductState.Assembled;
 
             Worker.SetOrder(null);
-            Worker.SetState(false);
             manager.AverageUtilityB.AddSample(Time, false);
 
             if (Order.Type == ProductType.Wardrobe) {
@@ -34,7 +33,7 @@ namespace EventSimulation.Structures.Events {
                     SimulationCore.EventCalendar.Enqueue(new MountingStartEvent(SimulationCore, Time, nextOrder, nextWorker), Time);
                 }
             } else {
-                Order.Workplace = null;
+                manager.Workplaces.FirstOrDefault(wp => wp.Order == Order)?.SetState(false);
 
                 SimulationCore.EventCalendar.Enqueue(new OrderEndEvent(SimulationCore, Time, Order, Worker), Time);
             }

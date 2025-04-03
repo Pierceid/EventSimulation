@@ -37,12 +37,9 @@ namespace EventSimulation.Structures.Objects {
                 if (workplace != value) {
                     workplace = value;
                     OnPropertyChanged(nameof(Workplace));
-                    OnPropertyChanged(nameof(FormattedWorkplace));
                 }
             }
         }
-
-        public string? FormattedWorkplace => workplace == null ? string.Empty : workplace.ToString();
 
         public Worker(int id, WorkerGroup group) {
             Id = id;

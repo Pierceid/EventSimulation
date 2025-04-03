@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:EventSimulation.Windows"
         xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d"
-        Title="Discrete Simulation" Height="720" Width="1000" WindowStartupLocation="CenterScreen" Closing="WindowClosing">
+        Title="Discrete Simulation" Height="720" Width="1000" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*"/>
@@ -138,7 +138,7 @@
                         <Label Content="Queue C:" Margin="0,0,2,0"/>
                         <TextBlock x:Name="txtQueueC" Grid.Column="1" FontWeight="Bold" VerticalAlignment="Center" Foreground="Black"/>
                     </Grid>
-                  
+
                     <Grid Grid.Row="4">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -227,7 +227,7 @@
                         <DataGridTextColumn Header="Group" Binding="{Binding Group}" Width="*"/>
                         <DataGridCheckBoxColumn Header="Is Busy" Binding="{Binding IsBusy}" Width="*"/>
                         <DataGridTextColumn Header="Order" Binding="{Binding Order.Id}" Width="*"/>
-                        <DataGridTextColumn Header="Workplace" Binding="{Binding FormattedWorkplace}" Width="*"/>
+                        <DataGridTextColumn Header="Workplace" Binding="{Binding Workplace.Id}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
