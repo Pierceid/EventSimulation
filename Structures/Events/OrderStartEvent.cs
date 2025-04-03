@@ -1,12 +1,15 @@
-﻿using EventSimulation.Simulations;
+﻿using EventSimulation.Flyweight;
+using EventSimulation.Simulations;
 using EventSimulation.Structures.Enums;
 using EventSimulation.Structures.Objects;
 
 namespace EventSimulation.Structures.Events {
     public class OrderStartEvent : Event<ProductionManager> {
-        private static int orderId = 0;
+        private OrderFlyweight orderFlyweight;
 
-        public OrderStartEvent(EventSimulationCore<ProductionManager> simulationCore, double time) : base(simulationCore, time, 2) { }
+        public OrderStartEvent(EventSimulationCore<ProductionManager> simulationCore, double time) : base(simulationCore, time, 2) {
+            orderFlyweight = new OrderFlyweight();
+        }
 
         public override void Execute() {
             if (SimulationCore.Data is not ProductionManager manager) return;
@@ -14,7 +17,7 @@ namespace EventSimulation.Structures.Events {
             var rng = SimulationCore.Generators.RNG.Next();
             ProductType orderType = rng < 0.5 ? ProductType.Table : rng < 0.65 ? ProductType.Chair : ProductType.Wardrobe;
 
-            Order order = new(orderId++, orderType, Time);
+            Order order = orderFlyweight.GetOrder(orderType, Time);
             manager.Orders.Add(order);
 
             if (manager.Orders.Count > 500) {

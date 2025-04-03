@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace EventSimulation.Structures.Objects {
     public class Order : INotifyPropertyChanged {
-        public int Id { get; }
+        public int Id { get; set; }
         public ProductType Type { get; set; }
         public double StartTime { get; set; }
         public double EndTime { get; set; }
