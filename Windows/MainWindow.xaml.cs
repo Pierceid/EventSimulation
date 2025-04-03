@@ -62,7 +62,7 @@ public partial class MainWindow : Window {
 
         facade?.InitCarpentry(replications, sldSpeed.Value, workersA, workersB, workersC);
 
-        TextBlock[] textBlocks = [txtTime, txtQueueA, txtQueueB, txtQueueC, txtUtilityA, txtUtilityB, txtUtilityC, txtFinishedOrders, txtPendingOrders, txtConfidenceInterval];
+        TextBlock[] textBlocks = [txtTime, txtQueueA, txtQueueB, txtQueueC, txtQueueD, txtUtilityA, txtUtilityB, txtUtilityC, txtFinishedOrders, txtPendingOrders, txtConfidenceInterval];
         DataGrid[] dataGrids = [dgOrders, dgWorkers];
 
         facade?.InitObservers(textBlocks, dataGrids);
@@ -94,6 +94,7 @@ public partial class MainWindow : Window {
         txtQueueA.Text = "0";
         txtQueueB.Text = "0";
         txtQueueC.Text = "0";
+        txtQueueD.Text = "0";
 
         InitCarpentry();
     }

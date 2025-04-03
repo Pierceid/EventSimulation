@@ -15,9 +15,13 @@ namespace EventSimulation.Structures.Events {
         public override void Execute() {
             if (SimulationCore.Data is not ProductionManager manager) return;
 
-            if (Order.State == ProductState.Assembled && Order.Type == ProductType.Wardrobe) {
-                SimulationCore.EventCalendar.Enqueue(new MountingStartEvent(SimulationCore, Time, Order, Worker), Time);
-                return;
+            if (manager.QueueD.Count > 0) {
+                manager.QueueC.AddFirst(Order);
+
+                Order nextOrder = manager.QueueD.First();
+                manager.QueueD.RemoveFirst();
+
+                SimulationCore.EventCalendar.Enqueue(new MountingStartEvent(SimulationCore, Time, nextOrder, Worker), Time); return;
             }
 
             double movingTime = 0.0;
