@@ -12,7 +12,7 @@ namespace EventSimulation.Structures.Objects {
         public List<Worker> WorkersB { get; } = new();
         public List<Worker> WorkersC { get; } = new();
         public List<Workplace> Workplaces { get; } = new();
-        public ConfidenceInterval AverageOrderTime { get; set; } = new();
+        public Average AverageOrderTime { get; set; } = new();
         public Counter AverageFinishedOrders { get; set; } = new();
         public Counter AveragePendingOrders { get; set; } = new();
         public Utility AverageUtilityA { get; set; } = new();

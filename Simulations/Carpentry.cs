@@ -40,7 +40,7 @@ namespace EventSimulation.Simulations {
 
             this.Data.AveragePendingOrders.AddSample(this.Data.QueueA.Count);
 
-            this.AverageOrderTime.AddSample(this.Data.AverageOrderTime.GetMean());
+            this.AverageOrderTime.AddSample(this.Data.AverageOrderTime.GetAverage());
             this.AverageFinishedOrders.AddSample(this.Data.AverageFinishedOrders.GetCounter());
             this.AveragePendingOrders.AddSample(this.Data.AveragePendingOrders.GetCounter());
 
