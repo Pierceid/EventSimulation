@@ -10,7 +10,7 @@ namespace EventSimulation.Presentation {
         private LinearAxis xAxis;
         private LinearAxis yAxis;
         private LineSeries series;
-        private TextAnnotation valueAnnotation;
+        private LineSeries upperSeries;
         private PlotView plotView;
 
         public LineGraph(string modelTitle, string xAxisTitle, string yAxisTitle, string seriesTitle, PlotView plotView) {
