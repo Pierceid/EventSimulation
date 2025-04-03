@@ -51,8 +51,6 @@ public partial class MainWindow : Window {
             return;
         }
 
-        Thread.Sleep(1000);
-
         facade?.StopSimulation();
     }
 

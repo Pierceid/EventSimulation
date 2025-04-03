@@ -31,7 +31,7 @@ namespace EventSimulation.Observer {
                     this.textBlocks[7].Text = $"{c.AverageFinishedOrders.GetAverage():F2}";
                     this.textBlocks[8].Text = $"{c.AveragePendingOrders.GetAverage():F2}";
 
-                    (double bottom, double top) = c.ConfidenceInterval.GetConfidenceInterval();
+                    (double bottom, double top) = c.AverageOrderTime.GetConfidenceInterval();
 
                     this.textBlocks[9].Text = $"< {top:F0} , {bottom:F0} >";
                 }

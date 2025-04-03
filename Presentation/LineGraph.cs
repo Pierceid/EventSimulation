@@ -37,7 +37,7 @@ namespace EventSimulation.Presentation {
             valueAnnotation = new TextAnnotation {
                 Text = "0",
                 StrokeThickness = 0,
-                TextColor = OxyColors.Red,
+                TextColor = OxyColors.Green,
                 FontSize = 16,
                 FontWeight = FontWeights.Bold,
                 TextHorizontalAlignment = HorizontalAlignment.Right,
@@ -58,14 +58,14 @@ namespace EventSimulation.Presentation {
 
                 mainSeries.Points.Add(new DataPoint(rep, mean));
 
-                if (c.CurrentReplication % 2 == 0) {
+                if (c.CurrentReplication % 2 == 0 && !double.IsNaN(bottom) && !double.IsNaN(top)) {
                     upperSeries.Points.Add(new DataPoint(rep, top));
                     lowerSeries.Points.Add(new DataPoint(rep, bottom));
                 }
 
                 xAxis.Maximum = rep;
-                yAxis.Minimum = Math.Min(mainSeries.MinY, Math.Min(lowerSeries.MinY, upperSeries.MinY));
-                yAxis.Maximum = Math.Max(mainSeries.MaxY, Math.Max(lowerSeries.MaxY, upperSeries.MaxY));
+                yAxis.Minimum = lowerSeries.Points.Count > 0 ? Math.Min(mainSeries.MinY, lowerSeries.MinY) : mainSeries.MinY;
+                yAxis.Maximum = upperSeries.Points.Count > 0 ? Math.Max(mainSeries.MaxX, upperSeries.MaxY) : mainSeries.MaxY;
 
                 valueAnnotation.Text = $"{mean:F0}";
                 valueAnnotation.TextPosition = new DataPoint(xAxis.Maximum * 0.99, yAxis.Maximum);
