@@ -1,7 +1,7 @@
 ﻿using EventSimulation.Simulations;
 
 namespace EventSimulation.Structures.Events {
-    public class SystemEvent<T>(EventSimulationCore<T> simulationCore, double time) : Event<T>(simulationCore, time, 1) where T : class, new() {
+    public class SystemEvent<T>(EventSimulationCore<T> simulationCore, double time) : Event<T>(simulationCore, time) where T : class, new() {
         public override void Execute() {
             Thread.Sleep((int)SimulationCore.UpdateTime);
 

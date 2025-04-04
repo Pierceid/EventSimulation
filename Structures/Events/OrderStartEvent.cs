@@ -7,7 +7,7 @@ namespace EventSimulation.Structures.Events {
     public class OrderStartEvent : Event<ProductionManager> {
         private OrderFlyweight orderFlyweight;
 
-        public OrderStartEvent(EventSimulationCore<ProductionManager> simulationCore, double time) : base(simulationCore, time, 2) {
+        public OrderStartEvent(EventSimulationCore<ProductionManager> simulationCore, double time) : base(simulationCore, time) {
             orderFlyweight = new OrderFlyweight();
         }
 
@@ -28,11 +28,13 @@ namespace EventSimulation.Structures.Events {
             order.Workplace = workPlace;
             workPlace.AssignOrder(order);
 
-            if (manager.WorkersA.Any(w => !w.IsBusy)) {
-                Worker nextWorker = manager.WorkersA.First(w => !w.IsBusy);
+            List<Worker> availableWorkersA = manager.GetAvailableWorkers(ProductState.Raw);
+
+            if (availableWorkersA.Count > 0) {
+                Worker nextWorker = availableWorkersA.First();
                 Order nextOrder;
 
-                if (manager.QueueA.Count != 0) {
+                if (manager.QueueA.Count > 0) {
                     nextOrder = manager.QueueA.First();
                     manager.QueueA.RemoveFirst();
                 } else {

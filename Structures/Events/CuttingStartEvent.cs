@@ -7,7 +7,7 @@ namespace EventSimulation.Structures.Events {
         public Order Order { get; }
         public Worker Worker { get; }
 
-        public CuttingStartEvent(EventSimulationCore<ProductionManager> simulationCore, double time, Order order, Worker worker) : base(simulationCore, time, 3) {
+        public CuttingStartEvent(EventSimulationCore<ProductionManager> simulationCore, double time, Order order, Worker worker) : base(simulationCore, time) {
             Order = order;
             Worker = worker;
         }

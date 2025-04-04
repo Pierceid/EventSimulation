@@ -7,7 +7,7 @@ namespace EventSimulation.Structures.Events {
         public Order Order { get; }
         public Worker Worker { get; }
 
-        public AssemblyEndEvent(EventSimulationCore<ProductionManager> simulationCore, double time, Order order, Worker worker) : base(simulationCore, time, 3) {
+        public AssemblyEndEvent(EventSimulationCore<ProductionManager> simulationCore, double time, Order order, Worker worker) : base(simulationCore, time) {
             Order = order;
             Worker = worker;
         }
@@ -23,10 +23,10 @@ namespace EventSimulation.Structures.Events {
             if (Order.Type == ProductType.Wardrobe) {
                 manager.QueueD.AddLast(Order);
 
-                List<Worker> availableMontageWorkers = manager.GetAvailableWorkers(ProductState.Assembled);
+                List<Worker> availableWorkersC = manager.GetAvailableWorkers(ProductState.Assembled);
 
-                if (availableMontageWorkers.Count > 0 && manager.QueueD.Count > 0) {
-                    Worker nextWorker = availableMontageWorkers.First();
+                if (availableWorkersC.Count > 0 && manager.QueueD.Count > 0) {
+                    Worker nextWorker = availableWorkersC.First();
                     Order nextOrder = manager.QueueD.First();
                     manager.QueueD.RemoveFirst();
 
@@ -38,10 +38,10 @@ namespace EventSimulation.Structures.Events {
                 SimulationCore.EventCalendar.Enqueue(new OrderEndEvent(SimulationCore, Time, Order, Worker), Time);
             }
 
-            List<Worker> availableAssemblyWorkers = manager.GetAvailableWorkers(ProductState.Painted);
+            List<Worker> availableWorkersB = manager.GetAvailableWorkers(ProductState.Painted);
 
-            if (availableAssemblyWorkers.Count > 0 && manager.QueueB.Count > 0) {
-                Worker nextWorker = availableAssemblyWorkers.First();
+            if (availableWorkersB.Count > 0 && manager.QueueB.Count > 0) {
+                Worker nextWorker = availableWorkersB.First();
                 Order nextOrder = manager.QueueB.First();
                 manager.QueueB.RemoveFirst();
 
