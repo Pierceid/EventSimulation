@@ -17,7 +17,7 @@ namespace EventSimulation.Structures.Events {
 
             double movingTime = 0.0;
 
-            if (Worker.Workplace == null) {
+            if (Worker.Workplace != null) {
                 movingTime += SimulationCore.Generators.WorkerMoveToStorageTime.Next();
             }
 

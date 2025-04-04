@@ -32,6 +32,12 @@ namespace EventSimulation.Structures.Events {
                 manager.QueueD.RemoveFirst();
 
                 SimulationCore.EventCalendar.Enqueue(new MountingStartEvent(SimulationCore, Time, nextOrder, nextWorker), Time);
+            } else if (manager.QueueC.Count > 0 && availableMontageWorkers.Count > 0) {
+                Worker nextWorker = availableMontageWorkers.First();
+                Order nextOrder = manager.QueueC.First();
+                manager.QueueC.RemoveFirst();
+
+                SimulationCore.EventCalendar.Enqueue(new PaintingStartEvent(SimulationCore, Time, nextOrder, nextWorker), Time);
             }
         }
     }
