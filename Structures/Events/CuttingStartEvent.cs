@@ -15,6 +15,8 @@ namespace EventSimulation.Structures.Events {
         public override void Execute() {
             if (SimulationCore.Data is not ProductionManager manager) return;
 
+            Order.State = ProductState.InCutting;
+
             double movingTime = 0.0;
 
             if (Worker.Workplace != null) {

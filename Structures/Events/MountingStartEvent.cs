@@ -1,4 +1,5 @@
 ﻿using EventSimulation.Simulations;
+using EventSimulation.Structures.Enums;
 using EventSimulation.Structures.Objects;
 
 namespace EventSimulation.Structures.Events {
@@ -13,6 +14,8 @@ namespace EventSimulation.Structures.Events {
 
         public override void Execute() {
             if (SimulationCore.Data is not ProductionManager manager) return;
+
+            Order.State = ProductState.InMounting;
 
             double movingTime = 0.0;
 

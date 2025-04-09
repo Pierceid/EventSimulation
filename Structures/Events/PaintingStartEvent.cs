@@ -24,6 +24,8 @@ namespace EventSimulation.Structures.Events {
                 SimulationCore.EventCalendar.Enqueue(new MountingStartEvent(SimulationCore, Time, nextOrder, Worker), Time); return;
             }
 
+            Order.State = ProductState.InPainting;
+
             double movingTime = 0.0;
 
             if (Worker.Workplace == null) {
