@@ -34,7 +34,7 @@ namespace EventSimulation.Observer {
 
                     (double bottom, double top) = c.AverageOrderTime.GetConfidenceInterval();
 
-                    this.textBlocks[10].Text = $"< {top:F0} , {bottom:F0} >";
+                    this.textBlocks[10].Text = $"< {(bottom / 3600):F2}h ; {(top / 3600):F2}h >";
                 }
             }
         }
